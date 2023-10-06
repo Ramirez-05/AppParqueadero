@@ -7,6 +7,7 @@ USE parqueadero;
 
 CREATE TABLE parqueadero(
     id INT PRIMARY KEY AUTO_INCREMENT,
+    nit INT UNIQUE, 
     nombre VARCHAR(50),
     direccion VARCHAR(100),
     telefono INT,
