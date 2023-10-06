@@ -1,9 +1,11 @@
 package Main;
 
 public class Parqueaderos extends javax.swing.JPanel {
-
+    
+    public Main main;
    
-    public Parqueaderos() {
+    public Parqueaderos(Main main) {
+        this.main = main;
         initComponents();
     }
 
@@ -114,15 +116,11 @@ public class Parqueaderos extends javax.swing.JPanel {
         System.out.println("SE APRETO EL BOTON DE CREAR PARQUEADERO");
         
         // HACEMOS LA INSTANCIA DE LA VENTANA QUE QUEREMOS CREAR Y LA MOSTRAMOS
-        CreateParking mostrarFrame = new CreateParking();
+        CreateParking mostrarFrame = new CreateParking(this);
         mostrarFrame.setVisible(true);
         
         // Obtener el JFrame padre que contiene el JPanel actual
-        javax.swing.JFrame frame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-
-        // Cerrar el JFrame padre
-        frame.dispose();
-
+        this.main.setVisible(false);
     }//GEN-LAST:event_bntCreateParkingActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed

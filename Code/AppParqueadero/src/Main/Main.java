@@ -140,7 +140,7 @@ public class Main extends javax.swing.JFrame {
         
         panelPrincipal.removeAll();
         
-        Parqueaderos mostrarPanel = new Parqueaderos();
+        Parqueaderos mostrarPanel = new Parqueaderos(this);
 
         mostrarPanel.setSize(panelPrincipal.getSize() );
         panelPrincipal.add( mostrarPanel );
