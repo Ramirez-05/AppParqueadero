@@ -13,6 +13,43 @@ public class ConsumoApi {
     
     }
     
+    public String consumoGET(String endpoint){
+        try {
+            // URL de la API
+            URL url = new URL(endpoint);
+            
+            // Abrir una conexión HTTP y configurar para Metodo GET
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            
+            // Obtener el código de respuesta enviado por el Servidor
+            int responseCode = connection.getResponseCode();
+            
+            // En caso de respuesta exitosa convertir la respuesta en String
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                connection.disconnect();
+                return response.toString();
+            } else {
+                System.out.println("Error al consumir la API. Código de respuesta: " + responseCode);
+                connection.disconnect();
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println(" -- Catch -- ");
+            System.out.println( e.getMessage() );
+            return null;
+        }
+    }
+    
     public String consumoGET(String endpoint, Map<String, String> getData){
         try {
             
@@ -94,6 +131,45 @@ public class ConsumoApi {
             }
 
             // Obtener el código de respuesta
+            int responseCode = connection.getResponseCode();
+            
+            // En caso de respuesta exitosa convertir la respuesta en String
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Leer la respuesta de la API
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                connection.disconnect();
+                return response.toString();
+            } else {
+                System.out.println("Error al consumir la API. Código de respuesta: " + responseCode);
+                connection.disconnect();
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
+    }
+    
+    public String consumoPOST(String endpoint){
+        try {
+            // URL de la API
+            URL url = new URL(endpoint);
+
+            // Abrir una conexión HTTP
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            // Configurar la conexión para el método POST sin Datos
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(false);
+            
+            // Obtener el código de respuesta enviado por el Servidor
             int responseCode = connection.getResponseCode();
             
             // En caso de respuesta exitosa convertir la respuesta en String

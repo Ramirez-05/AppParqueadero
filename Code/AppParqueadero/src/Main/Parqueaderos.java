@@ -1,12 +1,27 @@
 package Main;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
+import javax.swing.table.DefaultTableModel;
+
 
 public class Parqueaderos extends javax.swing.JPanel {
     
     public Main main;
-   
+    private Gson gson;
+    
+    DefaultTableModel modelo;
+    
+    
+    
     public Parqueaderos(Main main) {
         this.main = main;
+        gson = new Gson();
         initComponents();
+        initAlternComponets();
+        mostrarParqueaderos();
     }
 
   
@@ -18,7 +33,7 @@ public class Parqueaderos extends javax.swing.JPanel {
         btnBuscar = new javax.swing.JButton();
         bntCreateParking = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaParqueadero = new javax.swing.JTable();
         inputBuscarUpdate = new javax.swing.JTextField();
         btnBuscarUdate = new javax.swing.JButton();
 
@@ -44,20 +59,20 @@ public class Parqueaderos extends javax.swing.JPanel {
             }
         });
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaParqueadero.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        tablaParqueadero.setForeground(new java.awt.Color(0, 0, 0));
+        tablaParqueadero.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "NIT", "NOMBRE", "DIRECCION", "TELEFONO", "ESTADO", "VENDEDORES"
+                "NIT", "NOMBRE", "DIRECCION", "TELEFONO"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaParqueadero);
 
         btnBuscarUdate.setBackground(new java.awt.Color(73, 59, 114));
         btnBuscarUdate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -123,6 +138,14 @@ public class Parqueaderos extends javax.swing.JPanel {
         this.main.setVisible(false);
     }//GEN-LAST:event_bntCreateParkingActionPerformed
 
+    public void initAlternComponets(){
+       modelo = (DefaultTableModel) tablaParqueadero.getModel();
+
+    }
+    
+    
+    
+    
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
          // ACA VA El codigo para MOSTRA LA EMPRESA QUE SE ESTA BUSCANDO 
     
@@ -174,7 +197,47 @@ public class Parqueaderos extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnBuscarUdateActionPerformed
 
-
+    
+    private void mostrarParqueaderos(){
+        
+        // SE ESTA MOSTRANDO LA FUNCION DE MOSTRAR PARQUEADEROS
+        
+        System.out.println("Se mostro la lista de parqueaderos");
+        
+        ConsumoApi consumo = new ConsumoApi();
+        
+        
+        String obtenerParkings = consumo.consumoGET("http://localhost/APIenPHP/API-parqueadero/Obtener.php");
+        
+        
+        if( obtenerParkings != null ){
+            JsonObject jsonTemp  = gson.fromJson(obtenerParkings, JsonObject.class);
+            
+            JsonArray parking = jsonTemp.getAsJsonArray("registros");
+            
+            modelo.setRowCount(0);
+            System.out.println("");
+            System.out.println("REGISTRO DE PARQUEADROS: ");
+            
+            for(int i = 0; i < parking.size(); i++ ){
+                JsonObject viewParking = parking.get(i).getAsJsonObject();
+                String nit = viewParking.get("nit").getAsString();
+                String nombre = viewParking.get("nombre").getAsString();
+                String direccion = viewParking.get("direccion").getAsString();
+                String telefono = viewParking.get("telefono").getAsString();
+                System.out.println("nit " + nit);
+                
+                Object[] fila = new Object[]{nit,nombre,direccion,telefono};
+                
+                modelo.addRow(fila);
+                
+            }
+            
+            
+        }  
+      
+    }    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntCreateParking;
     private javax.swing.JButton btnBuscar;
@@ -182,6 +245,6 @@ public class Parqueaderos extends javax.swing.JPanel {
     private javax.swing.JTextField inputBuscar;
     private javax.swing.JTextField inputBuscarUpdate;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaParqueadero;
     // End of variables declaration//GEN-END:variables
 }
