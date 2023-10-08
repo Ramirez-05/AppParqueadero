@@ -1,5 +1,7 @@
 package Main;
 
+import VistaVendedor.Vendedores;
+import VistaParqueadero.Parqueaderos;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -30,10 +32,11 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(200, 194, 227));
+        jPanel1.setBackground(new java.awt.Color(49, 43, 81));
 
-        btnSeller.setBackground(new java.awt.Color(73, 59, 114));
+        btnSeller.setBackground(new java.awt.Color(207, 191, 255));
         btnSeller.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnSeller.setForeground(new java.awt.Color(0, 0, 0));
         btnSeller.setText("VENDEDORES");
         btnSeller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -41,8 +44,9 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        btnParking.setBackground(new java.awt.Color(73, 59, 114));
+        btnParking.setBackground(new java.awt.Color(207, 191, 255));
         btnParking.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnParking.setForeground(new java.awt.Color(0, 0, 0));
         btnParking.setText("PARQUEADERO");
         btnParking.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -50,7 +54,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(200, 194, 227));
+        jButton3.setBackground(new java.awt.Color(207, 191, 255));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("CERRAR SESION");

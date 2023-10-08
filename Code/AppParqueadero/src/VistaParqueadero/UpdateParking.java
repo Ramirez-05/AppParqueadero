@@ -1,18 +1,38 @@
 
-package Main;
+package VistaParqueadero;
+
+import Alerts.AlertConfirmarUpdateParking;
+import Main.ConsumoApi;
+import Main.Main;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateParking extends javax.swing.JFrame {
+public class UpdateParking extends javax.swing.JFrame {
     
+    private String nit;
+    private String nit2;
+    private String nombre;
+    private String direccion;
+    private String telefono; 
+    
+    private Gson gson;
     Parqueaderos contentParqueadero;
-    
-    public CreateParking(Parqueaderos contentParqueadero) {
+
+    // Modificamos el constructor para recibir el documento como parámetro
+    public UpdateParking(String nit, Parqueaderos contentParqueadero) {
+        gson = new Gson();
+        this.nit = nit;
         this.contentParqueadero = contentParqueadero;
         initComponents();
+        initAlternComponents();
+        
+        
         
         // Centrar la ventana en la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -21,8 +41,10 @@ public class CreateParking extends javax.swing.JFrame {
         int frameWidth = getWidth();
         int frameHeight = getHeight();
         setLocation((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2);
+        
     }
 
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -38,23 +60,25 @@ public class CreateParking extends javax.swing.JFrame {
         campoTelefono = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
-        btnCrear = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel1.setForeground(new java.awt.Color(49, 43, 81));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("CREANDO PARQUEADERO");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel2.setForeground(new java.awt.Color(49, 43, 81));
         jLabel2.setText("NIT:");
 
+        campoNit.setEnabled(false);
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel3.setForeground(new java.awt.Color(49, 43, 81));
         jLabel3.setText("NOMBRE:");
 
         campoNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -64,11 +88,11 @@ public class CreateParking extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel4.setForeground(new java.awt.Color(49, 43, 81));
         jLabel4.setText("DIRECCION:");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel5.setForeground(new java.awt.Color(49, 43, 81));
         jLabel5.setText("TELEFONO:");
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
@@ -81,13 +105,13 @@ public class CreateParking extends javax.swing.JFrame {
             }
         });
 
-        btnCrear.setBackground(new java.awt.Color(73, 59, 114));
-        btnCrear.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnCrear.setForeground(new java.awt.Color(255, 255, 255));
-        btnCrear.setText("CREAR");
-        btnCrear.addActionListener(new java.awt.event.ActionListener() {
+        btnUpdate.setBackground(new java.awt.Color(207, 191, 255));
+        btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnUpdate.setForeground(new java.awt.Color(0, 0, 0));
+        btnUpdate.setText("ACTUALIZAR");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearActionPerformed(evt);
+                btnUpdateActionPerformed(evt);
             }
         });
 
@@ -105,11 +129,11 @@ public class CreateParking extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(56, 56, 56)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(24, 24, 24)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(13, 13, 13)
                                         .addComponent(btnCancelar)
-                                        .addGap(38, 38, 38)
-                                        .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnUpdate))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -152,7 +176,7 @@ public class CreateParking extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
-                    .addComponent(btnCrear))
+                    .addComponent(btnUpdate))
                 .addGap(24, 24, 24))
         );
 
@@ -176,37 +200,70 @@ public class CreateParking extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // ACA VA EL CODIGO PARA REGRESAR A LA VENTANA DE INICIO
-        System.out.println("SE APRETO EL BOTON DE CANCELAR EN EL FORM PARA CREAR VENDEDOR");
-        this.contentParqueadero.main.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    
+    public void initAlternComponents(){
+        
+        System.out.println("NIT"+nit);
+        
+        //MAPEAR LOS DATOS
+        ConsumoApi consumo = new ConsumoApi();
+        Map<String, String> insertData = new HashMap<>();
+        insertData.put("nit",nit);
+        
+        //HACER LA PETICION
+        String obtenerDatos = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", insertData);
+        
+        if(obtenerDatos != null ){
+          
+            System.out.println("Datos llegados: "+obtenerDatos);
+            
+            //DECODIFICAR EL JSON
+            JsonObject jsonTemp = gson.fromJson(obtenerDatos, JsonObject.class);
+            JsonArray parking = jsonTemp.getAsJsonArray("registros");
+            JsonObject parqueadero = parking.get(0).getAsJsonObject();
 
+            //CAPTURAR EL VALOR POR CLAVE
+            nit2 = parqueadero.get("nit").getAsString();
+            nombre = parqueadero.get("nombre").getAsString();
+            direccion = parqueadero.get("direccion").getAsString();
+            telefono = parqueadero.get("telefono").getAsString();
+            
+            //PONER VALOR A LOS INPUTS
+            campoNit.setText(nit);
+            campoNombre.setText(nombre);
+            campoDireccion.setText(direccion);
+            campoTelefono.setText(telefono); 
+        }
+        
+    }   
+    
     private void campoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoNombreActionPerformed
 
-    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        String nit = campoNit.getText();
-        String nombre = campoNombre.getText();
-        String direccion = campoDireccion.getText();
-        String telefono = campoTelefono.getText();
-        
-        ConsumoApi consumo = new ConsumoApi();
-        Map<String, String> insertData = new HashMap<>();
-        insertData.put("nit",nit);
-        insertData.put("nombre",nombre);
-        insertData.put("direccion",direccion);
-        insertData.put("telefono",telefono);
-        
-        String insert = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/Insert.php", insertData);
-        
-    }//GEN-LAST:event_btnCrearActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // ACA VA EL CODIGO PARA REGRESAR A LA VENTANA DE INICIO
+        System.out.println("SE APRETO EL BOTON DE CANCELAR EN EL FORM PARA ACTUALIZAR VENDEDOR");
+        this.contentParqueadero.main.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        
+        //LLAMAMOS A LA ALERTA PARA ASEGURARNOS DE LOS CAMBIOS
+        AlertConfirmarUpdateParking confirmar = new AlertConfirmarUpdateParking(nit2,nombre,direccion,telefono);
+        confirmar.setVisible(true);
+        
+        
+        
+        
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnCrear;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JTextField campoDireccion;
     private javax.swing.JTextField campoNit;
     private javax.swing.JTextField campoNombre;

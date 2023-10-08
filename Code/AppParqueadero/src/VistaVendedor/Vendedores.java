@@ -2,7 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package Main;
+package VistaVendedor;
+
+import Alerts.InputBuscarUpdate;
+import Alerts.AlertInputVacio;
+import VistaParqueadero.UpdateParking;
 
 /**
  *
@@ -149,7 +153,7 @@ public class Vendedores extends javax.swing.JPanel {
         } else {
 
             //HACEMOS APARECER UNA ALERTA
-            InputBuscarUpdateParking mostrarFrame = new InputBuscarUpdateParking();
+            InputBuscarUpdate mostrarFrame = new InputBuscarUpdate();
             mostrarFrame.setVisible(true);
 
         }
@@ -183,14 +187,12 @@ public class Vendedores extends javax.swing.JPanel {
 
             System.out.println("Esta es  nit: " + nit);
 
-            //HACEMOS EL CAMBIO DE VENTANA PARA MOSTRAR EL FORM DONDE EDITAMOS EL PARQUEADERO 
-            UpdateParking mostrarFrame = new UpdateParking(nit);
-            mostrarFrame.setVisible(true);
+           
 
         } else {
 
             //HACEMOS APARECER UNA ALERTA
-            AlertInputVacioParking mostrarFrame = new AlertInputVacioParking();
+            AlertInputVacio mostrarFrame = new AlertInputVacio();
             mostrarFrame.setVisible(true);
 
         }
