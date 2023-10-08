@@ -1,8 +1,6 @@
 package Main;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonArray;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,20 +9,18 @@ public class Parqueaderos extends javax.swing.JPanel {
     
     public Main main;
     private Gson gson;
-    
-    DefaultTableModel modelo;
-    
-    
+    ConsumoApi consumo;
+    DefaultTableModel modelo;        
     
     public Parqueaderos(Main main) {
         this.main = main;
         gson = new Gson();
+        consumo = new ConsumoApi();   
         initComponents();
-        initAlternComponets();
+        initAlternComponents();
         mostrarParqueaderos();
     }
-
-  
+ 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -138,9 +134,8 @@ public class Parqueaderos extends javax.swing.JPanel {
         this.main.setVisible(false);
     }//GEN-LAST:event_bntCreateParkingActionPerformed
 
-    public void initAlternComponets(){
+    private void initAlternComponents(){
        modelo = (DefaultTableModel) tablaParqueadero.getModel();
-
     }
     
     
@@ -159,10 +154,7 @@ public class Parqueaderos extends javax.swing.JPanel {
             System.out.println("Esta es nit: " + nit);
 
             //ACA DEBE HARCERSE LA CONSULTA PARA BUSCAR LA EMPRESA POR NIT Y MOSTRARLO EN LA TABLA
-            
-
         } else {
-
             //HACEMOS APARECER UNA ALERTA
             InputBuscarUpdateParking mostrarFrame = new InputBuscarUpdateParking();
             mostrarFrame.setVisible(true);
@@ -171,8 +163,7 @@ public class Parqueaderos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnBuscarUdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarUdateActionPerformed
-        // ACA VA EK CODIGO PARA CAMBIAR A LA VENTA DE EDITAR 
-    
+        // ACA VA EL CODIGO PARA CAMBIAR A LA VENTA DE EDITAR 
         System.out.println("SE APRETO EL BOTON DE EDITAR PARQUEADERO");
 
         //Capturamos lo que hay en el input de buscar
@@ -181,35 +172,23 @@ public class Parqueaderos extends javax.swing.JPanel {
         if(nit != null && !nit.isEmpty()){
 
             System.out.println("Esta es  nit: " + nit);
-
             //HACEMOS EL CAMBIO DE VENTANA PARA MOSTRAR EL FORM DONDE EDITAMOS EL PARQUEADERO 
             UpdateParking mostrarFrame = new UpdateParking(nit);
             mostrarFrame.setVisible(true);
 
         } else {
-
             //HACEMOS APARECER UNA ALERTA
             AlertInputVacioParking mostrarFrame = new AlertInputVacioParking();
             mostrarFrame.setVisible(true);
-
         }
-        
-        
     }//GEN-LAST:event_btnBuscarUdateActionPerformed
 
     
     private void mostrarParqueaderos(){
-        
-        // SE ESTA MOSTRANDO LA FUNCION DE MOSTRAR PARQUEADEROS
-        
-        System.out.println("Se mostro la lista de parqueaderos");
-        
-        ConsumoApi consumo = new ConsumoApi();
-        
-        
+        // SE ESTA MOSTRANDO LA FUNCION DE MOSTRAR PARQUEADEROS        
+        System.out.println("Se mostro la lista de parqueaderos");                    
         String obtenerParkings = consumo.consumoGET("http://localhost/APIenPHP/API-parqueadero/Obtener.php");
-        
-        
+                
         if( obtenerParkings != null ){
             JsonObject jsonTemp  = gson.fromJson(obtenerParkings, JsonObject.class);
             
@@ -217,7 +196,7 @@ public class Parqueaderos extends javax.swing.JPanel {
             
             modelo.setRowCount(0);
             System.out.println("");
-            System.out.println("REGISTRO DE PARQUEADROS: ");
+            System.out.println("LISTA DE PARQUEADEROS: ");
             
             for(int i = 0; i < parking.size(); i++ ){
                 JsonObject viewParking = parking.get(i).getAsJsonObject();
@@ -230,12 +209,8 @@ public class Parqueaderos extends javax.swing.JPanel {
                 Object[] fila = new Object[]{nit,nombre,direccion,telefono};
                 
                 modelo.addRow(fila);
-                
-            }
-            
-            
+            } 
         }  
-      
     }    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
