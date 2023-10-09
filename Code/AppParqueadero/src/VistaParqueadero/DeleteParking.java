@@ -258,7 +258,6 @@ public class DeleteParking extends javax.swing.JFrame {
         AlertConfirmarDeleteParking confirmar = new AlertConfirmarDeleteParking(nit);
         confirmar.setVisible(true);
         
-        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 

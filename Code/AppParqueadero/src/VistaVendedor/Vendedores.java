@@ -33,8 +33,6 @@ public class Vendedores extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        inputBuscarUpdate = new javax.swing.JTextField();
-        btnBuscarUpdateSeller = new javax.swing.JButton();
         inputBuscar = new javax.swing.JTextField();
         btnBuscarSeller = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -66,16 +64,6 @@ public class Vendedores extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        btnBuscarUpdateSeller.setBackground(new java.awt.Color(73, 59, 114));
-        btnBuscarUpdateSeller.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnBuscarUpdateSeller.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuscarUpdateSeller.setText(" EDITAR VENDEDOR");
-        btnBuscarUpdateSeller.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarUpdateSellerActionPerformed(evt);
-            }
-        });
-
         btnBuscarSeller.setBackground(new java.awt.Color(73, 59, 114));
         btnBuscarSeller.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBuscarSeller.setForeground(new java.awt.Color(255, 255, 255));
@@ -100,13 +88,8 @@ public class Vendedores extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(inputBuscarUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscarUpdateSeller, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton4)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(inputBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -124,12 +107,9 @@ public class Vendedores extends javax.swing.JPanel {
                     .addComponent(btnBuscarSeller)
                     .addComponent(jButton2)
                     .addComponent(inputBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(inputBuscarUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscarUpdateSeller, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(34, 34, 34)
+                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
@@ -175,35 +155,10 @@ public class Vendedores extends javax.swing.JPanel {
         frame.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void btnBuscarUpdateSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarUpdateSellerActionPerformed
-        // ACA VA EK CODIGO PARA CAMBIAR A LA VENTA DE EDITAR 
-    
-        System.out.println("SE APRETO EL BOTON DE EDITAR PARQUEADERO");
-
-        //Capturamos lo que hay en el input de buscar
-        String nit = inputBuscarUpdate.getText();
-
-        if(nit != null && !nit.isEmpty()){
-
-            System.out.println("Esta es  nit: " + nit);
-
-           
-
-        } else {
-
-            //HACEMOS APARECER UNA ALERTA
-            AlertInputVacio mostrarFrame = new AlertInputVacio();
-            mostrarFrame.setVisible(true);
-
-        }
-    }//GEN-LAST:event_btnBuscarUpdateSellerActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarSeller;
-    private javax.swing.JButton btnBuscarUpdateSeller;
     private javax.swing.JTextField inputBuscar;
-    private javax.swing.JTextField inputBuscarUpdate;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JScrollPane jScrollPane1;
