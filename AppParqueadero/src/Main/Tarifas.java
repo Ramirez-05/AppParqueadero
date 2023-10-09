@@ -2,6 +2,13 @@ package Main;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -13,14 +20,12 @@ public final class Tarifas extends javax.swing.JPanel {
     private final Gson gson;
     
     DefaultTableModel modelo;
-    
-    
-    
     public Tarifas(MainVendedor main) {
         this.main = main;
         gson = new Gson();
         initComponents();
         initAlternComponets();
+        listaTarifa();
     }
 
   
@@ -33,12 +38,11 @@ public final class Tarifas extends javax.swing.JPanel {
         tabTarifas = new javax.swing.JTable();
         jLabelTarifas = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        inputTarifa = new javax.swing.JTextField();
+        campo_tarifa = new javax.swing.JTextField();
         jLabelTarifa = new javax.swing.JLabel();
         jLabelVehiculo = new javax.swing.JLabel();
-        inputVehiculo1 = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        boxVehiculos = new javax.swing.JComboBox<>();
 
         nitParqueadero2.setText("NO DISPONIBLE");
 
@@ -71,9 +75,9 @@ public final class Tarifas extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        inputTarifa.addActionListener(new java.awt.event.ActionListener() {
+        campo_tarifa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputTarifaActionPerformed(evt);
+                campo_tarifaActionPerformed(evt);
             }
         });
 
@@ -82,12 +86,6 @@ public final class Tarifas extends javax.swing.JPanel {
 
         jLabelVehiculo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelVehiculo.setText("VEHÍCULO:");
-
-        inputVehiculo1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputVehiculo1ActionPerformed(evt);
-            }
-        });
 
         btnModificar.setBackground(new java.awt.Color(73, 59, 114));
         btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -99,13 +97,9 @@ public final class Tarifas extends javax.swing.JPanel {
             }
         });
 
-        btnCancelar.setBackground(new java.awt.Color(73, 59, 114));
-        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelar.setText("CANCELAR");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        boxVehiculos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                boxVehiculosActionPerformed(evt);
             }
         });
 
@@ -114,39 +108,33 @@ public final class Tarifas extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnModificar)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(btnCancelar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnModificar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelVehiculo)
                             .addComponent(jLabelTarifa))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputTarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(inputVehiculo1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(boxVehiculos, 0, 203, Short.MAX_VALUE)
+                            .addComponent(campo_tarifa))))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addContainerGap(182, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelVehiculo)
-                    .addComponent(inputVehiculo1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(boxVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelTarifa)
-                    .addComponent(inputTarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(174, Short.MAX_VALUE))
+                    .addComponent(campo_tarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(89, 89, 89)
+                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -189,32 +177,64 @@ public final class Tarifas extends javax.swing.JPanel {
        
     }
     
-    
-    
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void listaTarifa(){
+        ConsumoApi consumo = new ConsumoApi();
+        String obtenerTarifas = consumo.consumoGET("http://localhost/APIenPHP/API-tarifas/Obtener.php");
 
+        if (obtenerTarifas != null) {
+            JsonObject jsonTemp = gson.fromJson(obtenerTarifas, JsonObject.class);
+            JsonArray tarifas = jsonTemp.getAsJsonArray("registros");
+            modelo.setRowCount(0);
+            String[] opcion = new String[tarifas.size()];
+
+            for (int i = 0; i < tarifas.size(); i++){
+                JsonObject verTarifa = tarifas.get(i).getAsJsonObject();
+                String id = verTarifa.get("id").getAsString();
+                String tipo = verTarifa.get("tipo_vehiculo").getAsString();
+                opcion[i] = tipo; // Asignar el tipo al arreglo opcion[]
+                String tarifa = verTarifa.get("tarifa").getAsString();
+                Object[] fila = new Object[]{id, tipo, tarifa};
+                modelo.addRow(fila);
+            }
+            for (int i = 0; i < opcion.length; i++) {
+                System.out.println("lista "+opcion[i]);
+            }
+            boxVehiculos.setModel(new DefaultComboBoxModel<>(opcion));
+        }
+    }
+
+    
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-
         System.out.println("SE APRETO EL BOTON MODIFICAR TARIFA");
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void inputVehiculo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputVehiculo1ActionPerformed
+    
+    private void campo_tarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campo_tarifaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputVehiculo1ActionPerformed
+    }//GEN-LAST:event_campo_tarifaActionPerformed
 
-    private void inputTarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputTarifaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inputTarifaActionPerformed
+    private void boxVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxVehiculosActionPerformed
+
+        String opcionSelected = (String) boxVehiculos.getSelectedItem();
+        ConsumoApi consumo = new ConsumoApi();
+        String obtenerT = consumo.consumoGET("http://localhost/APIenPHP/API-tarifas/obtenerTarifa.php?tipo_vehiculo=" + opcionSelected);
+
+        // Parsear la respuesta JSON
+        JsonParser parser = new JsonParser();
+        JsonObject jsonObject = parser.parse(obtenerT).getAsJsonObject();
+
+        // Obtener el valor de la tarifa del JSON
+        String tarifa = jsonObject.get("tarifa").getAsString();
+
+        campo_tarifa.setText(tarifa);
+    }//GEN-LAST:event_boxVehiculosActionPerformed
 
     
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox<String> boxVehiculos;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JTextField inputTarifa;
-    private javax.swing.JTextField inputVehiculo1;
+    private javax.swing.JTextField campo_tarifa;
     private javax.swing.JLabel jLabelTarifa;
     private javax.swing.JLabel jLabelTarifas;
     private javax.swing.JLabel jLabelVehiculo;
