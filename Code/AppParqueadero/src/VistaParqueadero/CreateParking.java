@@ -57,10 +57,14 @@ public class CreateParking extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(49, 43, 81));
         jLabel2.setText("NIT:");
 
+        campoNit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoNit.setForeground(new java.awt.Color(0, 0, 0));
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(49, 43, 81));
         jLabel3.setText("NOMBRE:");
 
+        campoNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         campoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoNombreActionPerformed(evt);
@@ -70,6 +74,11 @@ public class CreateParking extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(49, 43, 81));
         jLabel4.setText("DIRECCION:");
+
+        campoDireccion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        campoTelefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoTelefono.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(49, 43, 81));

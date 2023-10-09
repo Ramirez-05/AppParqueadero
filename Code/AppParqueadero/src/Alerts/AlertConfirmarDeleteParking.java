@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Alerts;
 
 import Main.ConsumoApi;
-import VistaParqueadero.UpdateParking;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.awt.Dimension;
@@ -13,30 +9,22 @@ import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
+public class AlertConfirmarDeleteParking extends javax.swing.JFrame {
 
     
-    
+       
     String nit;
-    String nombre;
-    String direccion;
-    String telefono;
     Gson gson;
     
-    UpdateParking ventanaUpdate;
-  
-    public AlertConfirmarUpdateParking(String nit,String nombre, String direccion,String telefono,UpdateParking ventanaUpdate ) {
-        initComponents();
-        
+    public AlertConfirmarDeleteParking(String nit) {
         gson = new Gson();
         this.nit = nit;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
+        initComponents();
         
         
         
-         // Centrar la ventana en la pantalla
+          
+        // Centrar la ventana en la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenWidth = (int) screenSize.getWidth();
         int screenHeight = (int) screenSize.getHeight();
@@ -49,7 +37,6 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -57,19 +44,7 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         btnConfirmar = new javax.swing.JButton();
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -81,7 +56,7 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("UNA VEZ HECHOS LOS CAMBIOS");
+        jLabel2.setText("UNA VEZ Al CONFIRMAR");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -120,11 +95,11 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(56, Short.MAX_VALUE)
+                .addContainerGap(39, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(btnConfirmar)
-                .addGap(53, 53, 53))
+                .addGap(42, 42, 42))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +114,7 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmar)
                     .addComponent(jButton1))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -167,34 +142,27 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        
+
         //CODIGO PARA HACER EL UPDATE DEL PARQUEADERO
-         
+
         ConsumoApi consumo = new ConsumoApi();
         Map<String, String> insertData = new HashMap<>();
         insertData.put("nit",nit);
-        insertData.put("nombre",nombre);
-        insertData.put("direccion",direccion);
-        insertData.put("telefono",telefono);
-        
-        String update = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/Update.php", insertData);
-        
-        System.out.println("Lo que llego"+update);
-        
-        JsonObject jsonResponse = gson.fromJson(update, JsonObject.class);
-        
+
+        String delete = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/Delete.php", insertData);
+
+        System.out.println("Lo que llego"+delete);
+
+        JsonObject jsonResponse = gson.fromJson(delete, JsonObject.class);
+
         boolean status = jsonResponse.get("status").getAsBoolean();
-        
+
         if( status ){
-            
+
             //CERRA VETANA ACTUAL
             this.dispose();
         }
-        
-        
-        
-        
-        
+
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
 
@@ -205,6 +173,5 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

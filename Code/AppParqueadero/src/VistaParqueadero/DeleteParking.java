@@ -1,37 +1,31 @@
 
 package VistaParqueadero;
 
-import Alerts.AlertConfirmarUpdateParking;
+import Alerts.AlertConfirmarDeleteParking;
 import Main.ConsumoApi;
-import Main.Main;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UpdateParking extends javax.swing.JFrame {
-    
+public class DeleteParking extends javax.swing.JFrame {
     private String nit;
     private String nit2;
     private String nombre;
     private String direccion;
     private String telefono; 
-    
     private Gson gson;
     Parqueaderos contentParqueadero;
-
-    // Modificamos el constructor para recibir el documento como parámetro
-    public UpdateParking(String nit, Parqueaderos contentParqueadero) {
-        gson = new Gson();
+    
+    public DeleteParking(String nit, Parqueaderos contentParqueadero) {
         this.nit = nit;
+        gson = new Gson();
         this.contentParqueadero = contentParqueadero;
         initComponents();
         initAlternComponents();
-        
         
         
         // Centrar la ventana en la pantalla
@@ -41,10 +35,8 @@ public class UpdateParking extends javax.swing.JFrame {
         int frameWidth = getWidth();
         int frameHeight = getHeight();
         setLocation((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2);
-        
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -60,16 +52,17 @@ public class UpdateParking extends javax.swing.JFrame {
         campoTelefono = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(49, 43, 81));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("CREANDO PARQUEADERO");
+        jLabel1.setText("ELIMINANDO PARQUEADERO");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(49, 43, 81));
@@ -84,7 +77,7 @@ public class UpdateParking extends javax.swing.JFrame {
         jLabel3.setText("NOMBRE:");
 
         campoNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        campoNombre.setForeground(new java.awt.Color(0, 0, 0));
+        campoNombre.setEnabled(false);
         campoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoNombreActionPerformed(evt);
@@ -96,9 +89,11 @@ public class UpdateParking extends javax.swing.JFrame {
         jLabel4.setText("DIRECCION:");
 
         campoDireccion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        campoDireccion.setForeground(new java.awt.Color(0, 0, 0));
+        campoDireccion.setEnabled(false);
 
         campoTelefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoTelefono.setForeground(new java.awt.Color(0, 0, 0));
+        campoTelefono.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(49, 43, 81));
@@ -114,13 +109,13 @@ public class UpdateParking extends javax.swing.JFrame {
             }
         });
 
-        btnUpdate.setBackground(new java.awt.Color(207, 191, 255));
-        btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnUpdate.setForeground(new java.awt.Color(0, 0, 0));
-        btnUpdate.setText("ACTUALIZAR");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(207, 191, 255));
+        btnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
+        btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -138,11 +133,11 @@ public class UpdateParking extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(56, 56, 56)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(13, 13, 13)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(24, 24, 24)
                                         .addComponent(btnCancelar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnUpdate))
+                                        .addGap(38, 38, 38)
+                                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -185,7 +180,7 @@ public class UpdateParking extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
-                    .addComponent(btnUpdate))
+                    .addComponent(btnEliminar))
                 .addGap(24, 24, 24))
         );
 
@@ -246,6 +241,7 @@ public class UpdateParking extends javax.swing.JFrame {
         
     }   
     
+    
     private void campoNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_campoNombreActionPerformed
@@ -257,19 +253,18 @@ public class UpdateParking extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         
-        //LLAMAMOS A LA ALERTA PARA ASEGURARNOS DE LOS CAMBIOS
-        AlertConfirmarUpdateParking confirmar = new AlertConfirmarUpdateParking(nit2,nombre,direccion,telefono, this);
+        AlertConfirmarDeleteParking confirmar = new AlertConfirmarDeleteParking(nit);
         confirmar.setVisible(true);
         
-    }//GEN-LAST:event_btnUpdateActionPerformed
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
-    
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JTextField campoDireccion;
     private javax.swing.JTextField campoNit;
     private javax.swing.JTextField campoNombre;
