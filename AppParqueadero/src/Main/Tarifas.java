@@ -31,11 +31,10 @@ public final class Tarifas extends javax.swing.JPanel {
         nitParqueadero2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabTarifas = new javax.swing.JTable();
-        btnModificarTarifa = new javax.swing.JButton();
         jLabelTarifas = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        inputPlaca = new javax.swing.JTextField();
-        jLabelPlaca = new javax.swing.JLabel();
+        inputTarifa = new javax.swing.JTextField();
+        jLabelTarifa = new javax.swing.JLabel();
         jLabelVehiculo = new javax.swing.JLabel();
         inputVehiculo1 = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
@@ -67,29 +66,19 @@ public final class Tarifas extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tabTarifas);
 
-        btnModificarTarifa.setBackground(new java.awt.Color(73, 59, 114));
-        btnModificarTarifa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnModificarTarifa.setForeground(new java.awt.Color(255, 255, 255));
-        btnModificarTarifa.setText("MODIFICAR TARIFA");
-        btnModificarTarifa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarTarifaActionPerformed(evt);
-            }
-        });
-
         jLabelTarifas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelTarifas.setText("TARIFAS");
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        inputPlaca.addActionListener(new java.awt.event.ActionListener() {
+        inputTarifa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputPlacaActionPerformed(evt);
+                inputTarifaActionPerformed(evt);
             }
         });
 
-        jLabelPlaca.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelPlaca.setText("PLACA:");
+        jLabelTarifa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelTarifa.setText("TARIFA:");
 
         jLabelVehiculo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelVehiculo.setText("VEHÍCULO:");
@@ -135,10 +124,10 @@ public final class Tarifas extends javax.swing.JPanel {
                         .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelVehiculo)
-                            .addComponent(jLabelPlaca))
+                            .addComponent(jLabelTarifa))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(inputPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputTarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(inputVehiculo1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -147,12 +136,12 @@ public final class Tarifas extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(97, 97, 97)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelPlaca)
-                    .addComponent(inputPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelVehiculo)
                     .addComponent(inputVehiculo1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelTarifa)
+                    .addComponent(inputTarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -169,9 +158,6 @@ public final class Tarifas extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(btnModificarTarifa))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
                         .addComponent(jLabelTarifas)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -185,8 +171,6 @@ public final class Tarifas extends javax.swing.JPanel {
                 .addComponent(jLabelTarifas)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnModificarTarifa, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -207,13 +191,6 @@ public final class Tarifas extends javax.swing.JPanel {
     
     
     
-    //Botón para editar parqueadero
-    private void btnModificarTarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarTarifaActionPerformed
-
-    
-        System.out.println("SE APRETO EL BOTON MODIFICAR TARIFA");
-    }//GEN-LAST:event_btnModificarTarifaActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -227,19 +204,18 @@ public final class Tarifas extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_inputVehiculo1ActionPerformed
 
-    private void inputPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputPlacaActionPerformed
+    private void inputTarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputTarifaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_inputPlacaActionPerformed
+    }//GEN-LAST:event_inputTarifaActionPerformed
 
     
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnModificarTarifa;
-    private javax.swing.JTextField inputPlaca;
+    private javax.swing.JTextField inputTarifa;
     private javax.swing.JTextField inputVehiculo1;
-    private javax.swing.JLabel jLabelPlaca;
+    private javax.swing.JLabel jLabelTarifa;
     private javax.swing.JLabel jLabelTarifas;
     private javax.swing.JLabel jLabelVehiculo;
     private javax.swing.JPanel jPanel1;
