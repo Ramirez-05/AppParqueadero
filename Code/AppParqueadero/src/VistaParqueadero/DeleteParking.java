@@ -18,7 +18,7 @@ public class DeleteParking extends javax.swing.JFrame {
     private String direccion;
     private String telefono; 
     private Gson gson;
-    Parqueaderos contentParqueadero;
+    public Parqueaderos contentParqueadero;
     
     public DeleteParking(String nit, Parqueaderos contentParqueadero) {
         this.nit = nit;
@@ -255,7 +255,7 @@ public class DeleteParking extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         
-        AlertConfirmarDeleteParking confirmar = new AlertConfirmarDeleteParking(nit);
+        AlertConfirmarDeleteParking confirmar = new AlertConfirmarDeleteParking(nit,this);
         confirmar.setVisible(true);
         
     }//GEN-LAST:event_btnEliminarActionPerformed

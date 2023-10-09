@@ -32,14 +32,18 @@ if (!empty($_POST['nit']) && !empty($_POST['nombre']) && !empty($_POST['direccio
             // Si la actualización se realizó con éxito, devolver una respuesta JSON positiva
             $respuesta = [
                 'status' => true,
-                'message' => "OK##PARQUEADERO##UPDATE"
+                'message' => "OK##PARQUEADERO##UPDATE",
+                'GET' => $_GET,
+                'POST' => $_POST
             ];
             echo json_encode($respuesta);
         } else {
             // Si hubo un error durante la actualización, devolver una respuesta JSON de error
             $respuesta = [
                 'status' => false,
-                'message' => "ERROR##PARQUEADERO##UPDATE"
+                'message' => "ERROR##PARQUEADERO##UPDATE",
+                'GET' => $_GET,
+                'POST' => $_POST
             ];
             echo json_encode($respuesta);
         }
@@ -48,7 +52,9 @@ if (!empty($_POST['nit']) && !empty($_POST['nombre']) && !empty($_POST['direccio
         $respuesta = [
             'status' => false,
             'message' => "ERROR##SQL",
-            'exception' => $e->getMessage()
+            'exception' => $e->getMessage(),
+            'GET' => $_GET,
+            'POST' => $_POST
         ];
         echo json_encode($respuesta);
     }
@@ -56,7 +62,9 @@ if (!empty($_POST['nit']) && !empty($_POST['nombre']) && !empty($_POST['direccio
     // Si no se recibieron todos los datos esperados en la solicitud POST, devolver una respuesta JSON de error
     $respuesta = [
         'status' => false,
-        'message' => "ERROR##DATOS##POST"
+        'message' => "ERROR##DATOS##POST",
+        'GET' => $_GET,
+        'POST' => $_POST
     ];
     echo json_encode($respuesta);
 }

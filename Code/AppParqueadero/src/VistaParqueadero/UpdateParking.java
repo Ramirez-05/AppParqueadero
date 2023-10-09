@@ -15,24 +15,22 @@ import java.util.Map;
 
 public class UpdateParking extends javax.swing.JFrame {
     
+    private String jsonParqueadero;
     private String nit;
-    private String nit2;
     private String nombre;
     private String direccion;
     private String telefono; 
     
     private Gson gson;
-    Parqueaderos contentParqueadero;
+    public Parqueaderos contentParqueadero;
 
     // Modificamos el constructor para recibir el documento como parámetro
-    public UpdateParking(String nit, Parqueaderos contentParqueadero) {
+    public UpdateParking(String jsonParqueadero, Parqueaderos contentParqueadero) {
         gson = new Gson();
-        this.nit = nit;
+        this.jsonParqueadero = jsonParqueadero;
         this.contentParqueadero = contentParqueadero;
         initComponents();
         initAlternComponents();
-        
-        
         
         // Centrar la ventana en la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -44,7 +42,6 @@ public class UpdateParking extends javax.swing.JFrame {
         
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -209,40 +206,29 @@ public class UpdateParking extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     public void initAlternComponents(){
         
-        System.out.println("NIT"+nit);
         
-        //MAPEAR LOS DATOS
-        ConsumoApi consumo = new ConsumoApi();
-        Map<String, String> insertData = new HashMap<>();
-        insertData.put("nit",nit);
+        System.out.println("");
+        System.out.println("JSON QUE ME LLEGO: "+jsonParqueadero);
+        System.out.println("");
         
-        //HACER LA PETICION
-        String obtenerDatos = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", insertData);
-        
-        if(obtenerDatos != null ){
-          
-            System.out.println("Datos llegados: "+obtenerDatos);
-            
-            //DECODIFICAR EL JSON
-            JsonObject jsonTemp = gson.fromJson(obtenerDatos, JsonObject.class);
-            JsonArray parking = jsonTemp.getAsJsonArray("registros");
-            JsonObject parqueadero = parking.get(0).getAsJsonObject();
+        JsonObject jsonTemp = gson.fromJson(jsonParqueadero, JsonObject.class);
+        JsonArray parking = jsonTemp.getAsJsonArray("registros");
+        JsonObject parqueadero = parking.get(0).getAsJsonObject();
+       
+        //CAPTURAR EL VALOR POR CLAVE
+        nit = parqueadero.get("nit").getAsString();
+        nombre = parqueadero.get("nombre").getAsString();
+        direccion = parqueadero.get("direccion").getAsString();
+        telefono = parqueadero.get("telefono").getAsString();
 
-            //CAPTURAR EL VALOR POR CLAVE
-            nit2 = parqueadero.get("nit").getAsString();
-            nombre = parqueadero.get("nombre").getAsString();
-            direccion = parqueadero.get("direccion").getAsString();
-            telefono = parqueadero.get("telefono").getAsString();
-            
-            //PONER VALOR A LOS INPUTS
-            campoNit.setText(nit);
-            campoNombre.setText(nombre);
-            campoDireccion.setText(direccion);
-            campoTelefono.setText(telefono); 
-        }
+        //PONER VALOR A LOS INPUTS
+        campoNit.setText(nit);
+        campoNombre.setText(nombre);
+        campoDireccion.setText(direccion);
+        campoTelefono.setText(telefono); 
+        
         
     }   
     
@@ -259,8 +245,13 @@ public class UpdateParking extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         
+        nit = campoNit.getText();
+        nombre = campoNombre.getText();
+        direccion = campoDireccion.getText();
+        telefono = campoTelefono.getText(); 
+        
         //LLAMAMOS A LA ALERTA PARA ASEGURARNOS DE LOS CAMBIOS
-        AlertConfirmarUpdateParking confirmar = new AlertConfirmarUpdateParking(nit2,nombre,direccion,telefono, this);
+        AlertConfirmarUpdateParking confirmar = new AlertConfirmarUpdateParking(nit,nombre,direccion,telefono, this);
         confirmar.setVisible(true);
         
     }//GEN-LAST:event_btnUpdateActionPerformed

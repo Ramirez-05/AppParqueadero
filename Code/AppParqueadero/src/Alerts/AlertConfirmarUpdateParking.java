@@ -15,28 +15,25 @@ import java.util.Map;
 
 public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
 
-    
-    
     String nit;
     String nombre;
     String direccion;
     String telefono;
     Gson gson;
-    
     UpdateParking ventanaUpdate;
   
+    
     public AlertConfirmarUpdateParking(String nit,String nombre, String direccion,String telefono,UpdateParking ventanaUpdate ) {
         initComponents();
-        
+ 
         gson = new Gson();
         this.nit = nit;
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
+        this.ventanaUpdate = ventanaUpdate;
         
-        
-        
-         // Centrar la ventana en la pantalla
+        // Centrar la ventana en la pantalla
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenWidth = (int) screenSize.getWidth();
         int screenHeight = (int) screenSize.getHeight();
@@ -163,6 +160,14 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        //MOSTRAMOS VENTA PRINCIPAL CON EL CONTENEDOR DEL PARUQEADERO
+        this.ventanaUpdate.contentParqueadero.main.setVisible(true);
+        
+        //CERRAMOS VENTA DE UPDATE
+        this.ventanaUpdate.dispose();
+
+        //CERRAMOS VENTANA DE ALERTA PARA CONFIRMAR UPDATE 
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -186,6 +191,18 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
         boolean status = jsonResponse.get("status").getAsBoolean();
         
         if( status ){
+            
+            //MOSTRAMOS VENTANA MAIN CON CONTENEDOR PARUQEADEROS
+            this.ventanaUpdate.contentParqueadero.main.setVisible(true);
+            this.ventanaUpdate.contentParqueadero.mostrarParqueaderos();
+            //MOSTRAMOS MENSAJE DE EXITO DE UPDATE
+            AlertUpdateExito mostrar = new AlertUpdateExito();
+            mostrar.setVisible(true);
+            
+            
+            //CERRAMOS VENTANA DE UPDATE
+            this.ventanaUpdate.dispose();
+            
             
             //CERRA VETANA ACTUAL
             this.dispose();

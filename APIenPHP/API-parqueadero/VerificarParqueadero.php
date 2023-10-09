@@ -15,7 +15,7 @@
             if ($consulta->rowCount() > 0) {
                 $registros = $consulta->fetchAll(PDO::FETCH_ASSOC); // Obtener los registros como un arreglo asociativo
                 $respuesta = [
-                    
+                    'status' => true,
                     'registros' => $registros // Agregar los registros a la respuesta
                 ];
                 echo json_encode($respuesta);

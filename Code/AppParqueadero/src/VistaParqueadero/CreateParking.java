@@ -5,6 +5,8 @@ import Alerts.AlertParqueaderoCreado;
 import Alerts.AlertParqueaderoRepetido;
 import Main.ConsumoApi;
 import VistaParqueadero.Parqueaderos;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.HashMap;
@@ -13,18 +15,22 @@ import java.util.Map;
 public class CreateParking extends javax.swing.JFrame {
     
     Parqueaderos contentParqueadero;
+    ConsumoApi consumo;
+    Gson gson;
+    
+    String nit;
+    String nombre;
+    String direccion;
+    String telefono;
     
     public CreateParking(Parqueaderos contentParqueadero) {
         this.contentParqueadero = contentParqueadero;
+        consumo = new ConsumoApi();
+        gson = new Gson();
         initComponents();
-        
-        // Centrar la ventana en la pantalla
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-        int frameWidth = getWidth();
-        int frameHeight = getHeight();
-        setLocation((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2);
+        centrarVentanas();
+
+     
     }
 
     @SuppressWarnings("unchecked")
@@ -201,27 +207,29 @@ public class CreateParking extends javax.swing.JFrame {
     }//GEN-LAST:event_campoNombreActionPerformed
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        String nit = campoNit.getText();
-        String nombre = campoNombre.getText();
-        String direccion = campoDireccion.getText();
-        String telefono = campoTelefono.getText();
         
-        ConsumoApi consumo = new ConsumoApi();
-        Map<String, String> insertData = new HashMap<>();
-        insertData.put("nit",nit);
-        insertData.put("nombre",nombre);
-        insertData.put("direccion",direccion);
-        insertData.put("telefono",telefono);
+        //CAPTURAMOS LOS DATOS IGRESADOS EN LOS INPUTS
+        nit = campoNit.getText();
+        nombre = campoNombre.getText();
+        direccion = campoDireccion.getText();
+        telefono = campoTelefono.getText();
         
+        //MAPEAMOS LOS DATOS PARA PODER HACER LA VERIFICACION
+        Map<String, String> comprobarParqueadero = new HashMap<>();
+        comprobarParqueadero.put("nit",nit);
         
         // HACEMOS LA PETICION POST PARA VERIFICAR DE QUE NO ESTEMOS CREANDO EMPRESAS REPTEIDAS 
-        String vericarParqueadero = consumo.consumoGET("http://localhost/APIenPHP/API-parqueadero/VericarParqueadero.php", insertData);
+        String vericarParqueadero = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", comprobarParqueadero);
         
-        if(vericarParqueadero != null ){
+        JsonObject jsonResponse = gson.fromJson(vericarParqueadero, JsonObject.class);
+        
+        boolean status = jsonResponse.get("status").getAsBoolean();
+        
+        if(status){
             
             //MOSTRAMOS VENTA DE ALERTA DE QUE SE ESTA CRRNAOD UN PARQUEADERO REPETIDO
-            System.out.println("LA EMPRESA YA SE ENCUENTRA CREADA");
-            
+            System.out.println("\n LA EMPRESA YA SE ENCUENTRA CREADA \n");
+                
             Alerts.AlertParqueaderoRepetido alerta = new AlertParqueaderoRepetido();
             alerta.setVisible(true);
             
@@ -229,29 +237,56 @@ public class CreateParking extends javax.swing.JFrame {
             
         }else{
             
+            //MAPEAMOS LOS DATOS PARA HCAER EL INSERT
+            Map<String, String> insertData = new HashMap<>();
+            insertData.put("nit",nit);
+            insertData.put("nombre",nombre);
+            insertData.put("direccion",direccion);
+            insertData.put("telefono",telefono);
+            
             //HACEMOS LA PETICION PARA INSERTAR LA NUEVA EMPRESA
             String crearEmpresa = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/Insert.php", insertData);
+            
+            System.out.println("Respuesta: "+crearEmpresa);
         
+            JsonObject respuestaInsert = gson.fromJson(crearEmpresa, JsonObject.class);
         
-            if(crearEmpresa != null){
-
-                System.out.println("EMPRESA CREADA EXITOSAMENTE ");
+            boolean statusInsert = respuestaInsert.get("status").getAsBoolean();
+            
+            if(statusInsert){
                 
-                AlertParqueaderoCreado alerta = new AlertParqueaderoCreado();
-                alerta.setVisible(true);   
-
+                this.contentParqueadero.main.setVisible(true);
+                contentParqueadero.mostrarParqueaderos();
+                
+                dispose();
+                
+                AlertParqueaderoCreado alert = new AlertParqueaderoCreado();
+                alert.setVisible(true);
+                
+                
+                
+                
             }
             
+            
         }
-        
-        
-        
-        
-        
-        
-        
+         
     }//GEN-LAST:event_btnCrearActionPerformed
-
+    
+    public void centrarVentanas(){
+        // Centrar la ventana en la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = (int) screenSize.getWidth();
+        int screenHeight = (int) screenSize.getHeight();
+        int frameWidth = getWidth();
+        int frameHeight = getHeight();
+        setLocation((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2);
+    }
+    
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCrear;

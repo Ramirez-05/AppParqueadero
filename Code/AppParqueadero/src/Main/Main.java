@@ -137,6 +137,11 @@ public class Main extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void mostrarTablaParqueaderos(){
+        
+    }
+    
+        
     private void btnParkingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParkingActionPerformed
         // ACA VA EL CODIGO PARA EL INTERCAMBIO DE PANEL PARQUEADEROS
         
