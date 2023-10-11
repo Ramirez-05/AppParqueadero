@@ -1,6 +1,7 @@
 
 package VistaParqueadero;
 
+import Alerts.AlertDatosIncompletos;
 import Alerts.AlertParqueaderoCreado;
 import Alerts.AlertParqueaderoRepetido;
 import Main.ConsumoApi;
@@ -29,8 +30,6 @@ public class CreateParking extends javax.swing.JFrame {
         gson = new Gson();
         initComponents();
         centrarVentanas();
-
-     
     }
 
     @SuppressWarnings("unchecked")
@@ -208,69 +207,65 @@ public class CreateParking extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         
-        //CAPTURAMOS LOS DATOS IGRESADOS EN LOS INPUTS
+       // Capturamos los datos ingresados en los inputs
         nit = campoNit.getText();
         nombre = campoNombre.getText();
         direccion = campoDireccion.getText();
         telefono = campoTelefono.getText();
-        
-        //MAPEAMOS LOS DATOS PARA PODER HACER LA VERIFICACION
-        Map<String, String> comprobarParqueadero = new HashMap<>();
-        comprobarParqueadero.put("nit",nit);
-        
-        // HACEMOS LA PETICION POST PARA VERIFICAR DE QUE NO ESTEMOS CREANDO EMPRESAS REPTEIDAS 
-        String vericarParqueadero = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", comprobarParqueadero);
-        
-        JsonObject jsonResponse = gson.fromJson(vericarParqueadero, JsonObject.class);
-        
-        boolean status = jsonResponse.get("status").getAsBoolean();
-        
-        if(status){
-            
-            //MOSTRAMOS VENTA DE ALERTA DE QUE SE ESTA CRRNAOD UN PARQUEADERO REPETIDO
-            System.out.println("\n LA EMPRESA YA SE ENCUENTRA CREADA \n");
-                
-            Alerts.AlertParqueaderoRepetido alerta = new AlertParqueaderoRepetido();
-            alerta.setVisible(true);
-            
-            campoNit.setText("");
-            
-        }else{
-            
-            //MAPEAMOS LOS DATOS PARA HCAER EL INSERT
-            Map<String, String> insertData = new HashMap<>();
-            insertData.put("nit",nit);
-            insertData.put("nombre",nombre);
-            insertData.put("direccion",direccion);
-            insertData.put("telefono",telefono);
-            
-            //HACEMOS LA PETICION PARA INSERTAR LA NUEVA EMPRESA
-            String crearEmpresa = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/Insert.php", insertData);
-            
-            System.out.println("Respuesta: "+crearEmpresa);
-        
-            JsonObject respuestaInsert = gson.fromJson(crearEmpresa, JsonObject.class);
-        
-            boolean statusInsert = respuestaInsert.get("status").getAsBoolean();
-            
-            if(statusInsert){
-                
-                this.contentParqueadero.main.setVisible(true);
-                contentParqueadero.mostrarParqueaderos();
-                
-                dispose();
-                
-                AlertParqueaderoCreado alert = new AlertParqueaderoCreado();
-                alert.setVisible(true);
-                
-                
-                
-                
+
+        // Verificamos que los campos no estén vacíos
+        if (!nit.isEmpty() && !nombre.isEmpty() && !direccion.isEmpty() && !telefono.isEmpty()) {
+            // Mapeamos los datos para verificar si el parqueadero ya existe
+            Map<String, String> comprobarParqueadero = new HashMap<>();
+            comprobarParqueadero.put("nit", nit);
+
+            // Hacemos la petición POST para verificar si el parqueadero ya existe
+            String verificarParqueadero = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", comprobarParqueadero);
+
+            JsonObject jsonResponse = gson.fromJson(verificarParqueadero, JsonObject.class);
+
+            boolean status = jsonResponse.get("status").getAsBoolean();
+
+            if (status) {
+                // Mostramos una alerta de que el parqueadero ya existe
+                System.out.println("\n LA EMPRESA YA SE ENCUENTRA CREADA \n");
+                Alerts.AlertParqueaderoRepetido alerta = new AlertParqueaderoRepetido();
+                alerta.setVisible(true);
+
+                campoNit.setText("");
+            } else {
+                // Mapeamos los datos para hacer la inserción
+                Map<String, String> insertData = new HashMap<>();
+                insertData.put("nit", nit);
+                insertData.put("nombre", nombre);
+                insertData.put("direccion", direccion);
+                insertData.put("telefono", telefono);
+
+                // Hacemos la petición para insertar la nueva empresa
+                String crearEmpresa = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/Insert.php", insertData);
+
+                System.out.println("Respuesta: " + crearEmpresa);
+
+                JsonObject respuestaInsert = gson.fromJson(crearEmpresa, JsonObject.class);
+
+                boolean statusInsert = respuestaInsert.get("status").getAsBoolean();
+
+                if (statusInsert) {
+                    // Mostramos una alerta de que el parqueadero fue creado con éxito
+                    this.contentParqueadero.main.setVisible(true);
+                    contentParqueadero.mostrarParqueaderos();
+                    dispose();
+
+                    AlertParqueaderoCreado alert = new AlertParqueaderoCreado();
+                    alert.setVisible(true);
+                }
             }
-            
+        } else {
+            AlertDatosIncompletos alert = new AlertDatosIncompletos();
+            alert.setVisible(true);
             
         }
-         
+
     }//GEN-LAST:event_btnCrearActionPerformed
     
     public void centrarVentanas(){

@@ -2,6 +2,7 @@
 package VistaParqueadero;
 
 import Alerts.AlertConfirmarUpdateParking;
+import Alerts.AlertDatosIncompletos;
 import Main.ConsumoApi;
 import Main.Main;
 import com.google.gson.Gson;
@@ -31,14 +32,8 @@ public class UpdateParking extends javax.swing.JFrame {
         this.contentParqueadero = contentParqueadero;
         initComponents();
         initAlternComponents();
+        centrarPantalla();
         
-        // Centrar la ventana en la pantalla
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-        int frameWidth = getWidth();
-        int frameHeight = getHeight();
-        setLocation((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2);
         
     }
 
@@ -249,14 +244,31 @@ public class UpdateParking extends javax.swing.JFrame {
         nombre = campoNombre.getText();
         direccion = campoDireccion.getText();
         telefono = campoTelefono.getText(); 
-        
-        //LLAMAMOS A LA ALERTA PARA ASEGURARNOS DE LOS CAMBIOS
-        AlertConfirmarUpdateParking confirmar = new AlertConfirmarUpdateParking(nit,nombre,direccion,telefono, this);
-        confirmar.setVisible(true);
+
+        // Verificamos que los campos no estén vacíos
+        if (nit.isEmpty() || nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty()) {
+           
+            AlertDatosIncompletos alert = new AlertDatosIncompletos();
+            alert.setVisible(true);
+            
+        } else {
+            // Si todos los campos están llenos, llamamos a la alerta de confirmación
+            AlertConfirmarUpdateParking confirmar = new AlertConfirmarUpdateParking(nit, nombre, direccion, telefono, this);
+            confirmar.setVisible(true);
+        }
+
         
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    
+    private void centrarPantalla(){
+        // Centrar la ventana en la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = (int) screenSize.getWidth();
+        int screenHeight = (int) screenSize.getHeight();
+        int frameWidth = getWidth();
+        int frameHeight = getHeight();
+        setLocation((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2);
+    }
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

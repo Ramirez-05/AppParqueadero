@@ -4,7 +4,7 @@
  */
 package VistaVendedor;
 
-import Alerts.InputBuscarUpdate;
+import Alerts.AlertBuscarVacio;
 import Alerts.AlertInputVacio;
 import VistaParqueadero.UpdateParking;
 
@@ -133,16 +133,15 @@ public class Vendedores extends javax.swing.JPanel {
         } else {
 
             //HACEMOS APARECER UNA ALERTA
-            InputBuscarUpdate mostrarFrame = new InputBuscarUpdate();
+            AlertBuscarVacio mostrarFrame = new AlertBuscarVacio();
             mostrarFrame.setVisible(true);
 
         }
     }//GEN-LAST:event_btnBuscarSellerActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-         // ACA VA EL CODIGO PARA MOSTRAR LA VENTANA PARA REGISTAR UN PARQUEADERO
-        
-        System.out.println("SE APRETO EL BOTON DE CREAR VENDEDOR");
+        // ACA VA EL CODIGO PARA MOSTRAR LA VENTANA PARA REGISTAR UN PARQUEADERO
+        System.out.println("\n SE APRETO EL BOTON DE CREAR VENDEDOR \n");
         
         // HACEMOS LA INSTANCIA DE LA VENTANA QUE QUEREMOS CREAR Y LA MOSTRAMOS
         CreateSeller mostrarFrame = new CreateSeller();

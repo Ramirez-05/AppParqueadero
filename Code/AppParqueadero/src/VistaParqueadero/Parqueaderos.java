@@ -1,14 +1,12 @@
 package VistaParqueadero;
-import Alerts.InputBuscarUpdate;
-import Alerts.AlertInputVacio;
+import Alerts.AlertBuscarVacio;
+import Alerts.AlertNoEncontrado;
 import Clases.ButtonEditor;
 import Clases.ButtonRenderer;
 import Main.ConsumoApi;
 import Main.Main;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonArray;
 import java.awt.Color;
 import java.awt.Font;
@@ -20,23 +18,24 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.table.DefaultTableModel;
 
-
 public class Parqueaderos extends javax.swing.JPanel {
     
     public Main main;
     private Gson gson;
-    
+    private Font font;
+    ConsumoApi consumo;
     DefaultTableModel modelo;
         
     public Parqueaderos(Main main) {
         this.main = main;
         gson = new Gson();
+        font = new Font("Segoe UI", Font.BOLD, 14);
+        consumo = new ConsumoApi();
         initComponents();
         initAlternComponets();
         mostrarParqueaderos();
     }
 
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -118,7 +117,6 @@ public class Parqueaderos extends javax.swing.JPanel {
 
     private void bntCreateParkingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntCreateParkingActionPerformed
         // ACA VA EL CODIGO PARA MOSTRAR LA VENTANA PARA REGISTAR UN PARQUEADERO
-        
         System.out.println("SE APRETO EL BOTON DE CREAR PARQUEADERO");
         
         // HACEMOS LA INSTANCIA DE LA VENTANA QUE QUEREMOS CREAR Y LA MOSTRAMOS
@@ -130,54 +128,93 @@ public class Parqueaderos extends javax.swing.JPanel {
     }//GEN-LAST:event_bntCreateParkingActionPerformed
 
     public void initAlternComponets(){
-         modelo = (DefaultTableModel) tablaParqueadero.getModel();
+        modelo = (DefaultTableModel) tablaParqueadero.getModel();
        
         this.tablaParqueadero.getColumn("EDITAR").setCellRenderer(new ButtonRenderer());
         this.tablaParqueadero.getColumn("EDITAR").setCellEditor(new ButtonEditor(new JCheckBox()));
         
         this.tablaParqueadero.getColumn("ELIMINAR").setCellRenderer(new ButtonRenderer());
         this.tablaParqueadero.getColumn("ELIMINAR").setCellEditor(new ButtonEditor(new JCheckBox()));
-
     }
      
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-         // ACA VA El codigo para MOSTRA LA EMPRESA QUE SE ESTA BUSCANDO 
-    
-        System.out.println("SE APRETO EL BOTON DE BUSCAR PARQUEADERO");
-
+        // ACA VA El codigo para MOSTRA LA EMPRESA QUE SE ESTA BUSCANDO 
+        System.out.println("\n SE APRETO EL BOTON DE BUSCAR PARQUEADERO \n");
+        
         //Capturamos lo que hay en el input de buscar
         String nit = inputBuscar.getText();
 
         if(nit != null && !nit.isEmpty()){
-
-            System.out.println("Esta es nit: " + nit);
+            
+            // MAPEAMOS LOS DATOS
+            Map<String, String> consultaParking = new HashMap<>();
+            consultaParking.put("nit",nit);
 
             //ACA DEBE HARCERSE LA CONSULTA PARA BUSCAR LA EMPRESA POR NIT Y MOSTRARLO EN LA TABLA
+            String consultaParqueadero = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", consultaParking);
             
+            JsonObject jsonResponse = gson.fromJson(consultaParqueadero, JsonObject.class);
 
+            boolean status = jsonResponse.get("status").getAsBoolean();
+            
+            if( status ){
+                //LIMPIAMOS EL MODELO
+                modelo.setRowCount(0);
+                
+                JsonArray parking = jsonResponse.getAsJsonArray("registros");
+                
+                for(int i = 0; i < parking.size(); i++ ){
+                    JsonObject viewParking = parking.get(i).getAsJsonObject();
+                    String nit2 = viewParking.get("nit").getAsString();
+                    String nombre = viewParking.get("nombre").getAsString();
+                    String direccion = viewParking.get("direccion").getAsString();       
+                    JButton btnEditar = new JButton("EDITAR");
+                    btnEditar.setBackground(new Color(207,191,255));
+                    btnEditar.setForeground(new Color(0,0,0));
+                    btnEditar.setFont(font);
+                    JButton btnEliminar = new JButton("ELIMINAR");
+                    btnEliminar.setBackground(new Color(255, 75, 75));
+                    btnEliminar.setForeground(new Color(0,0,0));
+                    btnEliminar.setFont(font);
+                    
+                     // Crear un botón de edición para cada fila
+                    final int posicion = i;
+                    btnEditar.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            accionClickBotonEditar( posicion );
+                        }
+                    });
+
+                    btnEliminar.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            accionClickBotonEliminar( posicion );
+                        }
+                    });
+
+
+                    Object[] fila = new Object[]{nit2,nombre,direccion,btnEditar, btnEliminar};
+
+                    modelo.addRow(fila);
+                }
+            }else{
+                AlertNoEncontrado alert = new AlertNoEncontrado();
+                alert.setVisible(true);
+                inputBuscar.setText("");
+                mostrarParqueaderos();
+            }
         } else {
-
             //HACEMOS APARECER UNA ALERTA
-            InputBuscarUpdate mostrarFrame = new InputBuscarUpdate();
+            AlertBuscarVacio mostrarFrame = new AlertBuscarVacio();
             mostrarFrame.setVisible(true);
-
+            mostrarParqueaderos();
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     public void mostrarParqueaderos(){
-        
-        Font font = new Font("Segoe UI", Font.BOLD, 14); 
-        
-        // SE ESTA MOSTRANDO LA FUNCION DE MOSTRAR PARQUEADEROS
-        
-        System.out.println("Se mostro la lista de parqueaderos");
-        
-        ConsumoApi consumo = new ConsumoApi();
-        
-        
+        // PETICION PARA OBTENER TODOS LOS PARQUEADEROS 
         String obtenerParkings = consumo.consumoGET("http://localhost/APIenPHP/API-parqueadero/Obtener.php");
-        
-        System.out.println("parkin dataos"+obtenerParkings  );
         
         if( obtenerParkings != null ){
             JsonObject jsonTemp  = gson.fromJson(obtenerParkings, JsonObject.class);
@@ -200,7 +237,6 @@ public class Parqueaderos extends javax.swing.JPanel {
                 btnEliminar.setForeground(new Color(0,0,0));
                 btnEliminar.setFont(font);
             
-                
                  // Crear un botón de edición para cada fila
                 final int posicion = i;
                 btnEditar.addActionListener(new ActionListener() {
@@ -216,17 +252,13 @@ public class Parqueaderos extends javax.swing.JPanel {
                         accionClickBotonEliminar( posicion );
                     }
                 });
-
                 
                 Object[] fila = new Object[]{nit,nombre,direccion,btnEditar, btnEliminar};
                 
                 modelo.addRow(fila);
                 
             }
-            
-            
-        }  
-      
+        }
     }    
     
     public void accionClickBotonEditar(int fila) {
@@ -245,7 +277,6 @@ public class Parqueaderos extends javax.swing.JPanel {
         System.out.println("");
 
         //VERIFICAR QUE LA EMPRESA QUE QUEREMOS EDITAR SI EXISTA
-        ConsumoApi consumo = new ConsumoApi();
         Map<String, String> insertData = new HashMap<>();
         insertData.put("nit",nit);
         
@@ -265,7 +296,7 @@ public class Parqueaderos extends javax.swing.JPanel {
     }
     
     public void accionClickBotonEliminar(int fila){
-        System.out.println("SE DIO CLICK EN EL BOTON DE ELIMINAR ");
+        System.out.println("\n SE DIO CLICK EN EL BOTON DE ELIMINAR \n");
         
         String nit = (String) modelo.getValueAt(fila, 0);
         String nombre = (String) modelo.getValueAt(fila, 1);
@@ -277,11 +308,9 @@ public class Parqueaderos extends javax.swing.JPanel {
         System.out.println("NIT: " + nit);
         System.out.println("Nombre: " + nombre);
         System.out.println("Dirección: " + direccion);
- 
         System.out.println("");
 
         //VERIFICAR QUE LA EMPRESA QUE QUEREMOS EDITAR SI EXISTA
-        ConsumoApi consumo = new ConsumoApi();
         Map<String, String> insertData = new HashMap<>();
         insertData.put("nit",nit);
         
@@ -295,10 +324,7 @@ public class Parqueaderos extends javax.swing.JPanel {
             
             // OCULTAMOS EL PANEL ACTUAL
             this.main.setVisible(false);
-            
-            
         }
-        
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
