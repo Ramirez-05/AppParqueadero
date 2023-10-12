@@ -5,11 +5,9 @@
 
     include '../Conexion.php';
 
-    $consulta = $base_de_datos->query("SELECT * FROM parqueadero");
+    $consulta = $base_de_datos->query("SELECT * FROM tarifas");
     $datos = $consulta->fetchAll();
 
     $respuesta['registros'] = $datos;
     echo json_encode($respuesta);
-    
 ?>
-
