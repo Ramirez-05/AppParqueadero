@@ -11,15 +11,12 @@ public final class Parqueadero extends javax.swing.JPanel {
     
     DefaultTableModel modelo;
     
-    
-    
     public Parqueadero(MainVendedor main) {
         this.main = main;
         gson = new Gson();
         initComponents();
         initAlternComponets();
     }
-
   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -189,13 +186,10 @@ public final class Parqueadero extends javax.swing.JPanel {
         tabVehiculosActuales.setPreferredScrollableViewportSize(tabVehiculosActuales.getPreferredSize());
        
     }
-    
-    
+     
     
     //Botón para buscar vehículo parqueadero
     private void btnBuscarVehiculoParqueaderoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVehiculoParqueaderoActionPerformed
-
-    
         System.out.println("SE APRETO EL BOTON DE BUSCAR VEHÍCULO");
     }//GEN-LAST:event_btnBuscarVehiculoParqueaderoActionPerformed
 

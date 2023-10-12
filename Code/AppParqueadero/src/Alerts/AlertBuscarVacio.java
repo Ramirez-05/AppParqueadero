@@ -15,8 +15,6 @@ public class AlertBuscarVacio extends javax.swing.JFrame {
         int frameWidth = getWidth();
         int frameHeight = getHeight();
         setLocation((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2);
-        
-        
     }
 
     @SuppressWarnings("unchecked")

@@ -263,7 +263,6 @@ public class CreateParking extends javax.swing.JFrame {
         } else {
             AlertDatosIncompletos alert = new AlertDatosIncompletos();
             alert.setVisible(true);
-            
         }
 
     }//GEN-LAST:event_btnCrearActionPerformed

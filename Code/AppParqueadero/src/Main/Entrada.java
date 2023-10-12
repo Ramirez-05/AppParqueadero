@@ -133,8 +133,6 @@ public final class Entrada extends javax.swing.JPanel {
     
     //Botón para editar parqueadero
     private void btnModificarTarifaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarTarifaActionPerformed
-
-    
         System.out.println("SE APRETO EL BOTON MODIFICAR TARIFA");
     }//GEN-LAST:event_btnModificarTarifaActionPerformed
 

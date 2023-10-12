@@ -289,8 +289,6 @@ public class Vendedores extends javax.swing.JPanel {
 
     public void mostrarVendedores(){
        
-        
-        
         TituloInformativo.setText("USUARIOS CON PARQUEADERO ASOCIADO:");
         // PETICION PARA OBTENER TODOS LOS PARQUEADEROS 
         String obtenerPersonas = consumo.consumoGET("http://localhost/APIenPHP/API-Personas/ObtenerPersonas.php");

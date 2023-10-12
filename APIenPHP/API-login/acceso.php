@@ -41,6 +41,5 @@
             'message' => "ERROR##DATOS##POST"
         ];
     }
-
     echo json_encode($respuesta);
 ?>

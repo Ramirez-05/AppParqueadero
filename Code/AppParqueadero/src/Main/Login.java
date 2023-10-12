@@ -1,7 +1,8 @@
 package Main;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+import Alerts.AlertDatosIncompletos;
+import Alerts.AlertDatosErroneos;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -107,34 +108,53 @@ public class Login extends javax.swing.JFrame {
         String correo = campo_correo.getText();
         String contrasena = campo_contrasena.getText();
 
-        Map<String, String> postData = new HashMap<>();
-        postData.put("correo", correo);
-        postData.put("contrasena", contrasena);
+        if (!correo.isEmpty() && !contrasena.isEmpty()) {
+            Map<String, String> postData = new HashMap<>();
+            postData.put("correo", correo);
+            postData.put("contrasena", contrasena);
 
-        String iniciarSesion = consumo.consumoPOST("http://localhost/APIenPHP/API-login/acceso.php", postData);
-        System.out.println(iniciarSesion);
-        if (iniciarSesion != null) {
-            JsonObject jsonTemp = gson.fromJson(iniciarSesion, JsonObject.class);
-            boolean status = jsonTemp.get("status").getAsBoolean();
+            String iniciarSesion = consumo.consumoPOST("http://localhost/APIenPHP/API-login/acceso.php", postData);
+            System.out.println(iniciarSesion);
 
-            if (status) {
-                JsonObject usuario = jsonTemp.getAsJsonObject("registros");
-                String tipoUser = usuario.get("tipo").getAsString();  
-                System.out.println("Inicio de sesión exitoso.");
-                System.out.println("Tipo: " + tipoUser);
-                
-                if (tipoUser == "VENDEDOR") {
-                    MainVendedor ventana = new MainVendedor();
-                    ventana.setVisible(true);
-                } else if(tipoUser == "ADMIN"){
-                    
+            if (iniciarSesion != null) {
+                JsonObject jsonTemp = gson.fromJson(iniciarSesion, JsonObject.class);
+                boolean status = jsonTemp.get("status").getAsBoolean();
+
+                if (status) {
+                    boolean registros = jsonTemp.get("registros").getAsBoolean();
+
+                    if (registros) {
+                        JsonObject usuario = jsonTemp.getAsJsonObject("registros");
+                        String tipoUser = usuario.get("tipo").getAsString();  
+                        System.out.println("Inicio de sesión exitoso.");
+                        System.out.println("Tipo: " + tipoUser);
+                        String ven = "VENDEDOR";
+                        String adm = "ADMIN";
+                        if (tipoUser.equalsIgnoreCase(ven)) {
+                            new MainVendedor().setVisible(true);
+                            dispose();
+                        } else if(tipoUser.equalsIgnoreCase(adm)){
+                            new Main().setVisible(true);
+                            dispose();
+                        }
+                    } else {
+                        System.out.println("El usuario no existe en la base de datos.");
+                        AlertDatosErroneos alert = new AlertDatosErroneos();
+                        alert.setVisible(true);
+                        alert.setLocationRelativeTo(null);
+                        campo_correo.setText("");
+                        campo_contrasena.setText("");
+                    }
+                } else {
+                    System.out.println("Error en el inicio de sesión: " );                          
                 }
             } else {
-                System.out.println("Error en el inicio de sesión: " );
+                System.out.println("Error al consumir la API.");
             }
-        } else {
-            System.out.println("Error al consumir la API.");
-        }
+        } else{
+            AlertDatosIncompletos alert = new AlertDatosIncompletos();
+            alert.setVisible(true);
+        }                                
     }//GEN-LAST:event_btn_ingresarActionPerformed
 
 
