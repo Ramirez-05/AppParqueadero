@@ -126,6 +126,8 @@ public class Login extends javax.swing.JFrame {
                 if (tipoUser == "VENDEDOR") {
                     MainVendedor ventana = new MainVendedor();
                     ventana.setVisible(true);
+                } else if(tipoUser == "ADMIN"){
+                    
                 }
             } else {
                 System.out.println("Error en el inicio de sesión: " );

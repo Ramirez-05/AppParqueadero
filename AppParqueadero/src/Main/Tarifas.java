@@ -15,13 +15,14 @@ import javax.swing.table.DefaultTableModel;
 
 
 public final class Tarifas extends javax.swing.JPanel {
-    
+    private ConsumoApi consumo;
     public MainVendedor main;
     private final Gson gson;
     
     DefaultTableModel modelo;
     public Tarifas(MainVendedor main) {
         this.main = main;
+        consumo = new ConsumoApi();
         gson = new Gson();
         initComponents();
         initAlternComponets();
@@ -205,7 +206,30 @@ public final class Tarifas extends javax.swing.JPanel {
 
     
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        System.out.println("SE APRETO EL BOTON MODIFICAR TARIFA");
+        String nuevoValor = campo_tarifa.getText(); 
+        String tipoVehiculo = (String) boxVehiculos.getSelectedItem();
+        System.out.println("Tarifa: " + nuevoValor);
+
+        // Envía la solicitud POST a tu API PHP
+        Map<String, String> postData = new HashMap<>();
+        postData.put("tipo_vehiculo", tipoVehiculo);
+        postData.put("tarifa", nuevoValor);
+        String cambiarTarifa = consumo.consumoPOST("http://localhost/APIenPHP/API-tarifas/UpdateTarifa.php", postData);
+        System.out.println("raspuesta api: "+ cambiarTarifa);
+        if (cambiarTarifa != null) {
+            JsonObject jsonTemp = gson.fromJson(cambiarTarifa, JsonObject.class);
+            boolean status = jsonTemp.get("status").getAsBoolean();
+            String message = jsonTemp.get("message").getAsString();
+
+            if (status) {
+                System.out.println("Tarifa actualizada correctamente.");
+            } else {
+                System.out.println("Error al actualizar la tarifa: " + message);
+            }
+        } else {
+            System.out.println("Error al consumir la API.");
+        }
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     
