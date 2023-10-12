@@ -154,7 +154,7 @@ public class AlertConfirmarDesligar extends javax.swing.JFrame {
 
             this.contentVendedores.mostrarVendedores();
             //MOSTRAMOS MENSAJE DE EXITO DE UPDATE
-            AlertExitoDesligar mostrar = new AlertExitoDesligar();
+            GeneratingAlert mostrar = new GeneratingAlert("EXITO AL DESLIGAR", "USUARIO DESVINCULADO");
             mostrar.setVisible(true);
 
             //CERRA VETANA ACTUAL

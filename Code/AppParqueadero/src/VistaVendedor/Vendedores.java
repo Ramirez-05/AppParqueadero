@@ -1,10 +1,11 @@
 package VistaVendedor;
 
-import Alerts.AlertBuscarVacio;
 import Alerts.AlertConfirmarDesligar;
+import Alerts.GeneratingAlert;
 import Clases.ButtonEditor;
 import Clases.ButtonRenderer;
 import Main.ConsumoApi;
+import Main.Main;
 import VistaParqueadero.DeleteParking;
 import VistaParqueadero.UpdateParking;
 import com.google.gson.Gson;
@@ -26,10 +27,12 @@ public class Vendedores extends javax.swing.JPanel {
     private Gson gson;
     private Font font;
     DefaultTableModel modelo;
+    Main main;
     
-    public Vendedores() {
+    public Vendedores(Main main) {
         
         consumo = new ConsumoApi();
+        this.main = main;
         gson = new Gson();
         font = new Font("Segoe UI", Font.BOLD, 14);
         initComponents();
@@ -191,7 +194,7 @@ public class Vendedores extends javax.swing.JPanel {
         } else {
 
             //HACEMOS APARECER UNA ALERTA
-            AlertBuscarVacio mostrarFrame = new AlertBuscarVacio();
+            GeneratingAlert mostrarFrame = new GeneratingAlert("ERROR", "LLENA TODOS LOS CAMPOS");
             mostrarFrame.setVisible(true);
 
         }
@@ -202,14 +205,11 @@ public class Vendedores extends javax.swing.JPanel {
         System.out.println("\n SE APRETO EL BOTON DE CREAR VENDEDOR \n");
         
         // HACEMOS LA INSTANCIA DE LA VENTANA QUE QUEREMOS CREAR Y LA MOSTRAMOS
-        CreateSeller mostrarFrame = new CreateSeller();
+        CreateSeller mostrarFrame = new CreateSeller(this);
         mostrarFrame.setVisible(true);
         
-        // Obtener el JFrame padre que contiene el JPanel actual
-        javax.swing.JFrame frame = (javax.swing.JFrame) javax.swing.SwingUtilities.getWindowAncestor(this);
-
-        // Cerrar el JFrame padre
-        frame.dispose();
+        this.main.setVisible(false);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void BtnConAsignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConAsignarActionPerformed

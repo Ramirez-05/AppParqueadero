@@ -196,7 +196,7 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
             this.ventanaUpdate.contentParqueadero.main.setVisible(true);
             this.ventanaUpdate.contentParqueadero.mostrarParqueaderos();
             //MOSTRAMOS MENSAJE DE EXITO DE UPDATE
-            AlertUpdateExito mostrar = new AlertUpdateExito();
+            GeneratingAlert mostrar = new GeneratingAlert("EXITO","ACTUALIZACION COMPLETADA");
             mostrar.setVisible(true);
             
             
@@ -207,11 +207,6 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
             //CERRA VETANA ACTUAL
             this.dispose();
         }
-        
-        
-        
-        
-        
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
 

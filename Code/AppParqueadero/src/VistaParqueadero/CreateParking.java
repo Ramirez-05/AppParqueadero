@@ -1,9 +1,6 @@
 
 package VistaParqueadero;
-
-import Alerts.AlertDatosIncompletos;
-import Alerts.AlertParqueaderoCreado;
-import Alerts.AlertParqueaderoRepetido;
+import Alerts.GeneratingAlert;
 import Main.ConsumoApi;
 import VistaParqueadero.Parqueaderos;
 import com.google.gson.Gson;
@@ -229,7 +226,7 @@ public class CreateParking extends javax.swing.JFrame {
             if (status) {
                 // Mostramos una alerta de que el parqueadero ya existe
                 System.out.println("\n LA EMPRESA YA SE ENCUENTRA CREADA \n");
-                Alerts.AlertParqueaderoRepetido alerta = new AlertParqueaderoRepetido();
+                GeneratingAlert alerta = new GeneratingAlert("ERROR", "PARQUEADERO REPETIDO");
                 alerta.setVisible(true);
 
                 campoNit.setText("");
@@ -256,12 +253,12 @@ public class CreateParking extends javax.swing.JFrame {
                     contentParqueadero.mostrarParqueaderos();
                     dispose();
 
-                    AlertParqueaderoCreado alert = new AlertParqueaderoCreado();
+                    GeneratingAlert alert = new GeneratingAlert("EXITO","SE CREO CORRECTAMENTE");
                     alert.setVisible(true);
                 }
             }
         } else {
-            AlertDatosIncompletos alert = new AlertDatosIncompletos();
+            GeneratingAlert alert = new GeneratingAlert("ERROR","DATOS INCOMPLETOS");
             alert.setVisible(true);
             
         }

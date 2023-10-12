@@ -1,6 +1,5 @@
 package VistaParqueadero;
-import Alerts.AlertBuscarVacio;
-import Alerts.AlertNoEncontrado;
+import Alerts.GeneratingAlert;
 import Clases.ButtonEditor;
 import Clases.ButtonRenderer;
 import Main.ConsumoApi;
@@ -199,14 +198,14 @@ public class Parqueaderos extends javax.swing.JPanel {
                     modelo.addRow(fila);
                 }
             }else{
-                AlertNoEncontrado alert = new AlertNoEncontrado();
+                GeneratingAlert alert = new GeneratingAlert("ERROR", "PARQUEADERO NO ENCONTRADO");
                 alert.setVisible(true);
                 inputBuscar.setText("");
                 mostrarParqueaderos();
             }
         } else {
             //HACEMOS APARECER UNA ALERTA
-            AlertBuscarVacio mostrarFrame = new AlertBuscarVacio();
+            GeneratingAlert mostrarFrame = new GeneratingAlert("ERROR","POR FAVOR INGRESE UN DATO");
             mostrarFrame.setVisible(true);
             mostrarParqueaderos();
         }

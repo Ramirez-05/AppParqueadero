@@ -165,7 +165,7 @@ public class Main extends javax.swing.JFrame {
         
         panelPrincipal.removeAll();
         
-        Vendedores mostrarPanel = new Vendedores();
+        Vendedores mostrarPanel = new Vendedores(this);
 
         mostrarPanel.setSize(panelPrincipal.getSize() );
         panelPrincipal.add( mostrarPanel );

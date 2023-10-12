@@ -157,7 +157,7 @@ public class AlertConfirmarDeleteParking extends javax.swing.JFrame {
             this.delete.contentParqueadero.main.setVisible(true);
             this.delete.contentParqueadero.mostrarParqueaderos();
             //MOSTRAMOS MENSAJE DE EXITO DE UPDATE
-            AlertDeleteExitoso mostrar = new AlertDeleteExitoso();
+            GeneratingAlert mostrar = new GeneratingAlert("ELIMNACION EXITOSA","SE ELIMINO CORRECTAMENTE");
             mostrar.setVisible(true);
             
             

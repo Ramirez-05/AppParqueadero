@@ -2,7 +2,7 @@
 package VistaParqueadero;
 
 import Alerts.AlertConfirmarUpdateParking;
-import Alerts.AlertDatosIncompletos;
+import Alerts.GeneratingAlert;
 import Main.ConsumoApi;
 import Main.Main;
 import com.google.gson.Gson;
@@ -248,7 +248,7 @@ public class UpdateParking extends javax.swing.JFrame {
         // Verificamos que los campos no estén vacíos
         if (nit.isEmpty() || nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty()) {
            
-            AlertDatosIncompletos alert = new AlertDatosIncompletos();
+            GeneratingAlert alert = new GeneratingAlert("ERROR","DATOS INCOMPLETOS");
             alert.setVisible(true);
             
         } else {
