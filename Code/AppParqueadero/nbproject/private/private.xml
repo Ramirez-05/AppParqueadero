@@ -3,18 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/VistaParqueadero/UpdateParking.java</file>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/VistaParqueadero/DeleteParking.java</file>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Alerts/AlertBuscarVacio.java</file>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Alerts/AlertConfirmarUpdateParking.java</file>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Alerts/AlertConfirmarDeleteParking.java</file>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Alerts/AlertInputVacio.java</file>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/VistaVendedor/Vendedores.java</file>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/VistaParqueadero/CreateParking.java</file>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/VistaVendedor/CreateSeller.java</file>
             <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/VistaParqueadero/Parqueaderos.java</file>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Alerts/AlertDatosIncompletos.java</file>
-            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Clases/ButtonEditor.java</file>
+            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Alerts/AlertProblemDelete.java</file>
+            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Alerts/AlertConfirmarDeleteParking.java</file>
+            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/VistaVendedor/Vendedores.java</file>
+            <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Alerts/AlertConfirmarDesligar.java</file>
             <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Alerts/AlertNoEncontrado.java</file>
             <file>file:/C:/Users/ramir/OneDrive/Escritorio/AppParqueadero/Code/AppParqueadero/src/Main/Main.java</file>
         </group>
