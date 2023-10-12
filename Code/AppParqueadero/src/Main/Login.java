@@ -3,6 +3,7 @@ package Main;
 import com.google.gson.Gson;
 import Alerts.AlertDatosIncompletos;
 import Alerts.AlertDatosErroneos;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
@@ -118,15 +119,13 @@ public class Login extends javax.swing.JFrame {
 
             if (iniciarSesion != null) {
                 JsonObject jsonTemp = gson.fromJson(iniciarSesion, JsonObject.class);
-                boolean status = jsonTemp.get("status").getAsBoolean();
+                boolean success = jsonTemp.get("success").getAsBoolean();
 
-                if (status) {
-                    boolean registros = jsonTemp.get("registros").getAsBoolean();
-
-                    if (registros) {
-                        JsonObject usuario = jsonTemp.getAsJsonObject("registros");
-                        String tipoUser = usuario.get("tipo").getAsString();  
-                        System.out.println("Inicio de sesión exitoso.");
+                if (success) {
+                    // Verificar si el usuario existe
+                    if (jsonTemp.get("user") != null && jsonTemp.get("user").isJsonObject()) {
+                        JsonObject usuario = jsonTemp.getAsJsonObject("user");
+                        String tipoUser = usuario.get("tipo").getAsString();                       
                         System.out.println("Tipo: " + tipoUser);
                         String ven = "VENDEDOR";
                         String adm = "ADMIN";
@@ -151,10 +150,10 @@ public class Login extends javax.swing.JFrame {
             } else {
                 System.out.println("Error al consumir la API.");
             }
-        } else{
+        } else {
             AlertDatosIncompletos alert = new AlertDatosIncompletos();
             alert.setVisible(true);
-        }                                
+        }                                                                                                                                                                                        
     }//GEN-LAST:event_btn_ingresarActionPerformed
 
 

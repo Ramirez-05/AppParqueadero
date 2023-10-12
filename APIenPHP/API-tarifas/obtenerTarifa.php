@@ -19,7 +19,7 @@ if (!empty($_GET['tipo_vehiculo'])) {
     $respuesta['tarifa'] = $datos[0]['tarifa'];
     echo json_encode($respuesta);
 } else {
-    echo json_encode(array('error' => 'No se proporcionó el tipo de vehículo.'));
+    echo json_encode(array('error' => 'No se proporciono el tipo de vehículo.'));
 }
 
 ?>

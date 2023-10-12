@@ -18,27 +18,27 @@
             if ($proceso) {
                 $usuario = $consulta->fetch(PDO::FETCH_ASSOC);
                 $respuesta = [
-                    'status' => true,
-                    'message' => "OK##CLIENT##INSERT",
-                    'registros' => $usuario
+                    'success' => true,
+                    'message' => "Inicio de sesión exitoso",
+                    'user' => $usuario
                 ];
             } else {
                 $respuesta = [
-                    'status' => false,
-                    'message' => "ERROR##CLIENT##INSERT"
+                    'success' => false,
+                    'message' => "Error en la autenticación"
                 ];
             }
         } catch (Exception $e) {
             $respuesta = [
-                'status' => false,
-                'message' => "ERROR##SQL",
+                'success' => false,
+                'message' => "Error en la consulta",
                 'exception' => $e
             ];
         }
     } else {
         $respuesta = [
-            'status' => false,
-            'message' => "ERROR##DATOS##POST"
+            'success' => false,
+            'message' => "Datos de inicio de sesión incompletos"
         ];
     }
     echo json_encode($respuesta);
