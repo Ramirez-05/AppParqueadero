@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 public class MainVendedor extends javax.swing.JFrame {
-
+    
     public MainVendedor() {
         initComponents();
         

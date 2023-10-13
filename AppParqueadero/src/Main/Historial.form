@@ -35,7 +35,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabelDireccion" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="direccionParqueadero" min="-2" max="-2" attributes="0"/>
+                      <Component id="etq_fecha" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="inputBuscarHistorial" min="-2" pref="215" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -53,7 +53,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnBuscarHistorial" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                   <Component id="inputBuscarHistorial" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                  <Component id="direccionParqueadero" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etq_fecha" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabelDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -71,19 +71,18 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tabHistorial">
+        <Component class="javax.swing.JTable" name="tablaHistorial">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="10" rowCount="4">
-                <Column editable="false" title="TIKECT" type="java.lang.Object"/>
+              <Table columnCount="9" rowCount="4">
+                <Column editable="false" title="TICKET" type="java.lang.Object"/>
                 <Column editable="false" title="VEH&#xcd;CULO" type="java.lang.Object"/>
                 <Column editable="false" title="PLACA" type="java.lang.Object"/>
                 <Column editable="false" title="TITULAR" type="java.lang.Object"/>
                 <Column editable="false" title="TARIFA" type="java.lang.Object"/>
-                <Column editable="true" title="FECHA" type="java.lang.Object"/>
                 <Column editable="false" title="INGRESO" type="java.lang.Object"/>
                 <Column editable="false" title="SALIDA" type="java.lang.Object"/>
                 <Column editable="false" title="TIEMPO/H" type="java.lang.Object"/>
@@ -92,12 +91,7 @@
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -172,6 +166,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarHistorialActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Historial_btnBuscarHistorial"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelDireccion">
       <Properties>
@@ -181,7 +178,7 @@
         <Property name="text" type="java.lang.String" value="FECHA:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="direccionParqueadero">
+    <Component class="javax.swing.JLabel" name="etq_fecha">
       <Properties>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>
