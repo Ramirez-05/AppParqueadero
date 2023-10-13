@@ -226,7 +226,9 @@ public class Vendedores extends javax.swing.JPanel {
       
     }//GEN-LAST:event_BtnSinAsignarActionPerformed
 
-    public void mostrarVendedores(){    
+    public void mostrarVendedores(){
+       
+        
         
         TituloInformativo.setText("USUARIOS CON PARQUEADERO ASOCIADO:");
         // PETICION PARA OBTENER TODOS LOS PARQUEADEROS 

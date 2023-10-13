@@ -264,7 +264,6 @@ public class CreateParking extends javax.swing.JFrame {
         } else {
             GeneratingAlert alert = new GeneratingAlert("ERROR","DATOS INCOMPLETOS");
             alert.setVisible(true);
-            
         }
 
     }//GEN-LAST:event_btnCrearActionPerformed

@@ -1,28 +1,25 @@
 package Main;
+import Alerts.AlertTarifaUpdate;
+import Alerts.AlertErrorUpdateTarifa; 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
 public final class Tarifas extends javax.swing.JPanel {
-    private ConsumoApi consumo;
     public MainVendedor main;
     private final Gson gson;
     
     DefaultTableModel modelo;
     public Tarifas(MainVendedor main) {
         this.main = main;
-        consumo = new ConsumoApi();
         gson = new Gson();
         initComponents();
         initAlternComponets();
@@ -166,12 +163,12 @@ public final class Tarifas extends javax.swing.JPanel {
 
     //Inicializando tabla de vehiculos actuales
     public void initAlternComponets(){
-       modelo = (DefaultTableModel) tabTarifas.getModel();
-       
-       //Deshabilita la modificación de columnas en la interfaz
-       tabTarifas.getTableHeader().setReorderingAllowed(false);
-       
-       // Configurar la JTable para ajustar automáticamente el ancho de las columnas
+        modelo = (DefaultTableModel) tabTarifas.getModel();
+
+        //Deshabilita la modificación de columnas en la interfaz
+        tabTarifas.getTableHeader().setReorderingAllowed(false);
+
+        // Configurar la JTable para ajustar automáticamente el ancho de las columnas
         tabTarifas.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         tabTarifas.setPreferredScrollableViewportSize(tabTarifas.getPreferredSize());
@@ -193,12 +190,9 @@ public final class Tarifas extends javax.swing.JPanel {
                 String id = verTarifa.get("id").getAsString();
                 String tipo = verTarifa.get("tipo_vehiculo").getAsString();
                 opcion[i] = tipo; // Asignar el tipo al arreglo opcion[]
-                String tarifa = verTarifa.get("tarifa").getAsString();
+                String tarifa = verTarifa.get("Tarifa").getAsString();
                 Object[] fila = new Object[]{id, tipo, tarifa};
                 modelo.addRow(fila);
-            }
-            for (int i = 0; i < opcion.length; i++) {
-                System.out.println("lista "+opcion[i]);
             }
             boxVehiculos.setModel(new DefaultComboBoxModel<>(opcion));
         }
@@ -206,6 +200,7 @@ public final class Tarifas extends javax.swing.JPanel {
 
     
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        ConsumoApi consumo = new ConsumoApi();
         String nuevoValor = campo_tarifa.getText(); 
         String tipoVehiculo = (String) boxVehiculos.getSelectedItem();
         System.out.println("Tarifa: " + nuevoValor);
@@ -223,13 +218,19 @@ public final class Tarifas extends javax.swing.JPanel {
 
             if (status) {
                 System.out.println("Tarifa actualizada correctamente.");
+                AlertTarifaUpdate alert = new AlertTarifaUpdate();
+                alert.setVisible(true);
+                alert.setLocationRelativeTo(null);
+                listaTarifa();
             } else {
                 System.out.println("Error al actualizar la tarifa: " + message);
+                AlertErrorUpdateTarifa alert = new AlertErrorUpdateTarifa();
+                alert.setVisible(true);
+                alert.setLocationRelativeTo(null);
             }
         } else {
             System.out.println("Error al consumir la API.");
         }
-        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     
@@ -238,7 +239,7 @@ public final class Tarifas extends javax.swing.JPanel {
     }//GEN-LAST:event_campo_tarifaActionPerformed
 
     private void boxVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxVehiculosActionPerformed
-
+        
         String opcionSelected = (String) boxVehiculos.getSelectedItem();
         ConsumoApi consumo = new ConsumoApi();
         String obtenerT = consumo.consumoGET("http://localhost/APIenPHP/API-tarifas/obtenerTarifa.php?tipo_vehiculo=" + opcionSelected);
@@ -247,10 +248,15 @@ public final class Tarifas extends javax.swing.JPanel {
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(obtenerT).getAsJsonObject();
 
-        // Obtener el valor de la tarifa del JSON
-        String tarifa = jsonObject.get("tarifa").getAsString();
-
-        campo_tarifa.setText(tarifa);
+        // Verificar si "tarifa" existe en la respuesta JSON
+        JsonElement tarifaElement = jsonObject.get("tarifa");
+        if (tarifaElement != null && !tarifaElement.isJsonNull()) {
+            // Obtener el valor de la tarifa del JSON
+            String tarifa = tarifaElement.getAsString();
+            campo_tarifa.setText(tarifa);
+        } else {
+            campo_tarifa.setText("No se encontró la tarifa");
+        }
     }//GEN-LAST:event_boxVehiculosActionPerformed
 
     
