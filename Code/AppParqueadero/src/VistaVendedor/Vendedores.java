@@ -222,74 +222,11 @@ public class Vendedores extends javax.swing.JPanel {
         
         BtnConAsignar.setVisible(true);
         BtnSinAsignar.setVisible(false);
-        
-        TituloInformativo.setText("USUARIOS CON PARQUEADEROS SIN ASOCIAR:");
-        
-        String obtenerPersonas = consumo.consumoGET("http://localhost/APIenPHP/API-Personas/ObtenerPersonasSinAsignar.php");
-         
-         if( obtenerPersonas != null ){
-            JsonObject jsonTemp  = gson.fromJson(obtenerPersonas, JsonObject.class);
-            
-            JsonArray personas = jsonTemp.getAsJsonArray("registros");
-            System.out.println(personas);
-            modelo.setRowCount(0);
-            
-             for(int i = 0; i < personas.size(); i++ ){
-                JsonObject viewParking = personas.get(i).getAsJsonObject();
-                String nombre = viewParking.get("nombre").getAsString();
-                String apellido = viewParking.get("apellidos").getAsString();
-                String documento = viewParking.get("cedula").getAsString(); 
-                
-                JButton btnVer = new JButton("VER");
-                btnVer.setBackground(new Color(207,191,255));
-                btnVer.setForeground(new Color(0,0,0));
-                btnVer.setFont(font);
-                
-                JButton btnEditar = new JButton("EDITAR");
-                btnEditar.setBackground(new Color(255,204,204));
-                btnEditar.setForeground(new Color(0,0,0));
-                btnEditar.setFont(font);
-                
-                JButton btnAsociar = new JButton("ASOCIAR");
-                btnAsociar.setBackground(new Color(255, 75, 75));
-                btnAsociar.setForeground(new Color(0,0,0));
-                btnAsociar.setFont(font);
-            
-                 // Crear un botón de edición para cada fila
-                final int posicion = i;
-                
-                 btnVer.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        accionClickBotonVer( posicion );
-                    }
-                });
-                
-                btnEditar.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        accionClickBotonEditar( posicion );
-                    }
-                });
-                
-                btnAsociar.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        accionClickBotonAsociar( posicion );
-                    }
-                });
-                
-                Object[] fila = new Object[]{documento,nombre,apellido,btnVer,btnEditar, btnAsociar};
-                
-                modelo.addRow(fila);
-                
-            }
-        } 
+        mostrarVendedoresSinAsignar();
+      
     }//GEN-LAST:event_BtnSinAsignarActionPerformed
 
-    public void mostrarVendedores(){
-       
-        
+    public void mostrarVendedores(){    
         
         TituloInformativo.setText("USUARIOS CON PARQUEADERO ASOCIADO:");
         // PETICION PARA OBTENER TODOS LOS PARQUEADEROS 
@@ -355,9 +292,78 @@ public class Vendedores extends javax.swing.JPanel {
         } 
     }
     
+    public void mostrarVendedoresSinAsignar(){
+          TituloInformativo.setText("USUARIOS CON PARQUEADEROS SIN ASOCIAR:");
+        
+        String obtenerPersonas = consumo.consumoGET("http://localhost/APIenPHP/API-Personas/ObtenerPersonasSinAsignar.php");
+         
+         if( obtenerPersonas != null ){
+            JsonObject jsonTemp  = gson.fromJson(obtenerPersonas, JsonObject.class);
+            
+            JsonArray personas = jsonTemp.getAsJsonArray("registros");
+            System.out.println(personas);
+            modelo.setRowCount(0);
+            
+             for(int i = 0; i < personas.size(); i++ ){
+                JsonObject viewParking = personas.get(i).getAsJsonObject();
+                String nombre = viewParking.get("nombre").getAsString();
+                String apellido = viewParking.get("apellidos").getAsString();
+                String documento = viewParking.get("cedula").getAsString(); 
+                
+                JButton btnVer = new JButton("VER");
+                btnVer.setBackground(new Color(207,191,255));
+                btnVer.setForeground(new Color(0,0,0));
+                btnVer.setFont(font);
+                
+                JButton btnEditar = new JButton("EDITAR");
+                btnEditar.setBackground(new Color(255,204,204));
+                btnEditar.setForeground(new Color(0,0,0));
+                btnEditar.setFont(font);
+                
+                JButton btnAsociar = new JButton("ASOCIAR");
+                btnAsociar.setBackground(new Color(255, 75, 75));
+                btnAsociar.setForeground(new Color(0,0,0));
+                btnAsociar.setFont(font);
+            
+                 // Crear un botón de edición para cada fila
+                final int posicion = i;
+                
+                 btnVer.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        accionClickBotonVer( posicion );
+                    }
+                });
+                
+                btnEditar.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        accionClickBotonEditar( posicion );
+                    }
+                });
+                
+                btnAsociar.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        accionClickBotonAsociar( posicion );
+                    }
+                });
+                
+                Object[] fila = new Object[]{documento,nombre,apellido,btnVer,btnEditar, btnAsociar};
+                
+                modelo.addRow(fila);
+                
+            }
+        } 
+    }
+    
     public void accionClickBotonVer(int fila) {
         
+        String cedula = (String) modelo.getValueAt(fila, 0);
+        VerUsuario frame = new VerUsuario(this,cedula);
+        frame.setVisible(true);
        
+        this.main.setVisible(false);
        
     }
     
@@ -398,7 +404,11 @@ public class Vendedores extends javax.swing.JPanel {
     
      public void accionClickBotonAsociar(int fila) {
         
+        String cedula = (String) modelo.getValueAt(fila, 0);
+        AsignarParqueadero frame = new AsignarParqueadero(this,cedula);
+        frame.setVisible(true);
        
+        this.main.setVisible(false);
        
     }
     

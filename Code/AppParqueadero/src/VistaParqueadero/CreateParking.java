@@ -210,11 +210,12 @@ public class CreateParking extends javax.swing.JFrame {
         direccion = campoDireccion.getText();
         telefono = campoTelefono.getText();
 
-        // Verificamos que los campos no estén vacíos
+          // Verificamos que los campos no estén vacíos
         if (!nit.isEmpty() && !nombre.isEmpty() && !direccion.isEmpty() && !telefono.isEmpty()) {
             // Mapeamos los datos para verificar si el parqueadero ya existe
             Map<String, String> comprobarParqueadero = new HashMap<>();
             comprobarParqueadero.put("nit", nit);
+            comprobarParqueadero.put("nombre", nombre);
 
             // Hacemos la petición POST para verificar si el parqueadero ya existe
             String verificarParqueadero = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", comprobarParqueadero);
@@ -224,12 +225,15 @@ public class CreateParking extends javax.swing.JFrame {
             boolean status = jsonResponse.get("status").getAsBoolean();
 
             if (status) {
+                
                 // Mostramos una alerta de que el parqueadero ya existe
                 System.out.println("\n LA EMPRESA YA SE ENCUENTRA CREADA \n");
                 GeneratingAlert alerta = new GeneratingAlert("ERROR", "PARQUEADERO REPETIDO");
                 alerta.setVisible(true);
 
                 campoNit.setText("");
+                campoNombre.setText("");
+                
             } else {
                 // Mapeamos los datos para hacer la inserción
                 Map<String, String> insertData = new HashMap<>();

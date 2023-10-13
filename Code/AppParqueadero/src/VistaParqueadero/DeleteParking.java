@@ -20,8 +20,9 @@ public class DeleteParking extends javax.swing.JFrame {
     private Gson gson;
     public Parqueaderos contentParqueadero;
     
-    public DeleteParking(String nit, Parqueaderos contentParqueadero) {
+    public DeleteParking(String nit,String nombre, Parqueaderos contentParqueadero) {
         this.nit = nit;
+        this.nombre = nombre;
         gson = new Gson();
         this.contentParqueadero = contentParqueadero;
         initComponents();
@@ -213,6 +214,7 @@ public class DeleteParking extends javax.swing.JFrame {
         ConsumoApi consumo = new ConsumoApi();
         Map<String, String> insertData = new HashMap<>();
         insertData.put("nit",nit);
+        insertData.put("nombre",nombre);
         
         //HACER LA PETICION
         String obtenerDatos = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", insertData);

@@ -21,11 +21,12 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
     String telefono;
     Gson gson;
     UpdateParking ventanaUpdate;
+    ConsumoApi consumo;
   
     
     public AlertConfirmarUpdateParking(String nit,String nombre, String direccion,String telefono,UpdateParking ventanaUpdate ) {
         initComponents();
- 
+        consumo = new ConsumoApi();
         gson = new Gson();
         this.nit = nit;
         this.nombre = nombre;
@@ -173,39 +174,54 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         
-        //CODIGO PARA HACER EL UPDATE DEL PARQUEADERO
-         
-        ConsumoApi consumo = new ConsumoApi();
-        Map<String, String> insertData = new HashMap<>();
-        insertData.put("nit",nit);
-        insertData.put("nombre",nombre);
-        insertData.put("direccion",direccion);
-        insertData.put("telefono",telefono);
-        
-        String update = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/Update.php", insertData);
-        
-        System.out.println("Lo que llego"+update);
-        
-        JsonObject jsonResponse = gson.fromJson(update, JsonObject.class);
-        
-        boolean status = jsonResponse.get("status").getAsBoolean();
-        
-        if( status ){
+        // CODIGO PARA HACER EL UPDATE DEL PARQUEADERO
+
+        Map<String, String> UpdateData = new HashMap<>();
+        UpdateData.put("nit", nit);
+        UpdateData.put("nombre", nombre);
+        UpdateData.put("direccion", direccion);
+        UpdateData.put("telefono", telefono);
+
+        // Verificar si el nombre ya existe antes de realizar la actualización
+        Map<String, String> checkNameData = new HashMap<>();
+        checkNameData.put("nit", nit);
+        checkNameData.put("nombre", nombre);
+
+        String checkNameResponse = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", checkNameData);
+        JsonObject checkNameJson = gson.fromJson(checkNameResponse, JsonObject.class);
+
+        boolean nameExists = checkNameJson.get("status").getAsBoolean();
+
+        if (nameExists) {
+            // Mostrar mensaje de error
+            GeneratingAlert errorAlert = new GeneratingAlert("ERROR", "NOMBRE YA EXISTENTE.");
+            errorAlert.setVisible(true);
             
-            //MOSTRAMOS VENTANA MAIN CON CONTENEDOR PARUQEADEROS
-            this.ventanaUpdate.contentParqueadero.main.setVisible(true);
-            this.ventanaUpdate.contentParqueadero.mostrarParqueaderos();
-            //MOSTRAMOS MENSAJE DE EXITO DE UPDATE
-            GeneratingAlert mostrar = new GeneratingAlert("EXITO","ACTUALIZACION COMPLETADA");
-            mostrar.setVisible(true);
-            
-            
-            //CERRAMOS VENTANA DE UPDATE
-            this.ventanaUpdate.dispose();
-            
-            
-            //CERRA VETANA ACTUAL
-            this.dispose();
+            dispose();
+        } else {
+            // El nombre no existe, proceder con la actualización
+            String update = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/Update.php", UpdateData);
+
+            System.out.println("Lo que llegó" + update);
+
+            JsonObject jsonResponse = gson.fromJson(update, JsonObject.class);
+
+            boolean status = jsonResponse.get("status").getAsBoolean();
+
+            if (status) {
+                // MOSTRAMOS VENTANA MAIN CON CONTENEDOR PARQUEADEROS
+                this.ventanaUpdate.contentParqueadero.main.setVisible(true);
+                this.ventanaUpdate.contentParqueadero.mostrarParqueaderos();
+                // MOSTRAMOS MENSAJE DE EXITO DE UPDATE
+                GeneratingAlert mostrar = new GeneratingAlert("EXITO", "ACTUALIZACION COMPLETADA");
+                mostrar.setVisible(true);
+
+                // CERRAMOS VENTANA DE UPDATE
+                this.ventanaUpdate.dispose();
+
+                // CERRAR VENTANA ACTUAL
+                this.dispose();
+            }
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 

@@ -278,6 +278,7 @@ public class Parqueaderos extends javax.swing.JPanel {
         //VERIFICAR QUE LA EMPRESA QUE QUEREMOS EDITAR SI EXISTA
         Map<String, String> insertData = new HashMap<>();
         insertData.put("nit",nit);
+        insertData.put("nombre",nombre);
         
         String consultarParqueadero = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", insertData);
         
@@ -312,13 +313,14 @@ public class Parqueaderos extends javax.swing.JPanel {
         //VERIFICAR QUE LA EMPRESA QUE QUEREMOS EDITAR SI EXISTA
         Map<String, String> insertData = new HashMap<>();
         insertData.put("nit",nit);
+        insertData.put("nombre",nombre);
         
         String verificar = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", insertData);
         
          if( verificar != null ){
               
             //HACEMOS EL CAMBIO DE VENTANA PARA MOSTRAR EL FORM DONDE EDITAMOS EL PARQUEADERO 
-            DeleteParking mostrarFrame = new DeleteParking(nit,this);
+            DeleteParking mostrarFrame = new DeleteParking(nit,nombre,this);
             mostrarFrame.setVisible(true);
             
             // OCULTAMOS EL PANEL ACTUAL
