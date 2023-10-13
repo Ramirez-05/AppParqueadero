@@ -1,7 +1,10 @@
 package Main;
+import Alerts.RegistroExitoso;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
