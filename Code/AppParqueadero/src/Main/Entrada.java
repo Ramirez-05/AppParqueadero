@@ -1,10 +1,7 @@
 package Main;
-import Alerts.RegistroExitoso;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -32,10 +29,10 @@ public final class Entrada extends javax.swing.JPanel {
     private void initComponents() {
 
         nitParqueadero2 = new javax.swing.JLabel();
-        btnEntrada = new javax.swing.JButton();
+        btnModificarTarifa = new javax.swing.JButton();
         inputPlaca = new javax.swing.JTextField();
-        inputTitular = new javax.swing.JTextField();
         inputVehiculo = new javax.swing.JTextField();
+        inputVehiculo1 = new javax.swing.JTextField();
         jLabelPlaca = new javax.swing.JLabel();
         jLabelVehiculo = new javax.swing.JLabel();
         jLabelTitular = new javax.swing.JLabel();
