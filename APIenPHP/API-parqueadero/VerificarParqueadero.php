@@ -1,43 +1,45 @@
-<?php 
-	header("Access-Control-Allow-Origin: * ");
-	header("Access-Control-Allow-Methods: GET, POST");
-	header("Access-Control-Allow-Headers: Content-Type");
-    include '../Conexion.php';
+<?php
+header("Access-Control-Allow-Origin: * ");
+header("Access-Control-Allow-Methods: GET, POST");
+header("Access-Control-Allow-Headers: Content-Type");
+include '../Conexion.php';
 
-    if (!empty($_POST['nit'])) {
-        $nit = $_POST['nit'];
+if (!empty($_POST['nit']) || !empty($_POST['nombre'])) {
+    $nit = $_POST['nit'];
+    $nombre = $_POST['nombre'];
 
-        try {
-            $consulta = $base_de_datos->prepare("SELECT * FROM parqueadero WHERE nit = :nit");
-            $consulta->bindParam(':nit', $nit);
-            $consulta->execute();
+    try {
+        $consulta = $base_de_datos->prepare("SELECT * FROM parqueadero WHERE nit = :nit OR nombre = :nombre");
+        $consulta->bindParam(':nit', $nit);
+        $consulta->bindParam(':nombre', $nombre);
+        $consulta->execute();
 
-            if ($consulta->rowCount() > 0) {
-                $registros = $consulta->fetchAll(PDO::FETCH_ASSOC); // Obtener los registros como un arreglo asociativo
-                $respuesta = [
-                    'status' => true,
-                    'registros' => $registros // Agregar los registros a la respuesta
-                ];
-                echo json_encode($respuesta);
-            } else {
-                $respuesta = [
-                    'status' => false,
-                    'message' => "No se encontraron resultados para el valor de 'nit' proporcionado."
-                ];
-                echo json_encode($respuesta);
-            }
-        } catch (Exception $e) {
+        if ($consulta->rowCount() > 0) {
+            $registros = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            $respuesta = [
+                'status' => true,
+                'registros' => $registros
+            ];
+            echo json_encode($respuesta);
+        } else {
             $respuesta = [
                 'status' => false,
-                'message' => "Error en la consulta SQL: " . $e->getMessage()
+                'message' => "No se encontraron resultados para los valores proporcionados en 'nit' o 'nombre'."
             ];
             echo json_encode($respuesta);
         }
-    } else {
+    } catch (Exception $e) {
         $respuesta = [
             'status' => false,
-            'message' => "El campo 'nit' en la solicitud POST está vacío."
+            'message' => "Error en la consulta SQL: " . $e->getMessage()
         ];
         echo json_encode($respuesta);
     }
+} else {
+    $respuesta = [
+        'status' => false,
+        'message' => "Los campos 'nit' y 'nombre' en la solicitud POST están vacíos."
+    ];
+    echo json_encode($respuesta);
+}
 ?>

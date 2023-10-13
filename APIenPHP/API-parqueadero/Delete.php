@@ -1,4 +1,4 @@
-<?php
+<?php 
 // Habilitar el acceso a la API desde cualquier origen
 header("Access-Control-Allow-Origin: *");
 // Permitir los métodos GET y POST
@@ -9,37 +9,30 @@ header("Access-Control-Allow-Headers: Content-Type");
 // Incluir el archivo de conexión a la base de datos
 include '../Conexion.php';
 
-// Verificar si se han recibido todos los datos esperados en la solicitud POST
-if (!empty($_POST['nit']) && !empty($_POST['nombre']) && !empty($_POST['direccion']) && !empty($_POST['telefono'])) {
-    // Obtener los datos de la solicitud POST
+// Verificar si se ha recibido el valor de "nit" en la solicitud POST
+if (!empty($_POST['nit'])) {
     $nit = $_POST['nit'];
-    $nombre = $_POST['nombre'];
-    $direccion = $_POST['direccion'];
-    $telefono = $_POST['telefono'];
 
     try {
-        // Actualizar los datos basados en el 'nit'
-        $consulta = $base_de_datos->prepare("UPDATE parqueadero SET nombre=:nom, direccion=:dir, telefono=:tel WHERE nit = :nit ");
-        $consulta->bindParam(':nom', $nombre);
-        $consulta->bindParam(':dir', $direccion);
-        $consulta->bindParam(':tel', $telefono);
+        // Preparar una consulta para eliminar el registro con el 'nit' proporcionado
+        $consulta = $base_de_datos->prepare("DELETE FROM parqueadero WHERE nit = :nit ");
         $consulta->bindParam(':nit', $nit);
 
-        // Ejecutar la actualización
+        // Ejecutar la consulta de eliminación
         $proceso = $consulta->execute();
 
         if ($proceso) {
-            // Si la actualización se realizó con éxito, devolver una respuesta JSON positiva
+            // Si la eliminación se realizó con éxito, devolver una respuesta JSON positiva
             $respuesta = [
                 'status' => true,
-                'message' => "OK##PARQUEADERO##UPDATE"
+                'message' => "OK##DELETE"
             ];
             echo json_encode($respuesta);
         } else {
-            // Si hubo un error durante la actualización, devolver una respuesta JSON de error
+            // Si hubo un error durante la eliminación, devolver una respuesta JSON de error
             $respuesta = [
                 'status' => false,
-                'message' => "ERROR##PARQUEADERO##UPDATE"
+                'message' => "ERROR##DELETE"
             ];
             echo json_encode($respuesta);
         }
@@ -53,7 +46,7 @@ if (!empty($_POST['nit']) && !empty($_POST['nombre']) && !empty($_POST['direccio
         echo json_encode($respuesta);
     }
 } else {
-    // Si no se recibieron todos los datos esperados en la solicitud POST, devolver una respuesta JSON de error
+    // Si no se recibió el valor de "nit" en la solicitud POST, devolver una respuesta JSON de error
     $respuesta = [
         'status' => false,
         'message' => "ERROR##DATOS##POST"
