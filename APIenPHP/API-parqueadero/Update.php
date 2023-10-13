@@ -1,56 +1,50 @@
 <?php
+// Habilitar el acceso a la API desde cualquier origen
 header("Access-Control-Allow-Origin: *");
+// Permitir los métodos GET y POST
 header("Access-Control-Allow-Methods: GET, POST");
+// Permitir el encabezado Content-Type
 header("Access-Control-Allow-Headers: Content-Type");
 
+// Incluir el archivo de conexión a la base de datos
 include '../Conexion.php';
 
+// Verificar si se han recibido todos los datos esperados en la solicitud POST
 if (!empty($_POST['nit']) && !empty($_POST['nombre']) && !empty($_POST['direccion']) && !empty($_POST['telefono'])) {
-
+    // Obtener los datos de la solicitud POST
     $nit = $_POST['nit'];
     $nombre = $_POST['nombre'];
     $direccion = $_POST['direccion'];
     $telefono = $_POST['telefono'];
 
     try {
-        $query_nit = $base_de_datos->prepare("SELECT id FROM parqueadero WHERE nit = :nit");
-        $query_nit->bindParam(':nit', $nit); // Corregido el nombre de la variable
-        $query_nit->execute(); // Cambiado $captureNit por $query_nit
+        // Actualizar los datos basados en el 'nit'
+        $consulta = $base_de_datos->prepare("UPDATE parqueadero SET nombre=:nom, direccion=:dir, telefono=:tel WHERE nit = :nit ");
+        $consulta->bindParam(':nom', $nombre);
+        $consulta->bindParam(':dir', $direccion);
+        $consulta->bindParam(':tel', $telefono);
+        $consulta->bindParam(':nit', $nit);
 
-        $result = $query_nit->fetch(PDO::FETCH_ASSOC);
+        // Ejecutar la actualización
+        $proceso = $consulta->execute();
 
-        if ($result) {
-
-            $consulta = $base_de_datos->prepare("UPDATE parqueadero SET nombre=:nom, direccion=:dir, telefono=:tel WHERE id = :eje ");
-
-            $consulta->bindParam(':nom', $nombre);
-            $consulta->bindParam(':dir', $direccion);
-            $consulta->bindParam(':tel', $telefono);
-            $consulta->bindParam(':eje', $result['id']); // Usar el ID obtenido de la consulta
-
-            $proceso = $consulta->execute();
-
-            if ($proceso) {
-                $respuesta = [
-                    'status' => true,
-                    'message' => "OK##PARQUEADERO##UPDATE"
-                ];
-                echo json_encode($respuesta);
-            } else {
-                $respuesta = [
-                    'status' => false,
-                    'message' => "ERROR##PARQUEADERO##UPDATE"
-                ];
-                echo json_encode($respuesta);
-            }
+        if ($proceso) {
+            // Si la actualización se realizó con éxito, devolver una respuesta JSON positiva
+            $respuesta = [
+                'status' => true,
+                'message' => "OK##PARQUEADERO##UPDATE"
+            ];
+            echo json_encode($respuesta);
         } else {
+            // Si hubo un error durante la actualización, devolver una respuesta JSON de error
             $respuesta = [
                 'status' => false,
-                'message' => "ERROR##IDNOTEXIST##POST"
+                'message' => "ERROR##PARQUEADERO##UPDATE"
             ];
             echo json_encode($respuesta);
         }
     } catch (Exception $e) {
+        // Si hubo una excepción durante la ejecución, devolver una respuesta JSON de error junto con detalles de la excepción
         $respuesta = [
             'status' => false,
             'message' => "ERROR##SQL",
@@ -59,6 +53,7 @@ if (!empty($_POST['nit']) && !empty($_POST['nombre']) && !empty($_POST['direccio
         echo json_encode($respuesta);
     }
 } else {
+    // Si no se recibieron todos los datos esperados en la solicitud POST, devolver una respuesta JSON de error
     $respuesta = [
         'status' => false,
         'message' => "ERROR##DATOS##POST"
