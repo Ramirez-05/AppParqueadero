@@ -27,7 +27,7 @@ public class Vendedores extends javax.swing.JPanel {
     private Gson gson;
     private Font font;
     DefaultTableModel modelo;
-    Main main;
+    public Main main;
     
     public Vendedores(Main main) {
         
@@ -227,9 +227,7 @@ public class Vendedores extends javax.swing.JPanel {
     }//GEN-LAST:event_BtnSinAsignarActionPerformed
 
     public void mostrarVendedores(){
-       
-        
-        
+              
         TituloInformativo.setText("USUARIOS CON PARQUEADERO ASOCIADO:");
         // PETICION PARA OBTENER TODOS LOS PARQUEADEROS 
         String obtenerPersonas = consumo.consumoGET("http://localhost/APIenPHP/API-Personas/ObtenerPersonas.php");
@@ -291,7 +289,9 @@ public class Vendedores extends javax.swing.JPanel {
                 modelo.addRow(fila);
                 
             }
-        } 
+        }else{ 
+            System.out.println("entro");
+        }
     }
     
     public void mostrarVendedoresSinAsignar(){
@@ -371,6 +371,10 @@ public class Vendedores extends javax.swing.JPanel {
     
     public void accionClickBotonEditar(int fila){
         System.out.println("\n SE DIO CLICK EN EL BOTON DE EDITAR \n");
+        
+        String cedula = (String) modelo.getValueAt(fila, 0);
+        EditarUsuario frame = new EditarUsuario(this,cedula);
+        frame.setVisible(true);
         
        
     }

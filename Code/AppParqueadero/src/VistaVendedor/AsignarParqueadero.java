@@ -1,6 +1,7 @@
 
 package VistaVendedor;
 
+import Alerts.AlertAsociacion;
 import Alerts.GeneratingAlert;
 import Main.ConsumoApi;
 import com.google.gson.Gson;
@@ -105,7 +106,7 @@ public class AsignarParqueadero extends javax.swing.JFrame {
         btnCrear.setBackground(new java.awt.Color(73, 59, 114));
         btnCrear.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnCrear.setForeground(new java.awt.Color(255, 255, 255));
-        btnCrear.setText("CREAR");
+        btnCrear.setText("VINCULAR");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearActionPerformed(evt);
@@ -286,7 +287,7 @@ public class AsignarParqueadero extends javax.swing.JFrame {
                 contentVendedor.mostrarVendedores();
                 dispose();
 
-                GeneratingAlert alert = new GeneratingAlert("EXITO","SE VINCULO CORRECTAMENTE");
+                AlertAsociacion alert = new AlertAsociacion();
                 alert.setVisible(true);
             }
             

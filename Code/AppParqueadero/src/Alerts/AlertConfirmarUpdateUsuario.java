@@ -1,8 +1,11 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package Alerts;
 
 import Main.ConsumoApi;
-import VistaVendedor.Vendedores;
+import VistaVendedor.EditarUsuario;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.awt.Dimension;
@@ -10,23 +13,41 @@ import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AlertConfirmarDesligar extends javax.swing.JFrame {
 
-    private String cedula;
-    Vendedores contentVendedores;
+public class AlertConfirmarUpdateUsuario extends javax.swing.JFrame {
+
+    public EditarUsuario ventanaUpdate;
+    String cedula;
+    String nombre;
+    String apellidos;
+    String celular;
+    String email;
+    String contrasenia;
     ConsumoApi consumo;
     Gson gson;
     
-    public AlertConfirmarDesligar(String cedula,Vendedores contentVendedores) {
+    
+    public AlertConfirmarUpdateUsuario(EditarUsuario ventanaUpdate,String cedula, String nombre, String apellidos, String celular, String email,  String contrasenia  ) {
         this.cedula = cedula;
-        this.contentVendedores = contentVendedores;
-        consumo = new ConsumoApi();
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.celular = celular;
+        this.email = email;
+        this.contrasenia = contrasenia;
+        this.ventanaUpdate = ventanaUpdate;
         gson = new Gson();
+        consumo = new ConsumoApi();
         initComponents();
-        centrarPantalla();
+        
+          // Centrar la ventana en la pantalla
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = (int) screenSize.getWidth();
+        int screenHeight = (int) screenSize.getHeight();
+        int frameWidth = getWidth();
+        int frameHeight = getHeight();
+        setLocation((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2);
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -35,8 +56,8 @@ public class AlertConfirmarDesligar extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnCancelar = new javax.swing.JButton();
-        btnDesligar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        btnConfirmar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,23 +78,23 @@ public class AlertConfirmarDesligar extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("NO HAY VUELTA ATRAS.");
 
-        btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
-        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelar.setText("CANCELAR");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setBackground(new java.awt.Color(255, 51, 51));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("CANCELAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
-        btnDesligar.setBackground(new java.awt.Color(207, 191, 255));
-        btnDesligar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnDesligar.setForeground(new java.awt.Color(0, 0, 0));
-        btnDesligar.setText("DESLIGAR");
-        btnDesligar.addActionListener(new java.awt.event.ActionListener() {
+        btnConfirmar.setBackground(new java.awt.Color(207, 191, 255));
+        btnConfirmar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnConfirmar.setForeground(new java.awt.Color(0, 0, 0));
+        btnConfirmar.setText("CONFIRMAR");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDesligarActionPerformed(evt);
+                btnConfirmarActionPerformed(evt);
             }
         });
 
@@ -85,15 +106,15 @@ public class AlertConfirmarDesligar extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelar)
-                .addGap(32, 32, 32)
-                .addComponent(btnDesligar)
-                .addGap(67, 67, 67))
+                .addGap(51, 51, 51)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnConfirmar)
+                .addGap(53, 53, 53))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -106,9 +127,9 @@ public class AlertConfirmarDesligar extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDesligar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addComponent(btnConfirmar)
+                    .addComponent(jButton1))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,54 +152,57 @@ public class AlertConfirmarDesligar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        //CERRAMOS VENTANA DE ALERTA PARA CONFIRMAR UPDATE
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //MOSTRAMOS VENTA PRINCIPAL CON EL CONTENEDOR DEL PARUQEADERO
+        this.ventanaUpdate.contentVendedor.main.setVisible(true);
+        
+        //CERRAMOS VENTA DE UPDATE
+        this.ventanaUpdate.dispose();
+
+        //CERRAMOS VENTANA DE ALERTA PARA CONFIRMAR UPDATE 
         this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnDesligarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesligarActionPerformed
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
 
-        //CODIGO PARA HACER EL UPDATE DEL PARQUEADERO
-        Map<String, String> queryDesligamiento = new HashMap<>();
-        queryDesligamiento.put("cedula",cedula);
+        Map<String, String> UpdateData = new HashMap<>();
+        UpdateData.put("cedula", cedula);
+        UpdateData.put("nombre", nombre);
+        UpdateData.put("apellidos", apellidos);
+        UpdateData.put("celular", celular);
+        UpdateData.put("email", email);
+        UpdateData.put("contrasenia", contrasenia);
 
-        String desligar = consumo.consumoPOST("http://localhost/APIenPHP/API-Personas/Desligar.php", queryDesligamiento);
-
-        System.out.println("Lo que llego"+desligar);
-
-        JsonObject jsonResponse = gson.fromJson(desligar, JsonObject.class);
-
-        boolean status = jsonResponse.get("status").getAsBoolean();
-
-        if( status ){
-
-            this.contentVendedores.mostrarVendedores();
-            //MOSTRAMOS MENSAJE DE EXITO DE UPDATE
-            AlertExitoDesvinculo mostrar = new AlertExitoDesvinculo();
-            mostrar.setVisible(true);
+        
+        String update = consumo.consumoPOST("http://localhost/APIenPHP/API-Personas/Update.php", UpdateData);
+        System.out.println("reponde update user "+update);
+        JsonObject responseUpdate = gson.fromJson(update, JsonObject.class);
+        
+        boolean status = responseUpdate.get("status").getAsBoolean();
+        
+        if(status){
             
-            this.contentVendedores.mostrarVendedores();
+            this.ventanaUpdate.contentVendedor.main.setVisible(true);
+            this.ventanaUpdate.contentVendedor.mostrarVendedores();
+            // MOSTRAMOS MENSAJE DE EXITO DE UPDATE
+            GeneratingAlert mostrar = new GeneratingAlert("EXITO", "ACTUALIZACION COMPLETADA");
+            mostrar.setVisible(true);
 
-            //CERRA VETANA ACTUAL
-            this.dispose();
+            // CERRAMOS VENTANA DE UPDATE
+            this.ventanaUpdate.dispose();
+
+            // CERRAR VENTANA ACTUAL
+            this.dispose(); 
+            
         }
+      
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
-    }//GEN-LAST:event_btnDesligarActionPerformed
-
-    private void centrarPantalla(){
-        // Centrar la ventana en la pantalla
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
-        int frameWidth = getWidth();
-        int frameHeight = getHeight();
-        setLocation((screenWidth - frameWidth) / 2, (screenHeight - frameHeight) / 2);
-    }
-   
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnDesligar;
+    private javax.swing.JButton btnConfirmar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

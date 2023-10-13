@@ -1,8 +1,8 @@
 package Main;
 
 import com.google.gson.Gson;
-import Alerts.AlertDatosIncompletos;
 import Alerts.AlertDatosErroneos;
+import Alerts.GeneratingAlert;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
@@ -151,7 +151,7 @@ public class Login extends javax.swing.JFrame {
                 System.out.println("Error al consumir la API.");
             }
         } else {
-            AlertDatosIncompletos alert = new AlertDatosIncompletos();
+            GeneratingAlert alert = new GeneratingAlert("ERROR","DATOS INCOMPLETOS");
             alert.setVisible(true);
         }                                                                                                                                                                                        
     }//GEN-LAST:event_btn_ingresarActionPerformed

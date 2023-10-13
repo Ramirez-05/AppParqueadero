@@ -11,6 +11,7 @@ public class GeneratingAlert extends javax.swing.JFrame {
         this.titulo = titulo;
         this.texto = texto;
         initComponents();
+        
         UpdateContent();
         centrarPantalla();
     }
@@ -31,12 +32,12 @@ public class GeneratingAlert extends javax.swing.JFrame {
         LabelTitle.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         LabelTitle.setForeground(new java.awt.Color(204, 0, 0));
         LabelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelTitle.setText("ERROR");
+        LabelTitle.setText("...");
 
         LabelTexto.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         LabelTexto.setForeground(new java.awt.Color(0, 0, 0));
         LabelTexto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        LabelTexto.setText("ERROR ERROR ERROR ");
+        LabelTexto.setText("...");
 
         jButton1.setBackground(new java.awt.Color(153, 153, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
