@@ -133,7 +133,7 @@ public final class Historial extends javax.swing.JPanel {
     
     //BOTÓN BUSCAR VEHICULO
     private void btnBuscarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarHistorialActionPerformed
-        String busqueda = inputBuscarHistorial.getText().trim(); 
+         String busqueda = inputBuscarHistorial.getText().trim(); 
         
         if (busqueda.isEmpty()) {
             listaHistorial();
@@ -221,9 +221,9 @@ public final class Historial extends javax.swing.JPanel {
     }
    
    
-       private void listaHistorial(){
+      private void listaHistorial(){
         ConsumoApi consumo = new ConsumoApi();
-        String obtenerHistorial = consumo.consumoGET("http://localhost/APIenPHP/obtenerHistorial.php");
+        String obtenerHistorial = consumo.consumoGET("http://localhost/APIenPHP/API-voce/obtenerHistorial.php");
 
         if (obtenerHistorial != null) {
             JsonObject jsonTemp = gson.fromJson(obtenerHistorial, JsonObject.class);
