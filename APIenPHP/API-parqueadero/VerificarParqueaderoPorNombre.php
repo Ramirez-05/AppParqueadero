@@ -4,12 +4,12 @@ header("Access-Control-Allow-Methods: GET, POST");
 header("Access-Control-Allow-Headers: Content-Type");
 include '../Conexion.php';
 
-if (!empty($_POST['nit'])) {
-    $nit = $_POST['nit'];
+if (!empty($_POST['nombre'])) {
+    $nombre = $_POST['nombre'];
 
     try {
-        $consulta = $base_de_datos->prepare("SELECT * FROM parqueadero WHERE nit = :nit");
-        $consulta->bindParam(':nit', $nit);
+        $consulta = $base_de_datos->prepare("SELECT * FROM parqueadero WHERE nombre = :nombre");
+        $consulta->bindParam(':nombre', $nombre);
         $consulta->execute();
 
         if ($consulta->rowCount() > 0) {

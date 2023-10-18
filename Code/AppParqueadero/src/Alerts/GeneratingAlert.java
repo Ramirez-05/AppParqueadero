@@ -99,7 +99,7 @@ public class GeneratingAlert extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
     
     private void UpdateContent(){
-        LabelTexto.setText(titulo);
+        LabelTitle.setText(titulo);
         LabelTexto.setText(texto);
     }
 

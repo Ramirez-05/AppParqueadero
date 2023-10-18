@@ -2,6 +2,7 @@
 package Alerts;
 
 import Main.ConsumoApi;
+import Main.Main;
 import VistaVendedor.Vendedores;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -134,6 +135,10 @@ public class AlertConfirmarDesligar extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         //CERRAMOS VENTANA DE ALERTA PARA CONFIRMAR UPDATE
         this.dispose();
+        
+        Main main = new Main();
+        main.setVisible(true);
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnDesligarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesligarActionPerformed
@@ -153,12 +158,16 @@ public class AlertConfirmarDesligar extends javax.swing.JFrame {
         if( status ){
 
             this.contentVendedores.mostrarVendedores();
+            
+            Main main = new Main();
+            main.setVisible(true);
+            
+            
+            
             //MOSTRAMOS MENSAJE DE EXITO DE UPDATE
             AlertExitoDesvinculo mostrar = new AlertExitoDesvinculo();
             mostrar.setVisible(true);
             
-            this.contentVendedores.mostrarVendedores();
-
             //CERRA VETANA ACTUAL
             this.dispose();
         }

@@ -215,7 +215,6 @@ public class CreateParking extends javax.swing.JFrame {
             // Mapeamos los datos para verificar si el parqueadero ya existe
             Map<String, String> comprobarParqueadero = new HashMap<>();
             comprobarParqueadero.put("nit", nit);
-            comprobarParqueadero.put("nombre", nombre);
 
             // Hacemos la petición POST para verificar si el parqueadero ya existe
             String verificarParqueadero = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", comprobarParqueadero);

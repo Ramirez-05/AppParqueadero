@@ -324,7 +324,7 @@ public class Parqueaderos extends javax.swing.JPanel {
             mostrarFrame.setVisible(true);
             
             // OCULTAMOS EL PANEL ACTUAL
-            this.main.setVisible(false);
+            this.main.dispose();
         }
     }
     

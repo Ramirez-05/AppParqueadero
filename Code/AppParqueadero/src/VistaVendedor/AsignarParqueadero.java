@@ -4,6 +4,7 @@ package VistaVendedor;
 import Alerts.AlertAsociacion;
 import Alerts.GeneratingAlert;
 import Main.ConsumoApi;
+import Main.Main;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -221,7 +222,9 @@ public class AsignarParqueadero extends javax.swing.JFrame {
 
         System.out.println("SE APRETO EL BOTON DE CANCELAR EN EL FORM PARA CREAR PARQUEADEROS");
 
-        this.contentVendedor.main.setVisible(true);
+        Main main = new Main();
+        main.setVisible(true);
+        
         this.contentVendedor.mostrarVendedores();
 
         dispose();
@@ -283,7 +286,8 @@ public class AsignarParqueadero extends javax.swing.JFrame {
 
             if(statusInsert){
 
-                this.contentVendedor.main.setVisible(true);
+                Main main = new Main();
+                main.setVisible(true);
                 contentVendedor.mostrarVendedores();
                 dispose();
 

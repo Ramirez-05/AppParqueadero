@@ -184,10 +184,9 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
 
         // Verificar si el nombre ya existe antes de realizar la actualización
         Map<String, String> checkNameData = new HashMap<>();
-        checkNameData.put("nit", nit);
         checkNameData.put("nombre", nombre);
 
-        String checkNameResponse = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueadero.php", checkNameData);
+        String checkNameResponse = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueaderoPorNombre.php", checkNameData);
         JsonObject checkNameJson = gson.fromJson(checkNameResponse, JsonObject.class);
 
         boolean nameExists = checkNameJson.get("status").getAsBoolean();

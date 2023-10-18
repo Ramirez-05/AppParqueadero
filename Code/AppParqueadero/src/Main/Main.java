@@ -134,13 +134,11 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
-    }
-
-    private void mostrarTablaParqueaderos(){
-        
-    }
-    
+        this.dispose();
+         
+        Login login = new Login();
+        login.setVisible(true);
+    }  
         
     private void btnParkingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParkingActionPerformed
         // ACA VA EL CODIGO PARA EL INTERCAMBIO DE PANEL PARQUEADEROS
@@ -172,8 +170,8 @@ public class Main extends javax.swing.JFrame {
 
         repaint();
         revalidate();
-    }//GEN-LAST:event_btnSellerActionPerformed
-
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
