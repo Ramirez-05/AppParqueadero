@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 public class MainVendedor extends javax.swing.JFrame {
-
+    
     public MainVendedor() {
         initComponents();
         
@@ -164,7 +164,7 @@ public class MainVendedor extends javax.swing.JFrame {
         System.out.println("SE DIO AL BOTON PARQUEADERO");
         
         panelPrincipal.removeAll();
-        
+
         Parqueadero mostrarPanel = new Parqueadero(this);
 
         mostrarPanel.setSize(panelPrincipal.getSize() );

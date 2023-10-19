@@ -3,6 +3,7 @@ package Main;
 import com.google.gson.Gson;
 import Alerts.AlertDatosErroneos;
 import Alerts.GeneratingAlert;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.awt.Image;
@@ -17,7 +18,9 @@ public class Login extends javax.swing.JFrame {
 
     private ConsumoApi consumo;
     private Gson gson;
+    public MainVendedor main;
     public Login() {
+        this.main = main;
         consumo = new ConsumoApi();
         gson = new Gson();
         initComponents();
@@ -171,6 +174,8 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_campo_correoActionPerformed
 
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
+        
+        Parqueadero park = new Parqueadero(main);
         String correo = campo_correo.getText();
         String contrasena = campo_contrasena.getText();
 
@@ -190,7 +195,36 @@ public class Login extends javax.swing.JFrame {
                     // Verificar si el usuario existe
                     if (jsonTemp.get("user") != null && jsonTemp.get("user").isJsonObject()) {
                         JsonObject usuario = jsonTemp.getAsJsonObject("user");
-                        String tipoUser = usuario.get("tipo").getAsString();                       
+
+                        int idUsuario = usuario.get("id").getAsInt();
+                        String url = "http://localhost/APIenPHP/API-Ticket/obtenerParqueadero.php?id_usuario=" + idUsuario;
+                        String respuestaParqueaderos = consumo.consumoGET(url);
+
+                        if (respuestaParqueaderos != null) {
+                            JsonObject jsonTemp2 = gson.fromJson(respuestaParqueaderos, JsonObject.class);
+                            boolean success2 = jsonTemp2.get("success").getAsBoolean();
+
+                            if (success2) {
+                                JsonArray parqueaderos = jsonTemp2.getAsJsonArray("parqueaderos");
+
+                                for (JsonElement parqueadero : parqueaderos) {
+                                    JsonObject parq = parqueadero.getAsJsonObject();
+                                    String nit = parq.get("nit").getAsString();
+                                    String nombre = parq.get("nombre").getAsString();
+                                    String direccion = parq.get("direccion").getAsString();
+                                    String telefono = parq.get("telefono").getAsString();
+                                    String user = usuario.get("email").getAsString();                                    
+
+                                    park.mostrarDatosParqueadero(nit, nombre, direccion, telefono, user);                                    
+                                }
+                            } else {
+                                System.out.println("Error al obtener los parqueaderos.");
+                            }
+                        } else {
+                            System.out.println("Error al consumir la API de parqueaderos.");
+                        }
+
+                        String tipoUser = usuario.get("tipo").getAsString();
                         System.out.println("Tipo: " + tipoUser);
                         String ven = "VENDEDOR";
                         String adm = "ADMIN";
@@ -218,7 +252,7 @@ public class Login extends javax.swing.JFrame {
         } else {
             GeneratingAlert alert = new GeneratingAlert("ERROR","DATOS INCOMPLETOS");
             alert.setVisible(true);
-        }                                                                                                                                                                                        
+        }                                                                                                                                                                                              
     }//GEN-LAST:event_btn_ingresarActionPerformed
     
        public static void main(String args[]) {

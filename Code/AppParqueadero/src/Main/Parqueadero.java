@@ -15,7 +15,7 @@ public final class Parqueadero extends javax.swing.JPanel {
         this.main = main;
         gson = new Gson();
         initComponents();
-        initAlternComponets();
+        initAlternComponets();        
     }
   
     @SuppressWarnings("unchecked")
@@ -23,22 +23,27 @@ public final class Parqueadero extends javax.swing.JPanel {
     private void initComponents() {
 
         nitParqueadero2 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabVehiculosActuales = new javax.swing.JTable();
         inputBuscarUpdate = new javax.swing.JTextField();
         btnBuscarVehiculoParqueadero = new javax.swing.JButton();
-        jLabelNit = new javax.swing.JLabel();
         jLabelDireccion = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
         jLabelTelefono = new javax.swing.JLabel();
         jLabelVendedores = new javax.swing.JLabel();
-        nombreParqueadero = new javax.swing.JLabel();
-        nitParqueadero1 = new javax.swing.JLabel();
-        telefonoParqueadero = new javax.swing.JLabel();
-        direccionParqueadero = new javax.swing.JLabel();
-        vendedoresParqueadero = new javax.swing.JLabel();
+        etq_nombre = new javax.swing.JLabel();
+        etq_telefono = new javax.swing.JLabel();
+        etq_direccion = new javax.swing.JLabel();
+        etq_vendedor = new javax.swing.JLabel();
+        etq_nit = new javax.swing.JLabel();
 
         nitParqueadero2.setText("NO DISPONIBLE");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -80,9 +85,6 @@ public final class Parqueadero extends javax.swing.JPanel {
             }
         });
 
-        jLabelNit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabelNit.setText("NIT:");
-
         jLabelDireccion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabelDireccion.setText("DIRECCIÓN:");
 
@@ -95,15 +97,16 @@ public final class Parqueadero extends javax.swing.JPanel {
         jLabelVendedores.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabelVendedores.setText("VENDEDORES:");
 
-        nombreParqueadero.setText("NO DISPONIBLE");
+        etq_nombre.setText("NO DISPONIBLE");
 
-        nitParqueadero1.setText("NO DISPONIBLE");
+        etq_telefono.setText("NO DISPONIBLE");
 
-        telefonoParqueadero.setText("NO DISPONIBLE");
+        etq_direccion.setText("NO DISPONIBLE");
 
-        direccionParqueadero.setText("NO DISPONIBLE");
+        etq_vendedor.setText("NO DISPONIBLE");
 
-        vendedoresParqueadero.setText("NO DISPONIBLE");
+        etq_nit.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        etq_nit.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -113,37 +116,35 @@ public final class Parqueadero extends javax.swing.JPanel {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelNit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nitParqueadero1)
-                        .addGap(65, 65, 65)
+                        .addComponent(etq_nit, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58)
                         .addComponent(jLabelNombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nombreParqueadero))
+                        .addComponent(etq_nombre))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelDireccion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(direccionParqueadero)))
+                        .addComponent(etq_direccion)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelTelefono)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(telefonoParqueadero))
+                        .addComponent(etq_telefono))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelVendedores)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(vendedoresParqueadero)))
+                        .addComponent(etq_vendedor)))
                 .addGap(47, 47, 47))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(inputBuscarUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscarVehiculoParqueadero)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -151,25 +152,24 @@ public final class Parqueadero extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNit)
                     .addComponent(jLabelNombre)
                     .addComponent(jLabelTelefono)
-                    .addComponent(nombreParqueadero)
-                    .addComponent(nitParqueadero1)
-                    .addComponent(telefonoParqueadero))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(etq_nombre)
+                    .addComponent(etq_telefono)
+                    .addComponent(etq_nit, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelDireccion)
                     .addComponent(jLabelVendedores)
-                    .addComponent(direccionParqueadero)
-                    .addComponent(vendedoresParqueadero))
-                .addGap(42, 42, 42)
+                    .addComponent(etq_direccion)
+                    .addComponent(etq_vendedor))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputBuscarUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarVehiculoParqueadero, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -181,9 +181,9 @@ public final class Parqueadero extends javax.swing.JPanel {
        tabVehiculosActuales.getTableHeader().setReorderingAllowed(false);
        
        // Configurar la JTable para ajustar automáticamente el ancho de las columnas
-        tabVehiculosActuales.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+       tabVehiculosActuales.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-        tabVehiculosActuales.setPreferredScrollableViewportSize(tabVehiculosActuales.getPreferredSize());
+       tabVehiculosActuales.setPreferredScrollableViewportSize(tabVehiculosActuales.getPreferredSize());
        
     }
      
@@ -194,26 +194,43 @@ public final class Parqueadero extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarVehiculoParqueaderoActionPerformed
 
     private void inputBuscarUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBuscarUpdateActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_inputBuscarUpdateActionPerformed
-
+    
+    public void mostrarDatosParqueadero(String nit, String nombre, String direccion, String telefono, String user){                     
+        try {
+            System.out.println("nit: " + nit);
+            System.out.println("nombre: " + nombre);
+            System.out.println("direccion: " + direccion);
+            System.out.println("telefono: " + telefono);
+            System.out.println("user: " + user);            
+            etq_nit.setText(nit);
+            etq_nombre.setText(nombre);
+            etq_direccion.setText(direccion);
+            etq_telefono.setText(telefono);
+            etq_vendedor.setText(user);
+        } catch (Exception e) {
+            System.out.println("NO HAY ASIGNACION");
+        }
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarVehiculoParqueadero;
-    private javax.swing.JLabel direccionParqueadero;
+    public javax.swing.JLabel etq_direccion;
+    public javax.swing.JLabel etq_nit;
+    private javax.swing.JLabel etq_nombre;
+    public javax.swing.JLabel etq_telefono;
+    public javax.swing.JLabel etq_vendedor;
     private javax.swing.JTextField inputBuscarUpdate;
     private javax.swing.JLabel jLabelDireccion;
-    private javax.swing.JLabel jLabelNit;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelTelefono;
     private javax.swing.JLabel jLabelVendedores;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel nitParqueadero1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel nitParqueadero2;
-    private javax.swing.JLabel nombreParqueadero;
     private javax.swing.JTable tabVehiculosActuales;
-    private javax.swing.JLabel telefonoParqueadero;
-    private javax.swing.JLabel vendedoresParqueadero;
     // End of variables declaration//GEN-END:variables
 }
