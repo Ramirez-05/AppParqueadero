@@ -34,16 +34,16 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabelNit" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="nitParqueadero1" min="-2" max="-2" attributes="0"/>
+                      <Component id="etq_nit" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                       <Component id="jLabelNombre" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="nombreParqueadero" min="-2" max="-2" attributes="0"/>
+                      <Component id="etq_nombre" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabelDireccion" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="direccionParqueadero" min="-2" max="-2" attributes="0"/>
+                      <Component id="etq_direccion" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="55" max="32767" attributes="0"/>
@@ -51,12 +51,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabelTelefono" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="telefonoParqueadero" min="-2" max="-2" attributes="0"/>
+                      <Component id="etq_telefono" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jLabelVendedores" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="vendedoresParqueadero" min="-2" max="-2" attributes="0"/>
+                      <Component id="etq_vendedor" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
@@ -83,16 +83,16 @@
                   <Component id="jLabelNit" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabelNombre" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabelTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="nombreParqueadero" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="nitParqueadero1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="telefonoParqueadero" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etq_nombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etq_nit" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etq_telefono" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabelDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabelVendedores" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="direccionParqueadero" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="vendedoresParqueadero" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etq_direccion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etq_vendedor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -244,27 +244,27 @@
         <Property name="text" type="java.lang.String" value="VENDEDORES:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="nombreParqueadero">
+    <Component class="javax.swing.JLabel" name="etq_nombre">
       <Properties>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="nitParqueadero1">
+    <Component class="javax.swing.JLabel" name="etq_nit">
       <Properties>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="telefonoParqueadero">
+    <Component class="javax.swing.JLabel" name="etq_telefono">
       <Properties>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="direccionParqueadero">
+    <Component class="javax.swing.JLabel" name="etq_direccion">
       <Properties>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="vendedoresParqueadero">
+    <Component class="javax.swing.JLabel" name="etq_vendedor">
       <Properties>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>
