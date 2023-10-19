@@ -109,6 +109,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_campo_correoActionPerformed
 
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
+        
         Parqueadero park = new Parqueadero(main);
         String correo = campo_correo.getText();
         String contrasena = campo_contrasena.getText();
@@ -147,12 +148,9 @@ public class Login extends javax.swing.JFrame {
                                     String nombre = parq.get("nombre").getAsString();
                                     String direccion = parq.get("direccion").getAsString();
                                     String telefono = parq.get("telefono").getAsString();
-                                    String user = usuario.get("email").getAsString();
-                                    System.out.println(nit+nombre+direccion+telefono+user);
-                                    // Aquí puedes hacer lo que necesites con la información del parqueadero
-                                    
-                                    park.mostrarDatosParqueadero(nit, nombre, direccion, telefono, user);
+                                    String user = usuario.get("email").getAsString();                                    
 
+                                    park.mostrarDatosParqueadero(nit, nombre, direccion, telefono, user);                                    
                                 }
                             } else {
                                 System.out.println("Error al obtener los parqueaderos.");
