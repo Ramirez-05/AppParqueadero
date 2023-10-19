@@ -181,46 +181,30 @@ public class AlertConfirmarUpdateParking extends javax.swing.JFrame {
         UpdateData.put("nombre", nombre);
         UpdateData.put("direccion", direccion);
         UpdateData.put("telefono", telefono);
+        
+        // El nombre no existe, proceder con la actualización
+        String update = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/Update.php", UpdateData);
 
-        // Verificar si el nombre ya existe antes de realizar la actualización
-        Map<String, String> checkNameData = new HashMap<>();
-        checkNameData.put("nombre", nombre);
+        System.out.println("Lo que llegó" + update);
 
-        String checkNameResponse = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/VerificarParqueaderoPorNombre.php", checkNameData);
-        JsonObject checkNameJson = gson.fromJson(checkNameResponse, JsonObject.class);
+        JsonObject jsonResponse = gson.fromJson(update, JsonObject.class);
 
-        boolean nameExists = checkNameJson.get("status").getAsBoolean();
+        boolean status = jsonResponse.get("status").getAsBoolean();
 
-        if (nameExists) {
-            // Mostrar mensaje de error
-            GeneratingAlert errorAlert = new GeneratingAlert("ERROR", "NOMBRE YA EXISTENTE.");
-            errorAlert.setVisible(true);
+        if (status) {
+            // MOSTRAMOS VENTANA MAIN CON CONTENEDOR PARQUEADEROS
+            this.ventanaUpdate.contentParqueadero.main.setVisible(true);
+            this.ventanaUpdate.contentParqueadero.mostrarParqueaderos();
+            // MOSTRAMOS MENSAJE DE EXITO DE UPDATE
+            GeneratingAlert mostrar = new GeneratingAlert("EXITO", "ACTUALIZACION COMPLETADA");
+            mostrar.setVisible(true); 
+
+            // CERRAMOS VENTANA DE UPDATE
+            this.ventanaUpdate.dispose();
+
+            // CERRAR VENTANA ACTUAL
+            this.dispose();
             
-            dispose();
-        } else {
-            // El nombre no existe, proceder con la actualización
-            String update = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/Update.php", UpdateData);
-
-            System.out.println("Lo que llegó" + update);
-
-            JsonObject jsonResponse = gson.fromJson(update, JsonObject.class);
-
-            boolean status = jsonResponse.get("status").getAsBoolean();
-
-            if (status) {
-                // MOSTRAMOS VENTANA MAIN CON CONTENEDOR PARQUEADEROS
-                this.ventanaUpdate.contentParqueadero.main.setVisible(true);
-                this.ventanaUpdate.contentParqueadero.mostrarParqueaderos();
-                // MOSTRAMOS MENSAJE DE EXITO DE UPDATE
-                GeneratingAlert mostrar = new GeneratingAlert("EXITO", "ACTUALIZACION COMPLETADA");
-                mostrar.setVisible(true);
-
-                // CERRAMOS VENTANA DE UPDATE
-                this.ventanaUpdate.dispose();
-
-                // CERRAR VENTANA ACTUAL
-                this.dispose();
-            }
         }
     }//GEN-LAST:event_btnConfirmarActionPerformed
 

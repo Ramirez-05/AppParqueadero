@@ -134,7 +134,7 @@ public class AlertConfirmarDeleteParking extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-
+     
         //CODIGO PARA HACER EL UPDATE DEL PARQUEADERO
 
         ConsumoApi consumo = new ConsumoApi();

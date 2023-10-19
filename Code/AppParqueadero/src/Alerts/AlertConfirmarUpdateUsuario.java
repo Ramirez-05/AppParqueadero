@@ -191,7 +191,7 @@ public class AlertConfirmarUpdateUsuario extends javax.swing.JFrame {
             // CERRAMOS VENTANA DE UPDATE
             this.ventanaUpdate.dispose();
 
-            // CERRAR VENTANA ACTUAL
+            // CERRAR VENTANA ACTUAL 
             this.dispose(); 
             
         }

@@ -1,6 +1,7 @@
 package VistaVendedor;
 
 import Main.ConsumoApi;
+import Main.Main;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.awt.Dimension;
@@ -271,7 +272,9 @@ public class VerUsuario extends javax.swing.JFrame {
 
         System.out.println("SE APRETO EL BOTON DE CANCELAR EN EL FORM PARA CREAR PARQUEADEROS");
 
-        this.contentVendedor.main.setVisible(true);
+        Main main = new Main();
+        main.setVisible(true);
+        
         this.contentVendedor.mostrarVendedores();
 
         dispose();

@@ -229,7 +229,7 @@ public class CreateParking extends javax.swing.JFrame {
                 System.out.println("\n LA EMPRESA YA SE ENCUENTRA CREADA \n");
                 GeneratingAlert alerta = new GeneratingAlert("ERROR", "PARQUEADERO REPETIDO");
                 alerta.setVisible(true);
-
+  
                 campoNit.setText("");
                 campoNombre.setText("");
                 

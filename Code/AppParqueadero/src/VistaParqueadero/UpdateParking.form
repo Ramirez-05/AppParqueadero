@@ -142,7 +142,7 @@
               <Color blue="51" green="2b" red="31" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="CREANDO PARQUEADERO"/>
+            <Property name="text" type="java.lang.String" value="EDITANDO PARQUEADERO"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
