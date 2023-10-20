@@ -1,23 +1,40 @@
 package Main;
+import Main.Clases.ButtonEditor;
+import Main.Clases.ButtonRenderer;
 import com.google.gson.Gson;
 import javax.swing.JTable;
+import Main.ConsumoApi;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.table.DefaultTableModel;
 
 
 public final class Parqueadero extends javax.swing.JPanel {
     
     public MainVendedor main;
+    private ConsumoApi consumo;
     private final Gson gson;
-    
     DefaultTableModel modelo;
     
     
     
-    public Parqueadero(MainVendedor main) {
-        this.main = main;
+    public Parqueadero(MainVendedor This) {
+        consumo = new ConsumoApi();
         gson = new Gson();
         initComponents();
         initAlternComponets();
+        listaVehiculos();
+
     }
 
   
@@ -187,9 +204,60 @@ public final class Parqueadero extends javax.swing.JPanel {
         tabVehiculosActuales.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         tabVehiculosActuales.setPreferredScrollableViewportSize(tabVehiculosActuales.getPreferredSize());
+        
+        this.tabVehiculosActuales.getColumn("SALIDA").setCellRenderer(new ButtonRenderer());
+        this.tabVehiculosActuales.getColumn("SALIDA").setCellEditor(new ButtonEditor(new JCheckBox()));
        
     }
+    //FUNCIÓN CALCULAR TIEMPO    
+    private String calcularTiempo(String ingreso) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+        try {
+            Date fechaIngreso = format.parse(ingreso);
+            Date fechaActual = new Date();
+            long diferencia = fechaActual.getTime() - fechaIngreso.getTime();
+            long horas = diferencia / (60 * 60 * 1000);
+            long minutos = (diferencia % (60 * 60 * 1000)) / (60 * 1000);
+            return horas + "h " + minutos + "m";
+        } catch (Exception e) {
+            System.err.println("Error al calcular tiempo: " + e.getMessage());
+            return "";
+        }
+    }
     
+    private void listaVehiculos(){
+        ConsumoApi consumo = new ConsumoApi();
+        String obtenerVehiculos = consumo.consumoGET("http://localhost/APIenPHP/obtenerParqueadero.php");
+        
+        if (obtenerVehiculos != null){
+            JsonObject jsonTemp = gson.fromJson(obtenerVehiculos, JsonObject.class);
+            JsonArray parqueadero = jsonTemp.getAsJsonArray("registros");
+            modelo.setRowCount(0);
+            
+            for (int i=0 ; i < parqueadero.size(); i++){
+                JsonObject verParqueadero = parqueadero.get(i).getAsJsonObject();
+                String id = verParqueadero.get("id").getAsString();
+                String tipo_vehiculo = verParqueadero.get("tipo_vehiculo").getAsString();
+                String placa = verParqueadero.get("placa").getAsString();
+                String responsable = verParqueadero.get("responsable").getAsString();
+                String Tarifa = verParqueadero.get("Tarifa").getAsString();
+                String create_entrada = verParqueadero.get("create_entrada").getAsString();
+                
+                String tiempo = calcularTiempo(create_entrada);
+                
+                final int posicion = i;
+                
+                JButton btnSalida = new JButton("Salida");
+                btnSalida.setBackground(new Color(207, 191, 255));
+                btnSalida.setForeground(new Color(0,0,0));
+                
+                Object[] fila = new Object[]{id, tipo_vehiculo, placa, responsable, Tarifa, create_entrada, tiempo, btnSalida};
+                modelo.addRow(fila);
+                
+            }
+        }
+    }
     
     
     //Botón para buscar vehículo parqueadero
