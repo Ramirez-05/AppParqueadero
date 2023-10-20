@@ -29,7 +29,6 @@ public final class Parqueadero extends javax.swing.JPanel {
     
     
     public Parqueadero(MainVendedor This) {
-        consumo = new ConsumoApi();
         gson = new Gson();
         initComponents();
         initAlternComponets();
@@ -228,7 +227,7 @@ public final class Parqueadero extends javax.swing.JPanel {
     
     private void listaVehiculos(){
         ConsumoApi consumo = new ConsumoApi();
-        String obtenerVehiculos = consumo.consumoGET("http://localhost/APIenPHP/obtenerParqueadero.php");
+        String obtenerVehiculos = consumo.consumoGET("http://localhost/APIenPHP/API-voce/obtenerParqueadero.php");
         
         if (obtenerVehiculos != null){
             JsonObject jsonTemp = gson.fromJson(obtenerVehiculos, JsonObject.class);

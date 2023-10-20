@@ -223,7 +223,7 @@ public final class Historial extends javax.swing.JPanel {
    
        private void listaHistorial(){
         ConsumoApi consumo = new ConsumoApi();
-        String obtenerHistorial = consumo.consumoGET("http://localhost/APIenPHP/obtenerHistorial.php");
+        String obtenerHistorial = consumo.consumoGET("http://localhost/APIenPHP/API-voce/obtenerHistorial.php");
 
         if (obtenerHistorial != null) {
             JsonObject jsonTemp = gson.fromJson(obtenerHistorial, JsonObject.class);
