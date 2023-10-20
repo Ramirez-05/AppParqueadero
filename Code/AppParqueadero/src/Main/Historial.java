@@ -28,7 +28,8 @@ public final class Historial extends javax.swing.JPanel {
     
     
     
-    public Historial(MainVendedor This) {
+    public Historial(MainVendedor main) {
+        this.main = main;
         consumo = new ConsumoApi();
         gson = new Gson();
         initComponents();
@@ -212,14 +213,14 @@ public final class Historial extends javax.swing.JPanel {
 
                     final int posicion = i;
 
-                    JButton btnImprimir = new JButton("Imprimir");
+                    JButton btnImprimir = new JButton("IMPRIMIR");
                     btnImprimir.setBackground(new Color(207,191,255));
                     btnImprimir.setForeground(new Color(0,0,0));
 
                     btnImprimir.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            //accionClickBotonImprimir( posicion );
+                            accionClickBotonImprimir( posicion );
                         }
                     });
 
@@ -230,7 +231,25 @@ public final class Historial extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_inputBuscarHistorialActionPerformed
-
+    
+    public void accionClickBotonImprimir(int fila){
+        
+        String id = (String) modelo.getValueAt(fila, 0);
+        String tipo_vh = (String) modelo.getValueAt(fila, 1);
+        String placa = (String) modelo.getValueAt(fila, 2);
+        String titular = (String) modelo.getValueAt(fila, 3);
+        String tarifa = (String) modelo.getValueAt(fila, 4);
+        String entrada = (String) modelo.getValueAt(fila, 5);
+        String salida = (String) modelo.getValueAt(fila, 6);
+        String tiempo = (String) modelo.getValueAt(fila, 7);
+        
+        Imprimir im = new Imprimir(id,tipo_vh,placa,titular,tarifa,entrada,salida,tiempo, this);
+        im.setVisible(true);
+        
+        main.setVisible(false);
+        
+    }
+    
     private String calcularTiempo(String ingreso, String salida) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -289,14 +308,14 @@ public final class Historial extends javax.swing.JPanel {
                 
                 final int posicion = i;
                 
-                JButton btnImprimir = new JButton("Imprimir");
+                JButton btnImprimir = new JButton("IMPRIMIR");
                 btnImprimir.setBackground(new Color(207,191,255));
                 btnImprimir.setForeground(new Color(0,0,0));
                 
                 btnImprimir.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //accionClickBotonImprimir( posicion );
+                        accionClickBotonImprimir( posicion );
                     }
                 });
 
