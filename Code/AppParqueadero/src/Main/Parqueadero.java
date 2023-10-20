@@ -1,5 +1,14 @@
 package Main;
+import Clases.ButtonEditor;
+import Clases.ButtonRenderer;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import java.awt.Color;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -8,7 +17,7 @@ public final class Parqueadero extends javax.swing.JPanel {
     
     public MainVendedor main;
     private final Gson gson;
-    
+    private ConsumoApi consumo;
     DefaultTableModel modelo;
     String nit;
     String nombre;
@@ -24,9 +33,11 @@ public final class Parqueadero extends javax.swing.JPanel {
         this.user = user;
         this.main = main;
         gson = new Gson();
+        consumo = new ConsumoApi();
         initComponents();
         initAlternComponets();        
         mostrarDatosParqueadero();
+        listaVehiculos();
     }
   
     @SuppressWarnings("unchecked")
@@ -210,9 +221,13 @@ public final class Parqueadero extends javax.swing.JPanel {
        tabVehiculosActuales.getTableHeader().setReorderingAllowed(false);
        
        // Configurar la JTable para ajustar automáticamente el ancho de las columnas
-       tabVehiculosActuales.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tabVehiculosActuales.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-       tabVehiculosActuales.setPreferredScrollableViewportSize(tabVehiculosActuales.getPreferredSize());
+        tabVehiculosActuales.setPreferredScrollableViewportSize(tabVehiculosActuales.getPreferredSize());
+        
+        this.tabVehiculosActuales.getColumn("SALIDA").setCellRenderer(new ButtonRenderer());
+        this.tabVehiculosActuales.getColumn("SALIDA").setCellEditor(new ButtonEditor(new JCheckBox()));
+       
        
     }
      
@@ -240,6 +255,55 @@ public final class Parqueadero extends javax.swing.JPanel {
             etq_vendedor.setText(user);
         } catch (Exception e) {
             System.out.println("NO HAY ASIGNACION");
+        }
+    }
+    
+    private void listaVehiculos(){
+        String obtenerVehiculos = consumo.consumoGET("http://localhost/APIenPHP/API-voce/obtenerParqueadero.php");
+        
+        if (obtenerVehiculos != null){
+            JsonObject jsonTemp = gson.fromJson(obtenerVehiculos, JsonObject.class);
+            JsonArray parqueadero = jsonTemp.getAsJsonArray("registros");
+            modelo.setRowCount(0);
+            
+            for (int i=0 ; i < parqueadero.size(); i++){
+                JsonObject verParqueadero = parqueadero.get(i).getAsJsonObject();
+                String id = verParqueadero.get("id").getAsString();
+                String tipo_vehiculo = verParqueadero.get("tipo_vehiculo").getAsString();
+                String placa = verParqueadero.get("placa").getAsString();
+                String responsable = verParqueadero.get("responsable").getAsString();
+                String Tarifa = verParqueadero.get("Tarifa").getAsString();
+                String create_entrada = verParqueadero.get("create_entrada").getAsString();
+                
+                String tiempo = calcularTiempo(create_entrada);
+                
+                final int posicion = i;
+                
+                JButton btnSalida = new JButton("Salida");
+                btnSalida.setBackground(new Color(207, 191, 255));
+                btnSalida.setForeground(new Color(0,0,0));
+                
+                Object[] fila = new Object[]{id, tipo_vehiculo, placa, responsable, Tarifa, create_entrada, tiempo, btnSalida};
+                modelo.addRow(fila);
+                
+            }
+        }
+    }
+    
+    //FUNCIÓN CALCULAR TIEMPO    
+    private String calcularTiempo(String ingreso) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+        try {
+            Date fechaIngreso = format.parse(ingreso);
+            Date fechaActual = new Date();
+            long diferencia = fechaActual.getTime() - fechaIngreso.getTime();
+            long horas = diferencia / (60 * 60 * 1000);
+            long minutos = (diferencia % (60 * 60 * 1000)) / (60 * 1000);
+            return horas + "h " + minutos + "m";
+        } catch (Exception e) {
+            System.err.println("Error al calcular tiempo: " + e.getMessage());
+            return "";
         }
     }
     
