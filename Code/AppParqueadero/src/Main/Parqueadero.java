@@ -113,15 +113,12 @@ public final class Parqueadero extends javax.swing.JPanel {
         jLabelDireccion.setText("DIRECCIÓN:");
 
         jLabelNombre.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelNombre.setForeground(new java.awt.Color(0, 0, 0));
         jLabelNombre.setText("NOMBRE:");
 
         jLabelTelefono.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelTelefono.setForeground(new java.awt.Color(0, 0, 0));
         jLabelTelefono.setText("TELÉFONO:");
 
         jLabelVendedores.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelVendedores.setForeground(new java.awt.Color(0, 0, 0));
         jLabelVendedores.setText("VENDEDORES:");
 
         etq_nombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -197,12 +194,13 @@ public final class Parqueadero extends javax.swing.JPanel {
                     .addComponent(jLabelVendedores)
                     .addComponent(etq_vendedor))
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelDireccion)
-                    .addComponent(etq_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabelTelefono)
-                        .addComponent(etq_telefono)))
+                        .addComponent(etq_telefono))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelDireccion)
+                        .addComponent(etq_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputBuscarUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -310,11 +308,11 @@ public final class Parqueadero extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarVehiculoParqueadero;
-    private javax.swing.JLabel etq_direccion;
-    private javax.swing.JLabel etq_nit;
+    public javax.swing.JLabel etq_direccion;
+    public javax.swing.JLabel etq_nit;
     private javax.swing.JLabel etq_nombre;
-    private javax.swing.JLabel etq_telefono;
-    private javax.swing.JLabel etq_vendedor;
+    public javax.swing.JLabel etq_telefono;
+    public javax.swing.JLabel etq_vendedor;
     private javax.swing.JTextField inputBuscarUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelDireccion;

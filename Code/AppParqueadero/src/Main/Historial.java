@@ -28,8 +28,9 @@ public final class Historial extends javax.swing.JPanel {
     
     
     
-    public Historial(MainVendedor This) {
+    public Historial(MainVendedor main) {
         consumo = new ConsumoApi();
+        this.main = main;
         gson = new Gson();
         initComponents();
         initAlternComponets();
@@ -243,19 +244,36 @@ public final class Historial extends javax.swing.JPanel {
                 
                 final int posicion = i;
                 
+                
+                
                 JButton btnImprimir = new JButton("Imprimir");
                 btnImprimir.setBackground(new Color(207,191,255));
                 btnImprimir.setForeground(new Color(0,0,0));
+
+                Object[] fila = new Object[]{id, tipoVehiculo, placa, responsable, tarifa, createEntrada, salida, tiempo, btnImprimir};
+                modelo.addRow(fila);
                 
                 btnImprimir.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //accionClickBotonImprimir( posicion );
+                        String id = fila[0].toString();
+                        String tipoVehiculo = fila[1].toString();
+                        String placa = fila[2].toString();
+                        String responsable = fila[3].toString();
+                        String tarifa = fila[4].toString();
+                        String createEntrada = fila[5].toString();
+                        String salida = fila[6].toString();
+                        String tiempo = fila[7].toString();
+        
+                        //enviando datos
+                        JFrameImprimir imprimirFrame = new JFrameImprimir( id, tipoVehiculo, placa, responsable, tarifa, createEntrada, salida, tiempo);
+                        imprimirFrame.setVisible(true);
+
+                        
+                        main.setVisible(false);
+                        
                     }
                 });
-
-                Object[] fila = new Object[]{id, tipoVehiculo, placa, responsable, tarifa, createEntrada, salida, tiempo, btnImprimir};
-                modelo.addRow(fila);
             }
         }
     }
