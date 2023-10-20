@@ -5,8 +5,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
@@ -236,6 +240,51 @@ public final class Parqueadero extends javax.swing.JPanel {
     //Botón para buscar vehículo parqueadero
     private void btnBuscarVehiculoParqueaderoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVehiculoParqueaderoActionPerformed
         System.out.println("SE APRETO EL BOTON DE BUSCAR VEHÍCULO");
+        String busqueda = inputBuscarUpdate.getText().trim(); 
+        
+        if (busqueda.isEmpty()) {
+            listaVehiculos();
+            
+        } else {
+
+            ConsumoApi consumo = new ConsumoApi();
+            Map<String, String> parametros = new HashMap<>();
+            parametros.put("busqueda", busqueda);
+            String obtenerVehiculo = consumo.consumoGET("http://localhost/APIenPHP/API-voce/buscarVehiculo.php", parametros);
+            
+            if (obtenerVehiculo != null) {
+                JsonObject jsonTemp = gson.fromJson(obtenerVehiculo, JsonObject.class);
+                JsonArray vehiculo = jsonTemp.getAsJsonArray("registros");
+                modelo.setRowCount(0);
+
+                for (int i = 0; i < vehiculo.size(); i++){
+                    JsonObject verVehiculo = vehiculo.get(i).getAsJsonObject();
+                    String id = verVehiculo.get(  "id").getAsString();
+                    String tipo_vehiculo = verVehiculo.get("tipo_vehiculo").getAsString();
+                    String placa = verVehiculo.get("placa").getAsString();
+                    String responsable = verVehiculo.get("responsable").getAsString();
+                    String Tarifa = verVehiculo.get("Tarifa").getAsString();
+                    String create_entrada = verVehiculo.get("create_entrada").getAsString();
+                    String tiempo = calcularTiempo(create_entrada);
+
+                    final int posicion = i;
+
+                    JButton btnSalida = new JButton("Salida");
+                    btnSalida.setBackground(new Color(207,191,255));
+                    btnSalida.setForeground(new Color(0,0,0));
+
+                    btnSalida.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            //accionClickBotonImprimir( posicion );
+                        }
+                    });
+
+                    Object[] fila = new Object[]{id, tipo_vehiculo, placa, responsable, Tarifa, create_entrada, tiempo, btnSalida};
+                    modelo.addRow(fila);
+                }
+            }
+        }
     }//GEN-LAST:event_btnBuscarVehiculoParqueaderoActionPerformed
 
     private void inputBuscarUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBuscarUpdateActionPerformed
@@ -259,7 +308,25 @@ public final class Parqueadero extends javax.swing.JPanel {
         }
     }
     
+     //FUNCIÓN CALCULAR TIEMPO    
+    private String calcularTiempo(String ingreso) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+        try {
+            Date fechaIngreso = format.parse(ingreso);
+            Date fechaActual = new Date();
+            long diferencia = fechaActual.getTime() - fechaIngreso.getTime();
+            long horas = diferencia / (60 * 60 * 1000);
+            long minutos = (diferencia % (60 * 60 * 1000)) / (60 * 1000);
+            return horas + "h " + minutos + "m";
+        } catch (Exception e) {
+            System.err.println("Error al calcular tiempo: " + e.getMessage());
+            return "";
+        }
+    }
+    
     private void listaVehiculos(){
+        ConsumoApi consumo = new ConsumoApi();
         String obtenerVehiculos = consumo.consumoGET("http://localhost/APIenPHP/API-voce/obtenerParqueadero.php");
         
         if (obtenerVehiculos != null){
@@ -291,22 +358,8 @@ public final class Parqueadero extends javax.swing.JPanel {
         }
     }
     
-    //FUNCIÓN CALCULAR TIEMPO    
-    private String calcularTiempo(String ingreso) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        
-        try {
-            Date fechaIngreso = format.parse(ingreso);
-            Date fechaActual = new Date();
-            long diferencia = fechaActual.getTime() - fechaIngreso.getTime();
-            long horas = diferencia / (60 * 60 * 1000);
-            long minutos = (diferencia % (60 * 60 * 1000)) / (60 * 1000);
-            return horas + "h " + minutos + "m";
-        } catch (Exception e) {
-            System.err.println("Error al calcular tiempo: " + e.getMessage());
-            return "";
-        }
-    }
+    
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

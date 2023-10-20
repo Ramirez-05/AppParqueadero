@@ -53,33 +53,48 @@ public class CreateSeller extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(15, 11, 25));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("CREANDO VENDEDOR");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("CEDULA:");
 
+        campoCedula.setBackground(new java.awt.Color(255, 255, 255));
+        campoCedula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoCedula.setForeground(new java.awt.Color(0, 0, 0));
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("NOMBRE:");
 
+        campoNombre.setBackground(new java.awt.Color(255, 255, 255));
+        campoNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoNombre.setForeground(new java.awt.Color(0, 0, 0));
+
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("APELLIDO:");
 
+        campoApellido.setBackground(new java.awt.Color(255, 255, 255));
+        campoApellido.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoApellido.setForeground(new java.awt.Color(0, 0, 0));
         campoApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoApellidoActionPerformed(evt);
             }
         });
 
+        campoTelefono.setBackground(new java.awt.Color(255, 255, 255));
+        campoTelefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoTelefono.setForeground(new java.awt.Color(0, 0, 0));
+
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("PARQUEADERO:");
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
@@ -92,7 +107,7 @@ public class CreateSeller extends javax.swing.JFrame {
             }
         });
 
-        btnCrear.setBackground(new java.awt.Color(73, 59, 114));
+        btnCrear.setBackground(new java.awt.Color(123, 47, 152));
         btnCrear.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnCrear.setForeground(new java.awt.Color(255, 255, 255));
         btnCrear.setText("CREAR");
@@ -102,18 +117,29 @@ public class CreateSeller extends javax.swing.JFrame {
             }
         });
 
+        campoEmail.setBackground(new java.awt.Color(255, 255, 255));
+        campoEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoEmail.setForeground(new java.awt.Color(0, 0, 0));
+
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("EMAIL:");
 
+        campoContrasenia.setBackground(new java.awt.Color(255, 255, 255));
+        campoContrasenia.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoContrasenia.setForeground(new java.awt.Color(0, 0, 0));
+
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("CONTRASEÑA:");
 
+        selectParking.setBackground(new java.awt.Color(255, 255, 255));
+        selectParking.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        selectParking.setForeground(new java.awt.Color(0, 0, 0));
         selectParking.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("TELEFONO");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -186,7 +212,7 @@ public class CreateSeller extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(selectParking, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(campoEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))

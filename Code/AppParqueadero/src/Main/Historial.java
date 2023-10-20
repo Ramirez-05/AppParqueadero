@@ -182,7 +182,53 @@ public final class Historial extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarHistorialActionPerformed
 
     private void inputBuscarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBuscarHistorialActionPerformed
+        String busqueda = inputBuscarHistorial.getText().trim(); 
         
+        if (busqueda.isEmpty()) {
+            listaHistorial();
+            
+        } else {
+
+            ConsumoApi consumo = new ConsumoApi();
+            Map<String, String> parametros = new HashMap<>();
+            parametros.put("busqueda", busqueda);
+            String obtenerVehiculo = consumo.consumoGET("http://localhost/APIenPHP/buscarVehiculo.php", parametros);
+            
+            if (obtenerVehiculo != null) {
+                JsonObject jsonTemp = gson.fromJson(obtenerVehiculo, JsonObject.class);
+                JsonArray vehiculo = jsonTemp.getAsJsonArray("registros");
+                modelo.setRowCount(0);
+
+                for (int i = 0; i < vehiculo.size(); i++){
+                    JsonObject verVehiculo = vehiculo.get(i).getAsJsonObject();
+                    String id = verVehiculo.get(  "id").getAsString();
+                    String placa = verVehiculo.get("placa").getAsString();
+                    String createEntrada = verVehiculo.get("create_entrada").getAsString();
+                    String salida = verVehiculo.get("salida").getAsString();
+                    String tipoVehiculo = verVehiculo.get("tipo_vehiculo").getAsString();
+                    String tarifa = verVehiculo.get("Tarifa").getAsString();
+                    String responsable = verVehiculo.get("responsable").getAsString();
+                    String tiempo = calcularTiempo(createEntrada, salida);
+
+                    final int posicion = i;
+
+                    JButton btnImprimir = new JButton("Imprimir");
+                    btnImprimir.setBackground(new Color(207,191,255));
+                    btnImprimir.setForeground(new Color(0,0,0));
+
+                    btnImprimir.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            //accionClickBotonImprimir( posicion );
+                        }
+                    });
+
+                    Object[] fila = new Object[]{id, tipoVehiculo, placa, responsable, tarifa, createEntrada, salida, tiempo, btnImprimir};
+                    modelo.addRow(fila);
+                }
+            }
+        }
+
     }//GEN-LAST:event_inputBuscarHistorialActionPerformed
 
     private String calcularTiempo(String ingreso, String salida) {
@@ -221,7 +267,7 @@ public final class Historial extends javax.swing.JPanel {
     }
    
    
-      private void listaHistorial(){
+    private void listaHistorial(){
         ConsumoApi consumo = new ConsumoApi();
         String obtenerHistorial = consumo.consumoGET("http://localhost/APIenPHP/API-voce/obtenerHistorial.php");
 

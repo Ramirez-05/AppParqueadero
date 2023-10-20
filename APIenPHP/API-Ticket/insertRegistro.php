@@ -5,35 +5,33 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 include '../Conexion.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['placa']) && isset($_POST['id_asignacion']) && isset($_POST['id_tarifa'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['placa']) && isset($_POST['responsable'])) {
     $placa = $_POST['placa'];
-    $id_asignacion = $_POST['id_asignacion'];
-    $id_tarifa = $_POST['id_tarifa'];
+    $responsable = $_POST['responsable'];
 
     try {
-        // Insertar un nuevo registro en la tabla de tickets
-        $consulta = $base_de_datos->prepare("INSERT INTO ticket (placa, id_asignacion, id_tarifa) VALUES (:placa, :id_asignacion, :id_tarifa)");
+        // Insertar un nuevo registro en la tabla de registro_vehiculos
+        $consulta = $base_de_datos->prepare("INSERT INTO registro_vehiculos (placa, responsable) VALUES (:placa, :responsable)");
         $consulta->bindParam(':placa', $placa);
-        $consulta->bindParam(':id_asignacion', $id_asignacion);
-        $consulta->bindParam(':id_tarifa', $id_tarifa);
+        $consulta->bindParam(':responsable', $responsable);
 
         $proceso = $consulta->execute();
 
         if ($proceso) {
             $respuesta = [
                 'status' => true,
-                'message' => "Registro de ticket insertado exitosamente"
+                'message' => "Registro de vehículo insertado exitosamente"
             ];
         } else {
             $respuesta = [
                 'status' => false,
-                'message' => "Error al insertar el registro de ticket"
+                'message' => "Error al insertar el registro de vehículo"
             ];
         }
     } catch (Exception $e) {
         $respuesta = [
             'status' => false,
-            'message' => "Error al insertar el registro de ticket",
+            'message' => "Error al insertar el registro de vehículo",
             'exception' => $e
         ];
     }

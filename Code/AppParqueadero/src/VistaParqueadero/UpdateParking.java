@@ -56,15 +56,15 @@ public class UpdateParking extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(15, 11, 25));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(49, 43, 81));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("EDITANDO PARQUEADERO");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(49, 43, 81));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("NIT:");
 
         campoNit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -72,7 +72,7 @@ public class UpdateParking extends javax.swing.JFrame {
         campoNit.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(49, 43, 81));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("NOMBRE:");
 
         campoNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -84,7 +84,7 @@ public class UpdateParking extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(49, 43, 81));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("DIRECCION:");
 
         campoDireccion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -93,7 +93,7 @@ public class UpdateParking extends javax.swing.JFrame {
         campoTelefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(49, 43, 81));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("TELEFONO:");
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));

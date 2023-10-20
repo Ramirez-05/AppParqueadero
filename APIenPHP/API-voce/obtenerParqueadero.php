@@ -4,7 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
-include 'Conexion.php';
+include '../Conexion.php';
 
 if (!$base_de_datos) {
     echo json_encode(['error' => 'No se pudo conectar a la base de datos.']);
