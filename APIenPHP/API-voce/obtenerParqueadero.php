@@ -13,7 +13,7 @@ if (!$base_de_datos) {
 
 $consulta = $base_de_datos->query(" SELECT t.id, tar.tipo_vehiculo, rv.placa, rv.responsable, tar.Tarifa, t.create_entrada FROM ticket t
     JOIN tarifas tar ON t.id_tarifa = tar.id
-    JOIN registro_vehiculos rv ON t.placa = rv.placa
+    JOIN registro_vehiculos rv ON t.placa = rv.placa WHERE t.salida IS NULL
 ");
 
 // Verifica si la consulta se realizó correctamente

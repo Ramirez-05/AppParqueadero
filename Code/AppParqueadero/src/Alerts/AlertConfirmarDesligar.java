@@ -170,6 +170,13 @@ public class AlertConfirmarDesligar extends javax.swing.JFrame {
             
             //CERRA VETANA ACTUAL
             this.dispose();
+        }else{
+            
+            Main main = new Main();
+            main.setVisible(true);
+            
+            GeneratingAlert alert = new GeneratingAlert("ERROR", "PARECE QUE ESTA ASOCIADO");
+            alert.setVisible(true);
         }
 
     }//GEN-LAST:event_btnDesligarActionPerformed
