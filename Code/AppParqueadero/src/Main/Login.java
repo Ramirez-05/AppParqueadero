@@ -19,6 +19,14 @@ public class Login extends javax.swing.JFrame {
     private ConsumoApi consumo;
     private Gson gson;
     public MainVendedor main;
+    
+    public String nit;
+    public String nombre;
+    public String direccion;
+    public String telefono;
+    public String user;
+    
+    
     public Login() {
         this.main = main;
         consumo = new ConsumoApi();
@@ -175,7 +183,6 @@ public class Login extends javax.swing.JFrame {
 
     private void btn_ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ingresarActionPerformed
         
-        Parqueadero park = new Parqueadero(main);
         String correo = campo_correo.getText();
         String contrasena = campo_contrasena.getText();
 
@@ -185,7 +192,7 @@ public class Login extends javax.swing.JFrame {
             postData.put("contrasena", contrasena);
 
             String iniciarSesion = consumo.consumoPOST("http://localhost/APIenPHP/API-login/acceso.php", postData);
-            System.out.println(iniciarSesion);
+            System.out.println("RETURN LOGIN: "+iniciarSesion);
 
             if (iniciarSesion != null) {
                 JsonObject jsonTemp = gson.fromJson(iniciarSesion, JsonObject.class);
@@ -195,13 +202,21 @@ public class Login extends javax.swing.JFrame {
                     // Verificar si el usuario existe
                     if (jsonTemp.get("user") != null && jsonTemp.get("user").isJsonObject()) {
                         JsonObject usuario = jsonTemp.getAsJsonObject("user");
+                        
+                        System.out.println("PASO 1 LOGIN: "+usuario);
 
-                        int idUsuario = usuario.get("id").getAsInt();
-                        String url = "http://localhost/APIenPHP/API-Ticket/obtenerParqueadero.php?id_usuario=" + idUsuario;
-                        String respuestaParqueaderos = consumo.consumoGET(url);
-
-                        if (respuestaParqueaderos != null) {
-                            JsonObject jsonTemp2 = gson.fromJson(respuestaParqueaderos, JsonObject.class);
+                        String idUsuario = usuario.get("id").getAsString();
+                        System.out.println("LOGIN PASO 1.5 = "+ idUsuario);
+                        
+                        Map<String, String> obtener = new HashMap<>();
+                        obtener.put("id_usuario", idUsuario);
+                        
+                        String ObtenParking = consumo.consumoPOST("http://localhost/APIenPHP/API-Ticket/obtenerParqueadero.php" , obtener);
+                          
+                        System.out.println("PASO 2 LOGIN: "+ ObtenParking);
+                        
+                        if (ObtenParking != null) {
+                            JsonObject jsonTemp2 = gson.fromJson(ObtenParking, JsonObject.class);
                             boolean success2 = jsonTemp2.get("success").getAsBoolean();
 
                             if (success2) {
@@ -209,13 +224,19 @@ public class Login extends javax.swing.JFrame {
 
                                 for (JsonElement parqueadero : parqueaderos) {
                                     JsonObject parq = parqueadero.getAsJsonObject();
-                                    String nit = parq.get("nit").getAsString();
-                                    String nombre = parq.get("nombre").getAsString();
-                                    String direccion = parq.get("direccion").getAsString();
-                                    String telefono = parq.get("telefono").getAsString();
-                                    String user = usuario.get("email").getAsString();                                    
+                                    nit = parq.get("nit").getAsString();
+                                    nombre = parq.get("nombre").getAsString();
+                                    direccion = parq.get("direccion").getAsString();
+                                    telefono = parq.get("telefono").getAsString();
+                                    user = parq.get("num_vendedores").getAsString();
+                                    
+                                    System.out.println("NIT LOGUEADO: "+nit);
+                                    System.out.println("NOMBRE LOGUEADO: "+nombre);
+                                    System.out.println("DIRECCION: "+direccion);
+                                    System.out.println("TELEFONO: "+telefono);
+                                    System.out.println("EMAIL: "+user);
 
-                                    park.mostrarDatosParqueadero(nit, nombre, direccion, telefono, user);                                    
+                                    
                                 }
                             } else {
                                 System.out.println("Error al obtener los parqueaderos.");
@@ -229,7 +250,8 @@ public class Login extends javax.swing.JFrame {
                         String ven = "VENDEDOR";
                         String adm = "ADMIN";
                         if (tipoUser.equalsIgnoreCase(ven)) {
-                            new MainVendedor().setVisible(true);
+                            MainVendedor mainv = new MainVendedor(nit, nombre, direccion, telefono, user);
+                            mainv.setVisible(true);
                             dispose();
                         } else if(tipoUser.equalsIgnoreCase(adm)){
                             new Main().setVisible(true);

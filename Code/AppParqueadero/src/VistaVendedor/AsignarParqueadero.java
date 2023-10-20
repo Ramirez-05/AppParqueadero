@@ -115,6 +115,11 @@ public class AsignarParqueadero extends javax.swing.JFrame {
         });
 
         selectParking.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        selectParking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectParkingActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(73, 59, 114));
@@ -300,6 +305,10 @@ public class AsignarParqueadero extends javax.swing.JFrame {
             alert.setVisible(true);
         }
     }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void selectParkingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectParkingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_selectParkingActionPerformed
 
     private void centrarPantalla(){
          // Centrar la ventana en la pantalla
