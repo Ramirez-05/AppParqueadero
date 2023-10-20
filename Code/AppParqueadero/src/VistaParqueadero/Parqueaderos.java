@@ -266,6 +266,10 @@ public class Parqueaderos extends javax.swing.JPanel {
     
     public void accionClickBotonEditar(int fila) {
         
+        
+        
+        
+        
         // Obtener los datos de la fila seleccionada
         String nit = (String) modelo.getValueAt(fila, 0);
         String nombre = (String) modelo.getValueAt(fila, 1);

@@ -57,27 +57,30 @@ public class DeleteParking extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(15, 11, 25));
         jPanel1.setEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(49, 43, 81));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ELIMINANDO PARQUEADERO");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(49, 43, 81));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("NIT:");
 
+        campoNit.setBackground(new java.awt.Color(255, 255, 255));
         campoNit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         campoNit.setForeground(new java.awt.Color(0, 0, 0));
         campoNit.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(49, 43, 81));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("NOMBRE:");
 
+        campoNombre.setBackground(new java.awt.Color(255, 255, 255));
         campoNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoNombre.setForeground(new java.awt.Color(0, 0, 0));
         campoNombre.setEnabled(false);
         campoNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,18 +89,21 @@ public class DeleteParking extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(49, 43, 81));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("DIRECCION:");
 
+        campoDireccion.setBackground(new java.awt.Color(255, 255, 255));
         campoDireccion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoDireccion.setForeground(new java.awt.Color(0, 0, 0));
         campoDireccion.setEnabled(false);
 
+        campoTelefono.setBackground(new java.awt.Color(255, 255, 255));
         campoTelefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         campoTelefono.setForeground(new java.awt.Color(0, 0, 0));
         campoTelefono.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(49, 43, 81));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("TELEFONO:");
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
@@ -110,9 +116,9 @@ public class DeleteParking extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(207, 191, 255));
+        btnEliminar.setBackground(new java.awt.Color(123, 47, 152));
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("ELIMINAR");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

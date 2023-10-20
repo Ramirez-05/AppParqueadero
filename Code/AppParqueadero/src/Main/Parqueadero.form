@@ -61,21 +61,26 @@
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel1" min="-2" pref="51" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="etq_nit" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                              <Component id="jLabelNombre" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabelDireccion" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="etq_direccion" min="-2" pref="118" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="etq_direccion" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Component id="jLabelTelefono" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="etq_telefono" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel1" min="-2" pref="51" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="etq_nit" min="-2" pref="128" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                              <Component id="jLabelNombre" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
                               <Component id="etq_nombre" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                               <Component id="jLabelVendedores" min="-2" max="-2" attributes="0"/>
@@ -103,17 +108,15 @@
                   <Component id="etq_vendedor" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabelDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="etq_direccion" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Group type="103" alignment="3" groupAlignment="3" attributes="0">
                       <Component id="jLabelTelefono" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="etq_telefono" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="etq_direccion" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
-                  </Group>
               </Group>
-              <EmptySpace pref="27" max="32767" attributes="0"/>
+              <EmptySpace pref="30" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="inputBuscarUpdate" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                   <Component id="btnBuscarVehiculoParqueadero" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
@@ -140,14 +143,14 @@
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="8" rowCount="4">
-                <Column editable="false" title="TIKECT" type="java.lang.Object"/>
-                <Column editable="false" title="VEH&#xcd;CULO" type="java.lang.Object"/>
-                <Column editable="false" title="PLACA" type="java.lang.Object"/>
-                <Column editable="false" title="TITULAR" type="java.lang.Object"/>
-                <Column editable="false" title="TARIFA" type="java.lang.Object"/>
-                <Column editable="false" title="INGRESO" type="java.lang.Object"/>
-                <Column editable="false" title="TIEMPO/H" type="java.lang.Object"/>
-                <Column editable="false" title="SALIDA" type="java.lang.Object"/>
+                <Column editable="true" title="TIKECT" type="java.lang.Object"/>
+                <Column editable="true" title="VEH&#xcd;CULO" type="java.lang.Object"/>
+                <Column editable="true" title="PLACA" type="java.lang.Object"/>
+                <Column editable="true" title="TITULAR" type="java.lang.Object"/>
+                <Column editable="true" title="TARIFA" type="java.lang.Object"/>
+                <Column editable="true" title="INGRESO" type="java.lang.Object"/>
+                <Column editable="true" title="TIEMPO/H" type="java.lang.Object"/>
+                <Column editable="true" title="SALIDA" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -270,7 +273,10 @@
     <Component class="javax.swing.JLabel" name="etq_nombre">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="1"/>
+          <Font name="Segoe UI" size="18" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>
@@ -278,7 +284,10 @@
     <Component class="javax.swing.JLabel" name="etq_telefono">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="1"/>
+          <Font name="Segoe UI" size="18" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>
@@ -289,7 +298,10 @@
     <Component class="javax.swing.JLabel" name="etq_direccion">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="1"/>
+          <Font name="Segoe UI" size="18" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>
@@ -300,7 +312,10 @@
     <Component class="javax.swing.JLabel" name="etq_vendedor">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="1"/>
+          <Font name="Segoe UI" size="18" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>
@@ -311,7 +326,10 @@
     <Component class="javax.swing.JLabel" name="etq_nit">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Dialog" size="14" style="1"/>
+          <Font name="Dialog" size="18" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="NO DISPONIBLE"/>
       </Properties>

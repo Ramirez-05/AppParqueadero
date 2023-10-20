@@ -1,4 +1,6 @@
 package Main;
+import Alerts.AlertCobrar;
+import Alerts.GeneratingAlert;
 import Clases.ButtonEditor;
 import Clases.ButtonRenderer;
 import com.google.gson.Gson;
@@ -85,15 +87,7 @@ public final class Parqueadero extends javax.swing.JPanel {
             new String [] {
                 "TIKECT", "VEHÍCULO", "PLACA", "TITULAR", "TARIFA", "INGRESO", "TIEMPO/H", "SALIDA"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(tabVehiculosActuales);
 
         inputBuscarUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -128,19 +122,24 @@ public final class Parqueadero extends javax.swing.JPanel {
         jLabelVendedores.setForeground(new java.awt.Color(0, 0, 0));
         jLabelVendedores.setText("VENDEDORES:");
 
-        etq_nombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etq_nombre.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        etq_nombre.setForeground(new java.awt.Color(0, 0, 0));
         etq_nombre.setText("NO DISPONIBLE");
 
-        etq_telefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etq_telefono.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        etq_telefono.setForeground(new java.awt.Color(0, 0, 0));
         etq_telefono.setText("NO DISPONIBLE");
 
-        etq_direccion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etq_direccion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        etq_direccion.setForeground(new java.awt.Color(0, 0, 0));
         etq_direccion.setText("NO DISPONIBLE");
 
-        etq_vendedor.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etq_vendedor.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        etq_vendedor.setForeground(new java.awt.Color(0, 0, 0));
         etq_vendedor.setText("NO DISPONIBLE");
 
-        etq_nit.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        etq_nit.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        etq_nit.setForeground(new java.awt.Color(0, 0, 0));
         etq_nit.setText("NO DISPONIBLE");
 
         jLabel1.setBackground(new java.awt.Color(15, 11, 25));
@@ -167,20 +166,22 @@ public final class Parqueadero extends javax.swing.JPanel {
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(etq_nit)
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabelNombre))
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelDireccion)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(etq_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(etq_direccion)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabelTelefono)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(etq_telefono))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(etq_nit, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39)
-                                .addComponent(jLabelNombre)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(etq_nombre)
                                 .addGap(47, 47, 47)
                                 .addComponent(jLabelVendedores)
@@ -201,14 +202,13 @@ public final class Parqueadero extends javax.swing.JPanel {
                     .addComponent(jLabelVendedores)
                     .addComponent(etq_vendedor))
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelDireccion)
+                    .addComponent(etq_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabelTelefono)
-                        .addComponent(etq_telefono))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabelDireccion)
-                        .addComponent(etq_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addComponent(etq_telefono)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputBuscarUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarVehiculoParqueadero, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -221,9 +221,6 @@ public final class Parqueadero extends javax.swing.JPanel {
     //Inicializando tabla de vehiculos actuales
     public void initAlternComponets(){
        modelo = (DefaultTableModel) tabVehiculosActuales.getModel();
-       
-       //Deshabilita la modificación de columnas en la interfaz
-       tabVehiculosActuales.getTableHeader().setReorderingAllowed(false);
        
        // Configurar la JTable para ajustar automáticamente el ancho de las columnas
         tabVehiculosActuales.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -247,7 +244,6 @@ public final class Parqueadero extends javax.swing.JPanel {
             
         } else {
 
-            ConsumoApi consumo = new ConsumoApi();
             Map<String, String> parametros = new HashMap<>();
             parametros.put("busqueda", busqueda);
             String obtenerVehiculo = consumo.consumoGET("http://localhost/APIenPHP/API-voce/buscarVehiculo.php", parametros);
@@ -269,14 +265,14 @@ public final class Parqueadero extends javax.swing.JPanel {
 
                     final int posicion = i;
 
-                    JButton btnSalida = new JButton("Salida");
+                    JButton btnSalida = new JButton("SALIDA");
                     btnSalida.setBackground(new Color(207,191,255));
                     btnSalida.setForeground(new Color(0,0,0));
 
                     btnSalida.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            //accionClickBotonImprimir( posicion );
+                            accionClickDarSalida( posicion );
                         }
                     });
 
@@ -291,6 +287,69 @@ public final class Parqueadero extends javax.swing.JPanel {
         
     }//GEN-LAST:event_inputBuscarUpdateActionPerformed
     
+    public void accionClickDarSalida(int fila){
+        // Obtener los datos de la fila seleccionada
+        String ticket = (String) modelo.getValueAt(fila, 0);
+        String vehiculo = (String) modelo.getValueAt(fila, 1);
+        String placa = (String) modelo.getValueAt(fila, 2);
+        String titular = (String) modelo.getValueAt(fila, 3);
+        String tarifa = (String) modelo.getValueAt(fila, 4);
+        String ingreso = (String) modelo.getValueAt(fila, 5);
+        String tiempo = (String) modelo.getValueAt(fila, 6);
+
+        System.out.println("Ticket: " + ticket);
+        System.out.println("Vehículo: " + vehiculo);
+        System.out.println("Placa: " + placa);
+        System.out.println("Titular: " + titular);
+        System.out.println("Tarifa: " + tarifa);
+        System.out.println("Ingreso: " + ingreso);
+        System.out.println("Tiempo: " + tiempo);
+        
+         double tarifaDouble = Double.parseDouble(tarifa);
+        
+        // Datos de entrada
+        double tarifaPorHora = tarifaDouble; // Tarifa 
+        String tiempoT = tiempo; 
+
+        // Extraer horas y minutos del tiempo
+        int horas = 0;
+        int minutos = 0;
+
+        if (tiempoT.contains("h")) {
+            String[] partesTiempo = tiempoT.split("h");
+            horas = Integer.parseInt(partesTiempo[0].trim());
+
+            if (partesTiempo[1].contains("m")) {
+                minutos = Integer.parseInt(partesTiempo[1].replace("m", "").trim());
+            }
+        } else if (tiempoT.contains("m")) {
+            minutos = Integer.parseInt(tiempoT.replace("m", "").trim());
+        }
+
+        // Calcular la tarifa
+        double tarifaTotal = (horas * tarifaPorHora) + ((minutos > 0) ? tarifaPorHora : 0);
+
+        System.out.println("Tarifa total: $" + tarifaTotal);
+        
+        Map<String, String> update = new HashMap<>();
+        update.put("placa", placa);
+        
+        
+        String verificarT = consumo.consumoGET("http://localhost/APIenPHP/API-tarifas/VerificarTicket.php", update);
+        
+        System.out.println("EL TICKET RETORNADO: "+verificarT);
+        
+        if(verificarT != null ){
+            
+            AlertCobrar alert = new AlertCobrar(placa, tarifaTotal,this, tiempo);
+            alert.setVisible(true);
+            
+        }
+        
+        
+    }
+    
+   
     public void mostrarDatosParqueadero(){                     
         try {
             System.out.println("nit a panel: " + nit);
@@ -325,7 +384,7 @@ public final class Parqueadero extends javax.swing.JPanel {
         }
     }
     
-    private void listaVehiculos(){
+    public void listaVehiculos(){
         ConsumoApi consumo = new ConsumoApi();
         String obtenerVehiculos = consumo.consumoGET("http://localhost/APIenPHP/API-voce/obtenerParqueadero.php");
         
@@ -350,6 +409,13 @@ public final class Parqueadero extends javax.swing.JPanel {
                 JButton btnSalida = new JButton("Salida");
                 btnSalida.setBackground(new Color(207, 191, 255));
                 btnSalida.setForeground(new Color(0,0,0));
+                
+                btnSalida.addActionListener(new ActionListener() {
+                      @Override
+                      public void actionPerformed(ActionEvent e) {
+                          accionClickDarSalida( posicion );
+                      }
+                  });
                 
                 Object[] fila = new Object[]{id, tipo_vehiculo, placa, responsable, Tarifa, create_entrada, tiempo, btnSalida};
                 modelo.addRow(fila);
