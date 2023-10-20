@@ -54,32 +54,46 @@ public class EditarUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(15, 11, 25));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("VINCULANDO VENDEDOR");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("CEDULA:");
 
+        campoCedula.setBackground(new java.awt.Color(255, 255, 255));
+        campoCedula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoCedula.setForeground(new java.awt.Color(0, 0, 0));
         campoCedula.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("NOMBRE:");
 
+        campoNombre.setBackground(new java.awt.Color(255, 255, 255));
+        campoNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoNombre.setForeground(new java.awt.Color(0, 0, 0));
+
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("APELLIDO:");
 
+        campoApellido.setBackground(new java.awt.Color(255, 255, 255));
+        campoApellido.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoApellido.setForeground(new java.awt.Color(0, 0, 0));
         campoApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoApellidoActionPerformed(evt);
             }
         });
+
+        campoTelefono.setBackground(new java.awt.Color(255, 255, 255));
+        campoTelefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoTelefono.setForeground(new java.awt.Color(0, 0, 0));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -91,19 +105,27 @@ public class EditarUsuario extends javax.swing.JFrame {
             }
         });
 
+        campoEmail.setBackground(new java.awt.Color(255, 255, 255));
+        campoEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoEmail.setForeground(new java.awt.Color(0, 0, 0));
+
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("EMAIL:");
 
+        campoContrasenia.setBackground(new java.awt.Color(255, 255, 255));
+        campoContrasenia.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        campoContrasenia.setForeground(new java.awt.Color(0, 0, 0));
+
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("CONTRASEÑA:");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(73, 59, 114));
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("TELEFONO");
 
-        jButton1.setBackground(new java.awt.Color(73, 59, 114));
+        jButton1.setBackground(new java.awt.Color(123, 47, 152));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("EDITAR");
@@ -191,7 +213,7 @@ public class EditarUsuario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(jButton1))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

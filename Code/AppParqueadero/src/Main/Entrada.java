@@ -1,4 +1,5 @@
 package Main;
+import Alerts.GeneratingAlert;
 import Alerts.RegistroExitoso;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -18,11 +19,16 @@ public final class Entrada extends javax.swing.JPanel {
     ConsumoApi consumo;
     
     DefaultTableModel modelo;
+    String id_asignacion;
+    String responsable;
+    String placa;
+    String vehiculo;
+    String encargado;
     
     
-    
-    public Entrada(MainVendedor main) {
+    public Entrada(MainVendedor main, String id_asignacion) {
         this.main = main;
+        this.id_asignacion = id_asignacion;
         consumo = new ConsumoApi();
         gson = new Gson();
         initComponents();
@@ -150,6 +156,8 @@ public final class Entrada extends javax.swing.JPanel {
     //Inicializando tabla de vehiculos actuales
     public void initAlternComponets(){
        
+        
+        
     }
     
     
@@ -157,9 +165,9 @@ public final class Entrada extends javax.swing.JPanel {
     //Botón para editar parqueadero
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
        
-        String placa = inputPlaca.getText();
-        String vehiculo = selectVehiculo.getSelectedItem().toString();
-        String encargado = inputTitular.getText();
+        placa = inputPlaca.getText();
+        vehiculo = selectVehiculo.getSelectedItem().toString();
+        encargado = inputTitular.getText();
        
         if (!placa.isEmpty() &&  !selectVehiculo.getSelectedItem().equals("Seleccionar Vehiculo") && !encargado.isEmpty() ) {
             
@@ -168,28 +176,119 @@ public final class Entrada extends javax.swing.JPanel {
             
             String selected = consumo.consumoPOST("http://localhost/APIenPHP/API-tarifas/VerificarPlaca.php", verificar);
             
-            System.out.println("RESPUESTA ASOCIACION: "+selected);
+            System.out.println("RESPUESTA ASOCIACION: " + selected);
             
             JsonObject respuestaInsert = gson.fromJson(selected, JsonObject.class);
 
             boolean status = respuestaInsert.get("status").getAsBoolean();
-            
-            if(status){
-                
-                System.out.println("hola");
-                
-            }
-            
-            
-            
-            
-        }
-        
-        
-       
-        
 
+            if (status) {
+                responsable = respuestaInsert.get("responsable").getAsString();
+                String tipoVehiculo = respuestaInsert.get("tipo_vehiculo").getAsString();
+
+                System.out.println("Responsable: " + responsable);
+                System.out.println("Tipo de Vehículo: " + tipoVehiculo);
                 
+                inputTitular.setText(responsable);
+                selectVehiculo.setSelectedItem(responsable);
+                
+                Map<String, String> id_tarifa = new HashMap<>();
+                id_tarifa.put("tipo_vehiculo", vehiculo);
+                
+                String idTarifa = consumo.consumoPOST("http://localhost/APIenPHP/API-tarifas/ObtenerIdTarifa.php", id_tarifa);
+                
+                System.out.println("LO QUE ME LLEGO PARA TARIFAS ID: "+idTarifa);
+                // Analizar la respuesta JSON
+                JsonObject respuesta = gson.fromJson(idTarifa, JsonObject.class);
+
+                // Verificar si la respuesta indica éxito
+                boolean success = respuesta.get("success").getAsBoolean();
+
+                if (success) {
+                    // Obtener el ID de tarifa
+                    String idTarifaObtenido = respuesta.get("id_tarifa").getAsString();
+                    System.out.println("ID de Tarifa: " + idTarifaObtenido);
+
+                    Map<String, String> ticket = new HashMap<>();
+                    ticket.put("placa", placa);
+                    ticket.put("id_asignacion", id_asignacion);
+                    ticket.put("id_tarifa", idTarifaObtenido);
+                    
+                    String insertTicket = consumo.consumoPOST("http://localhost/APIenPHP/API-ticket/insertTicket.php", ticket);
+                    
+                    System.out.println("RESPUESTA DEL INSERT DEL TICKET: "+insertTicket);
+                    
+                    JsonObject response = gson.fromJson(insertTicket, JsonObject.class);
+
+                    boolean statusinsert = response.get("status").getAsBoolean();
+
+                    if (statusinsert) {
+                        
+                        inputPlaca.setText("");
+                        inputTitular.setText("");
+                        
+                        GeneratingAlert alert = new GeneratingAlert("EXITO","REGISTRO EXITOSO");
+                        alert.setVisible(true);
+                    } 
+                }
+            }else if(!status){
+                System.out.println("entro a ststus falseeeee");
+           
+                Map<String, String> insertRegistroV = new HashMap<>();
+                insertRegistroV.put("placa", placa);
+                insertRegistroV.put("responsable", encargado);
+                
+                String insetRegistrov = consumo.consumoPOST("http://localhost/APIenPHP/API-ticket/insertRegistro.php", insertRegistroV);
+                
+                System.out.println("INSERTANDO NUEVO REGISTRO: "+insetRegistrov);
+                
+                JsonObject response = gson.fromJson(insetRegistrov, JsonObject.class);
+
+                boolean statusinsert = response.get("status").getAsBoolean();
+                
+                if (statusinsert) {
+                    
+                    Map<String, String> id_tarifa = new HashMap<>();
+                    id_tarifa.put("tipo_vehiculo", vehiculo);
+
+                    String idTarifa = consumo.consumoPOST("http://localhost/APIenPHP/API-tarifas/ObtenerIdTarifa.php", id_tarifa);
+
+                    System.out.println("LO QUE ME LLEGO PARA TARIFAS ID: "+idTarifa);
+                    // Analizar la respuesta JSON
+                    JsonObject respuesta = gson.fromJson(idTarifa, JsonObject.class);
+
+                    // Verificar si la respuesta indica éxito
+                    boolean success = respuesta.get("success").getAsBoolean();
+
+                    if (success) {
+                        // Obtener el ID de tarifa
+                        String idTarifaObtenido = respuesta.get("id_tarifa").getAsString();
+                        System.out.println("ID de Tarifa: " + idTarifaObtenido);
+
+                        Map<String, String> ticket = new HashMap<>();
+                        ticket.put("placa", placa);
+                        ticket.put("id_asignacion", id_asignacion);
+                        ticket.put("id_tarifa", idTarifaObtenido);
+
+                        String insertTicket = consumo.consumoPOST("http://localhost/APIenPHP/API-ticket/insertTicket.php", ticket);
+
+                        JsonObject response1 = gson.fromJson(insertTicket, JsonObject.class);
+
+                        boolean statusinsert2 = response1.get("status").getAsBoolean();
+
+                        if (statusinsert2) {
+
+                            inputPlaca.setText("");
+                            inputTitular.setText("");
+
+                            GeneratingAlert alert = new GeneratingAlert("EXITO","REGISTRO EXITOSO");
+                            alert.setVisible(true);
+                        } 
+
+                    }    
+                } 
+            }
+        }
     }//GEN-LAST:event_btnEntradaActionPerformed
 
     private void selectVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectVehiculoActionPerformed

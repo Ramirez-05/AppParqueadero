@@ -25,6 +25,7 @@ public class Login extends javax.swing.JFrame {
     public String direccion;
     public String telefono;
     public String user;
+    String id_asiganacion;
     
     
     public Login() {
@@ -204,7 +205,7 @@ public class Login extends javax.swing.JFrame {
                         JsonObject usuario = jsonTemp.getAsJsonObject("user");
                         
                         System.out.println("PASO 1 LOGIN: "+usuario);
-
+                        
                         String idUsuario = usuario.get("id").getAsString();
                         System.out.println("LOGIN PASO 1.5 = "+ idUsuario);
                         
@@ -235,8 +236,19 @@ public class Login extends javax.swing.JFrame {
                                     System.out.println("DIRECCION: "+direccion);
                                     System.out.println("TELEFONO: "+telefono);
                                     System.out.println("EMAIL: "+user);
-
                                     
+                                    
+                                    Map<String, String> queryAsignacion = new HashMap<>();
+                                    queryAsignacion.put("id_usuario", idUsuario);
+                                    
+                                    String ObtenerAsignacion = consumo.consumoPOST("http://localhost/APIenPHP/API-parqueadero/obtenerIdAsignacion.php", queryAsignacion);
+                                    
+                                    System.out.println("ESTE ES EL ID DEL ASIGNACION "+ObtenerAsignacion);
+                                    
+                                    JsonObject respuesta = gson.fromJson(ObtenerAsignacion, JsonObject.class);
+                                    
+                                    id_asiganacion = respuesta.get("id_asignacion").getAsString();
+                                    System.out.println("ID de Asignación: " + id_asiganacion);
                                 }
                             } else {
                                 System.out.println("Error al obtener los parqueaderos.");
@@ -250,7 +262,7 @@ public class Login extends javax.swing.JFrame {
                         String ven = "VENDEDOR";
                         String adm = "ADMIN";
                         if (tipoUser.equalsIgnoreCase(ven)) {
-                            MainVendedor mainv = new MainVendedor(nit, nombre, direccion, telefono, user);
+                            MainVendedor mainv = new MainVendedor(nit, nombre, direccion, telefono, user, id_asiganacion);
                             mainv.setVisible(true);
                             dispose();
                         } else if(tipoUser.equalsIgnoreCase(adm)){
