@@ -27,7 +27,7 @@ public class ParqueaderoDB extends DataBase{
         }
         
         return listado;
-    }
+    }              
     
     public boolean eliminarParqueadero(String nit) {
         boolean respuesta = false;
