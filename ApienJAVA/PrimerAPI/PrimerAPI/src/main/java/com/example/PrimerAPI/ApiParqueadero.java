@@ -5,7 +5,10 @@ import org.springframework.dao.DataAccessException;
 import PackagesDB.DataBase;
 import PackagesDB.ParqueaderoDB;
 import Clases.Parking;
+import Clases.Registro;
+import Clases.Ticket;
 import Clases.ToolsApi;
+import Clases.datosParking;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,15 +31,22 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiParqueadero {
     
     ParqueaderoDB parqueadero;
+  
     
      public ApiParqueadero(){
         this.parqueadero = new ParqueaderoDB();
     }
+
+     
+     public static void main(String[] args) {
+        SpringApplication.run(ApiParqueadero.class, args);
+    }
+     
     
     @GetMapping("/obtenerParqueaderos")
     public ResponseEntity<Object> listado() {
         List<Parking> listado = new ArrayList<>();
-        ResultSet response = parqueadero.listaParqueaderos();
+        ResultSet response = parqueadero.obtenerParqueadero();
 
         if (response == null) {
             return ResponseEntity.notFound().build();
@@ -186,6 +196,117 @@ public class ApiParqueadero {
             return ResponseEntity.badRequest().body(errorResponse);
         }
     }
-   
+    
+    @PostMapping("/insertarRegistro")
+    public ResponseEntity<Object> insertarRegistro(@RequestParam("placa") String placa,@RequestParam("responsable") String responsable) {
+        try {
+            if (!placa.isEmpty() && !responsable.isEmpty()) {
+
+                boolean insercionExitosa = parqueadero.insertarRegistro(placa, responsable);
+
+                if (insercionExitosa) {
+                    Map<String, Object> insertResponse = new HashMap<>();
+                    insertResponse.put("status", true);
+                    insertResponse.put("message", "OK##PARQUEADERO##INSERT");
+                    
+                    System.out.println("-> resp: "+insertResponse.toString());
+                    return ResponseEntity.ok(insertResponse);
+                } else {
+                    Map<String, Object> errorResponse = new HashMap<>();
+                    errorResponse.put("status", false);
+                    errorResponse.put("message", "ERROR##PARQUEADERO##INSERT");
+                    System.out.println("-> resp: "+errorResponse.toString());
+                    return ResponseEntity.badRequest().body(errorResponse);
+                }
+            } else {
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("status", false);
+                errorResponse.put("message", "ERROR##DATOS##POST");
+                System.out.println("-> resp: "+errorResponse.toString());
+                
+                return ResponseEntity.badRequest().body(errorResponse);
+            }
+        } catch (DataAccessException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", false);
+            errorResponse.put("message", "ERROR##SQL");
+            errorResponse.put("exception", e.getMessage());
+            System.out.println("-> resp: "+errorResponse.toString());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+    @PostMapping("/insertarTicket")
+    public ResponseEntity<Object> insertarTicket(@RequestParam("placa") String placa, @RequestParam("asignacion") String asignacion, @RequestParam("tarifa") String tarifa) {
+        try {
+            if (!placa.isEmpty() && !asignacion.isEmpty() && !tarifa.isEmpty()) {
+
+                boolean insercionExitosa = parqueadero.insertarTicket(placa, asignacion, tarifa);
+
+                if (insercionExitosa) {
+                    Map<String, Object> insertResponse = new HashMap<>();
+                    insertResponse.put("status", true);
+                    insertResponse.put("message", "OK##PARQUEADERO##INSERT");
+                    
+                    System.out.println("-> resp: "+insertResponse.toString());
+                    return ResponseEntity.ok(insertResponse);
+                } else {
+                    Map<String, Object> errorResponse = new HashMap<>();
+                    errorResponse.put("status", false);
+                    errorResponse.put("message", "ERROR##PARQUEADERO##INSERT");
+                    System.out.println("-> resp: "+errorResponse.toString());
+                    return ResponseEntity.badRequest().body(errorResponse);
+                }
+            } else {
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("status", false);
+                errorResponse.put("message", "ERROR##DATOS##POST");
+                System.out.println("-> resp: "+errorResponse.toString());
+                
+                return ResponseEntity.badRequest().body(errorResponse);
+            }
+        } catch (DataAccessException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("status", false);
+            errorResponse.put("message", "ERROR##SQL");
+            errorResponse.put("exception", e.getMessage());
+            System.out.println("-> resp: "+errorResponse.toString());
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+    
+    @GetMapping("/obtenerParqueadero")
+    public ResponseEntity<Object> listados() {
+        List<datosParking> listados = new ArrayList<>();
+        ResultSet response = parqueadero.obtenerParqueadero();
+
+        if (response == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        try {
+            do {
+                datosParking temp = new datosParking(
+                        response.getString("id"),
+                        response.getString("tipo_vahiculo"),
+                        response.getString("placa"),
+                        response.getString("responsable"),
+                        response.getString("Tarifa"),
+                        response.getString("create_entrada")
+                );
+
+                listados.add(temp);
+            } while (response.next());
+
+            Map<String, List<datosParking>> responseMap = new HashMap<>();
+            responseMap.put("registros", listados);
+
+            return ResponseEntity.ok(responseMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    
     
 }
