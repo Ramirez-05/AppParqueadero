@@ -45,11 +45,15 @@ public class Parqueaderos extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaParqueadero = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(15, 11, 25));
 
-        btnBuscar.setBackground(new java.awt.Color(207, 191, 255));
+        inputBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        inputBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        inputBuscar.setForeground(new java.awt.Color(0, 0, 0));
+
+        btnBuscar.setBackground(new java.awt.Color(123, 47, 152));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("BUSCAR");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -57,9 +61,9 @@ public class Parqueaderos extends javax.swing.JPanel {
             }
         });
 
-        bntCreateParking.setBackground(new java.awt.Color(207, 191, 255));
+        bntCreateParking.setBackground(new java.awt.Color(123, 47, 152));
         bntCreateParking.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        bntCreateParking.setForeground(new java.awt.Color(0, 0, 0));
+        bntCreateParking.setForeground(new java.awt.Color(255, 255, 255));
         bntCreateParking.setText("CREAR PARQUEADERO");
         bntCreateParking.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,10 +111,10 @@ public class Parqueaderos extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
                     .addComponent(bntCreateParking)
-                    .addComponent(inputBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                    .addComponent(inputBuscar))
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -168,8 +172,8 @@ public class Parqueaderos extends javax.swing.JPanel {
                     String nombre = viewParking.get("nombre").getAsString();
                     String direccion = viewParking.get("direccion").getAsString();       
                     JButton btnEditar = new JButton("EDITAR");
-                    btnEditar.setBackground(new Color(207,191,255));
-                    btnEditar.setForeground(new Color(0,0,0));
+                    btnEditar.setBackground(new Color(123,47,152));
+                    btnEditar.setForeground(new Color(0, 0 ,0));
                     btnEditar.setFont(font);
                     JButton btnEliminar = new JButton("ELIMINAR");
                     btnEliminar.setBackground(new Color(255, 75, 75));
@@ -228,8 +232,8 @@ public class Parqueaderos extends javax.swing.JPanel {
                 String nombre = viewParking.get("nombre").getAsString();
                 String direccion = viewParking.get("direccion").getAsString();       
                 JButton btnEditar = new JButton("EDITAR");
-                btnEditar.setBackground(new Color(207,191,255));
-                btnEditar.setForeground(new Color(0,0,0));
+                btnEditar.setBackground(new Color(123,47,152));
+                btnEditar.setForeground(new Color(0, 0 ,0));
                 btnEditar.setFont(font);
                 JButton btnEliminar = new JButton("ELIMINAR");
                 btnEliminar.setBackground(new Color(255, 75, 75));
@@ -261,6 +265,10 @@ public class Parqueaderos extends javax.swing.JPanel {
     }    
     
     public void accionClickBotonEditar(int fila) {
+        
+        
+        
+        
         
         // Obtener los datos de la fila seleccionada
         String nit = (String) modelo.getValueAt(fila, 0);
@@ -324,7 +332,7 @@ public class Parqueaderos extends javax.swing.JPanel {
             mostrarFrame.setVisible(true);
             
             // OCULTAMOS EL PANEL ACTUAL
-            this.main.setVisible(false);
+            this.main.dispose();
         }
     }
     

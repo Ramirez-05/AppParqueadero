@@ -5,7 +5,20 @@ import java.awt.Toolkit;
 
 public class MainVendedor extends javax.swing.JFrame {
     
-    public MainVendedor() {
+    String nit;
+    String nombre;
+    String direccion;
+    String telefono;
+    String user;
+    String id_asignacion;
+    
+    public MainVendedor( String nit, String nombre,String direccion,String telefono, String user, String id_asignacion ) {
+        this.nit = nit;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.user = user;
+        this.id_asignacion = id_asignacion;
         initComponents();
         
         // Centrar la ventana en la pantalla
@@ -165,7 +178,7 @@ public class MainVendedor extends javax.swing.JFrame {
         
         panelPrincipal.removeAll();
 
-        Parqueadero mostrarPanel = new Parqueadero(this);
+        Parqueadero mostrarPanel = new Parqueadero(this, nit, nombre, direccion, telefono, user);
 
         mostrarPanel.setSize(panelPrincipal.getSize() );
         panelPrincipal.add( mostrarPanel );
@@ -210,7 +223,7 @@ public class MainVendedor extends javax.swing.JFrame {
         
         panelPrincipal.removeAll();
         
-        Entrada mostrarPanel = new Entrada(this);
+        Entrada mostrarPanel = new Entrada(this,id_asignacion);
 
         mostrarPanel.setSize(panelPrincipal.getSize() );
         panelPrincipal.add( mostrarPanel);

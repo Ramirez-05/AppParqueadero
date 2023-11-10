@@ -16,10 +16,11 @@ import javax.swing.table.DefaultTableModel;
 public final class Tarifas extends javax.swing.JPanel {
     public MainVendedor main;
     private final Gson gson;
-    
+    private ConsumoApi consumo;
     DefaultTableModel modelo;
     public Tarifas(MainVendedor main) {
         this.main = main;
+        consumo = new ConsumoApi();
         gson = new Gson();
         initComponents();
         initAlternComponets();
@@ -176,12 +177,12 @@ public final class Tarifas extends javax.swing.JPanel {
     }
     
     private void listaTarifa(){
-        ConsumoApi consumo = new ConsumoApi();
-        String obtenerTarifas = consumo.consumoGET("http://localhost/APIenPHP/API-tarifas/Obtener.php");
-
+        String obtenerTarifas = consumo.consumoGET("http://localhost:8080/listaTarifa");
+        
+        System.out.println(obtenerTarifas);
         if (obtenerTarifas != null) {
-            JsonObject jsonTemp = gson.fromJson(obtenerTarifas, JsonObject.class);
-            JsonArray tarifas = jsonTemp.getAsJsonArray("registros");
+            
+            JsonArray tarifas = JsonParser.parseString(obtenerTarifas).getAsJsonArray(); 
             modelo.setRowCount(0);
             String[] opcion = new String[tarifas.size()];
 
@@ -190,7 +191,7 @@ public final class Tarifas extends javax.swing.JPanel {
                 String id = verTarifa.get("id").getAsString();
                 String tipo = verTarifa.get("tipo_vehiculo").getAsString();
                 opcion[i] = tipo; // Asignar el tipo al arreglo opcion[]
-                String tarifa = verTarifa.get("Tarifa").getAsString();
+                String tarifa = verTarifa.get("tarifa").getAsString();
                 Object[] fila = new Object[]{id, tipo, tarifa};
                 modelo.addRow(fila);
             }
@@ -200,36 +201,30 @@ public final class Tarifas extends javax.swing.JPanel {
 
     
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        ConsumoApi consumo = new ConsumoApi();
-        String nuevoValor = campo_tarifa.getText(); 
+        String nuevoValor = campo_tarifa.getText();
         String tipoVehiculo = (String) boxVehiculos.getSelectedItem();
         System.out.println("Tarifa: " + nuevoValor);
 
-        // Envía la solicitud POST a tu API PHP
+        // Envía la solicitud POST a tu API Java
         Map<String, String> postData = new HashMap<>();
-        postData.put("tipo_vehiculo", tipoVehiculo);
-        postData.put("tarifa", nuevoValor);
-        String cambiarTarifa = consumo.consumoPOST("http://localhost/APIenPHP/API-tarifas/UpdateTarifa.php", postData);
-        System.out.println("raspuesta api: "+ cambiarTarifa);
-        if (cambiarTarifa != null) {
-            JsonObject jsonTemp = gson.fromJson(cambiarTarifa, JsonObject.class);
-            boolean status = jsonTemp.get("status").getAsBoolean();
-            String message = jsonTemp.get("message").getAsString();
+        postData.put("tipoVehiculo", tipoVehiculo);
+        postData.put("nuevaTarifa", nuevoValor);
+        String respuesta = consumo.consumoGET("http://localhost:8080/actualizarTarifa", postData);        
+        JsonArray response = JsonParser.parseString(respuesta).getAsJsonArray();
+        boolean success = response.get(0).getAsBoolean();
 
-            if (status) {
-                System.out.println("Tarifa actualizada correctamente.");
-                AlertTarifaUpdate alert = new AlertTarifaUpdate();
-                alert.setVisible(true);
-                alert.setLocationRelativeTo(null);
-                listaTarifa();
-            } else {
-                System.out.println("Error al actualizar la tarifa: " + message);
-                AlertErrorUpdateTarifa alert = new AlertErrorUpdateTarifa();
-                alert.setVisible(true);
-                alert.setLocationRelativeTo(null);
-            }
+        // Si el booleano indica éxito, puedes acceder al mensaje de la siguiente manera:
+        if (success) {
+            System.out.println("Tarifa actualizada correctamente.");
+            AlertTarifaUpdate alert = new AlertTarifaUpdate();
+            alert.setVisible(true);
+            alert.setLocationRelativeTo(null);
+            listaTarifa();
         } else {
-            System.out.println("Error al consumir la API.");
+            System.out.println("Error al actualizar la tarifa: ");
+            AlertErrorUpdateTarifa alert = new AlertErrorUpdateTarifa();
+            alert.setVisible(true);
+            alert.setLocationRelativeTo(null);
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -239,17 +234,15 @@ public final class Tarifas extends javax.swing.JPanel {
     }//GEN-LAST:event_campo_tarifaActionPerformed
 
     private void boxVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxVehiculosActionPerformed
-        
         String opcionSelected = (String) boxVehiculos.getSelectedItem();
-        ConsumoApi consumo = new ConsumoApi();
-        String obtenerT = consumo.consumoGET("http://localhost/APIenPHP/API-tarifas/obtenerTarifa.php?tipo_vehiculo=" + opcionSelected);
+        String obtenerT = consumo.consumoGET("http://localhost:8080/obtenerValor?tipo_vehiculo=" + opcionSelected);
 
         // Parsear la respuesta JSON
         JsonParser parser = new JsonParser();
         JsonObject jsonObject = parser.parse(obtenerT).getAsJsonObject();
 
         // Verificar si "tarifa" existe en la respuesta JSON
-        JsonElement tarifaElement = jsonObject.get("tarifa");
+        JsonElement tarifaElement = jsonObject.get("valor");
         if (tarifaElement != null && !tarifaElement.isJsonNull()) {
             // Obtener el valor de la tarifa del JSON
             String tarifa = tarifaElement.getAsString();

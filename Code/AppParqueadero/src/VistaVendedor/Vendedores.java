@@ -53,9 +53,9 @@ public class Vendedores extends javax.swing.JPanel {
         TituloInformativo = new javax.swing.JLabel();
         BtnSinAsignar = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(15, 11, 25));
 
-        jButton2.setBackground(new java.awt.Color(73, 59, 114));
+        jButton2.setBackground(new java.awt.Color(123, 47, 152));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("CREAR VENDEDOR");
@@ -80,7 +80,11 @@ public class Vendedores extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tablaVendedor);
 
-        btnBuscarSeller.setBackground(new java.awt.Color(73, 59, 114));
+        inputBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        inputBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        inputBuscar.setForeground(new java.awt.Color(0, 0, 0));
+
+        btnBuscarSeller.setBackground(new java.awt.Color(123, 47, 152));
         btnBuscarSeller.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBuscarSeller.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscarSeller.setText("BUSCAR");
@@ -90,7 +94,7 @@ public class Vendedores extends javax.swing.JPanel {
             }
         });
 
-        BtnConAsignar.setBackground(new java.awt.Color(73, 59, 114));
+        BtnConAsignar.setBackground(new java.awt.Color(123, 47, 152));
         BtnConAsignar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         BtnConAsignar.setForeground(new java.awt.Color(255, 255, 255));
         BtnConAsignar.setText("VENDEDORES CON ASIGNACION");
@@ -101,10 +105,10 @@ public class Vendedores extends javax.swing.JPanel {
         });
 
         TituloInformativo.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        TituloInformativo.setForeground(new java.awt.Color(73, 59, 114));
+        TituloInformativo.setForeground(new java.awt.Color(255, 255, 255));
         TituloInformativo.setText("USUARIO CON PARQUEADEROS ASIGNADOS: ");
 
-        BtnSinAsignar.setBackground(new java.awt.Color(73, 59, 114));
+        BtnSinAsignar.setBackground(new java.awt.Color(123, 47, 152));
         BtnSinAsignar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         BtnSinAsignar.setForeground(new java.awt.Color(255, 255, 255));
         BtnSinAsignar.setText("VENDEDORES SIN ASIGNACION");
@@ -123,7 +127,7 @@ public class Vendedores extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(TituloInformativo)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,7 +150,7 @@ public class Vendedores extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscarSeller)
                     .addComponent(jButton2)
-                    .addComponent(inputBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                    .addComponent(inputBuscar))
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(BtnConAsignar, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
@@ -176,30 +180,6 @@ public class Vendedores extends javax.swing.JPanel {
         this.tablaVendedor.getColumn("OPCION").setCellEditor(new ButtonEditor(new JCheckBox())); 
     }
     
-    private void btnBuscarSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarSellerActionPerformed
-         // ACA VA El codigo para MOSTRA EL USUARIO QUE SE ESTA BUSCANDO 
-    
-        System.out.println("SE APRETO EL BOTON DE BUSCAR PARQUEADERO");
-
-        //Capturamos lo que hay en el input de buscar
-        String documento = inputBuscar.getText();
-
-        if(documento != null && !documento.isEmpty()){
-
-            System.out.println("Esta es la cedula: " + documento);
-
-            //ACA DEBE HARCERSE LA CONSULTA PARA BUSCAR EL USUARIO POR DOCUMENTO Y MOSTRARLO EN LA TABLA
-            
-
-        } else {
-
-            //HACEMOS APARECER UNA ALERTA
-            GeneratingAlert mostrarFrame = new GeneratingAlert("ERROR", "LLENA TODOS LOS CAMPOS");
-            mostrarFrame.setVisible(true);
-
-        }
-    }//GEN-LAST:event_btnBuscarSellerActionPerformed
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // ACA VA EL CODIGO PARA MOSTRAR LA VENTANA PARA REGISTAR UN PARQUEADERO
         System.out.println("\n SE APRETO EL BOTON DE CREAR VENDEDOR \n");
@@ -225,6 +205,10 @@ public class Vendedores extends javax.swing.JPanel {
         mostrarVendedoresSinAsignar();
       
     }//GEN-LAST:event_BtnSinAsignarActionPerformed
+
+    private void btnBuscarSellerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarSellerActionPerformed
+        
+    }//GEN-LAST:event_btnBuscarSellerActionPerformed
 
     public void mostrarVendedores(){
               
@@ -356,7 +340,9 @@ public class Vendedores extends javax.swing.JPanel {
                 modelo.addRow(fila);
                 
             }
-        } 
+        }else{
+             System.out.println("NO SE ENCONTRO");
+         }
     }
     
     public void accionClickBotonVer(int fila) {
@@ -375,6 +361,9 @@ public class Vendedores extends javax.swing.JPanel {
         String cedula = (String) modelo.getValueAt(fila, 0);
         EditarUsuario frame = new EditarUsuario(this,cedula);
         frame.setVisible(true);
+        
+        this.main.setVisible(false);
+        
         
        
     }
@@ -401,6 +390,9 @@ public class Vendedores extends javax.swing.JPanel {
         String verificar = consumo.consumoPOST("http://localhost/APIenPHP/API-Personas/VerificarPersona.php", queryData);
         
         if( verificar != null ){
+            
+            this.main.dispose();
+            
               
             //HACEMOS EL CAMBIO DE VENTANA PARA MOSTRAR EL FORM DONDE EDITAMOS EL PARQUEADERO 
             AlertConfirmarDesligar mostrarFrame = new AlertConfirmarDesligar(cedula,this);
@@ -414,7 +406,7 @@ public class Vendedores extends javax.swing.JPanel {
         AsignarParqueadero frame = new AsignarParqueadero(this,cedula);
         frame.setVisible(true);
        
-        this.main.setVisible(false);
+        this.main.dispose();
        
     }
     

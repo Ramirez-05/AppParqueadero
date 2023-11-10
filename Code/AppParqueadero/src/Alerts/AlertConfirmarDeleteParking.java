@@ -2,6 +2,7 @@
 package Alerts;
 
 import Main.ConsumoApi;
+import Main.Main;
 import VistaParqueadero.DeleteParking;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -10,9 +11,7 @@ import java.awt.Toolkit;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AlertConfirmarDeleteParking extends javax.swing.JFrame {
-
-    
+public class AlertConfirmarDeleteParking extends javax.swing.JFrame { 
        
     String nit;
     Gson gson;
@@ -135,7 +134,7 @@ public class AlertConfirmarDeleteParking extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-
+     
         //CODIGO PARA HACER EL UPDATE DEL PARQUEADERO
 
         ConsumoApi consumo = new ConsumoApi();
@@ -154,7 +153,9 @@ public class AlertConfirmarDeleteParking extends javax.swing.JFrame {
             
             
           //MOSTRAMOS VENTANA MAIN CON CONTENEDOR PARUQEADEROS
-            this.delete.contentParqueadero.main.setVisible(true);
+            Main main = new Main();
+            main.setVisible(true);
+          
             this.delete.contentParqueadero.mostrarParqueaderos();
             //MOSTRAMOS MENSAJE DE EXITO DE UPDATE
             GeneratingAlert mostrar = new GeneratingAlert("ELIMNACION EXITOSA","SE ELIMINO CORRECTAMENTE");

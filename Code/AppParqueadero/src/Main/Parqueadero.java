@@ -1,5 +1,20 @@
 package Main;
+import Alerts.AlertCobrar;
+import Alerts.GeneratingAlert;
+import Clases.ButtonEditor;
+import Clases.ButtonRenderer;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -8,14 +23,27 @@ public final class Parqueadero extends javax.swing.JPanel {
     
     public MainVendedor main;
     private final Gson gson;
-    
+    private ConsumoApi consumo;
     DefaultTableModel modelo;
+    String nit;
+    String nombre;
+    String direccion;
+    String telefono;
+    String user;
     
-    public Parqueadero(MainVendedor main) {
+    public Parqueadero(MainVendedor main,String nit, String nombre, String direccion, String telefono, String user ) {
+        this.nit = nit;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.user = user;
         this.main = main;
         gson = new Gson();
+        consumo = new ConsumoApi();
         initComponents();
         initAlternComponets();        
+        mostrarDatosParqueadero();
+        listaVehiculos();
     }
   
     @SuppressWarnings("unchecked")
@@ -38,6 +66,7 @@ public final class Parqueadero extends javax.swing.JPanel {
         etq_direccion = new javax.swing.JLabel();
         etq_vendedor = new javax.swing.JLabel();
         etq_nit = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         nitParqueadero2.setText("NO DISPONIBLE");
 
@@ -58,15 +87,7 @@ public final class Parqueadero extends javax.swing.JPanel {
             new String [] {
                 "TIKECT", "VEHÍCULO", "PLACA", "TITULAR", "TARIFA", "INGRESO", "TIEMPO/H", "SALIDA"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(tabVehiculosActuales);
 
         inputBuscarUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -85,85 +106,110 @@ public final class Parqueadero extends javax.swing.JPanel {
             }
         });
 
-        jLabelDireccion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelDireccion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelDireccion.setForeground(new java.awt.Color(15, 11, 25));
         jLabelDireccion.setText("DIRECCIÓN:");
 
-        jLabelNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelNombre.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelNombre.setForeground(new java.awt.Color(0, 0, 0));
         jLabelNombre.setText("NOMBRE:");
 
-        jLabelTelefono.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelTelefono.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelTelefono.setForeground(new java.awt.Color(0, 0, 0));
         jLabelTelefono.setText("TELÉFONO:");
 
-        jLabelVendedores.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelVendedores.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelVendedores.setForeground(new java.awt.Color(0, 0, 0));
         jLabelVendedores.setText("VENDEDORES:");
 
+        etq_nombre.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        etq_nombre.setForeground(new java.awt.Color(0, 0, 0));
         etq_nombre.setText("NO DISPONIBLE");
 
+        etq_telefono.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        etq_telefono.setForeground(new java.awt.Color(0, 0, 0));
         etq_telefono.setText("NO DISPONIBLE");
 
+        etq_direccion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        etq_direccion.setForeground(new java.awt.Color(0, 0, 0));
         etq_direccion.setText("NO DISPONIBLE");
 
+        etq_vendedor.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        etq_vendedor.setForeground(new java.awt.Color(0, 0, 0));
         etq_vendedor.setText("NO DISPONIBLE");
 
-        etq_nit.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        etq_nit.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         etq_nit.setForeground(new java.awt.Color(0, 0, 0));
+        etq_nit.setText("NO DISPONIBLE");
+
+        jLabel1.setBackground(new java.awt.Color(15, 11, 25));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(15, 11, 25));
+        jLabel1.setText("NIT:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(etq_nit, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabelNombre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(etq_nombre))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelDireccion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(etq_direccion)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelTelefono)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(etq_telefono))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelVendedores)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(etq_vendedor)))
-                .addGap(47, 47, 47))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(inputBuscarUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscarVehiculoParqueadero)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(inputBuscarUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscarVehiculoParqueadero))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(etq_nit)
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabelNombre))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelDireccion)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(etq_direccion)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelTelefono)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(etq_telefono))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(etq_nombre)
+                                .addGap(47, 47, 47)
+                                .addComponent(jLabelVendedores)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(etq_vendedor)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(etq_nit, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
                     .addComponent(jLabelNombre)
-                    .addComponent(jLabelTelefono)
                     .addComponent(etq_nombre)
-                    .addComponent(etq_telefono)
-                    .addComponent(etq_nit, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelDireccion)
                     .addComponent(jLabelVendedores)
-                    .addComponent(etq_direccion)
                     .addComponent(etq_vendedor))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelTelefono)
+                        .addComponent(etq_telefono))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelDireccion)
+                        .addComponent(etq_direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inputBuscarUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscarVehiculoParqueadero, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -177,13 +223,14 @@ public final class Parqueadero extends javax.swing.JPanel {
     public void initAlternComponets(){
        modelo = (DefaultTableModel) tabVehiculosActuales.getModel();
        
-       //Deshabilita la modificación de columnas en la interfaz
-       tabVehiculosActuales.getTableHeader().setReorderingAllowed(false);
-       
        // Configurar la JTable para ajustar automáticamente el ancho de las columnas
-       tabVehiculosActuales.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tabVehiculosActuales.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-       tabVehiculosActuales.setPreferredScrollableViewportSize(tabVehiculosActuales.getPreferredSize());
+        tabVehiculosActuales.setPreferredScrollableViewportSize(tabVehiculosActuales.getPreferredSize());
+        
+        this.tabVehiculosActuales.getColumn("SALIDA").setCellRenderer(new ButtonRenderer());
+        this.tabVehiculosActuales.getColumn("SALIDA").setCellEditor(new ButtonEditor(new JCheckBox()));
+       
        
     }
      
@@ -191,19 +238,126 @@ public final class Parqueadero extends javax.swing.JPanel {
     //Botón para buscar vehículo parqueadero
     private void btnBuscarVehiculoParqueaderoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVehiculoParqueaderoActionPerformed
         System.out.println("SE APRETO EL BOTON DE BUSCAR VEHÍCULO");
+        String busqueda = inputBuscarUpdate.getText().trim(); 
+        
+        if (busqueda.isEmpty()) {
+            listaVehiculos();
+            
+        } else {
+
+            Map<String, String> parametros = new HashMap<>();
+            parametros.put("busqueda", busqueda);
+            String obtenerVehiculo = consumo.consumoGET("http://localhost/APIenPHP/API-voce/buscarVehiculo.php", parametros);
+            
+            if (obtenerVehiculo != null) {
+                JsonObject jsonTemp = gson.fromJson(obtenerVehiculo, JsonObject.class);
+                JsonArray vehiculo = jsonTemp.getAsJsonArray("registros");
+                modelo.setRowCount(0);
+
+                for (int i = 0; i < vehiculo.size(); i++){
+                    JsonObject verVehiculo = vehiculo.get(i).getAsJsonObject();
+                    String id = verVehiculo.get(  "id").getAsString();
+                    String tipo_vehiculo = verVehiculo.get("tipo_vehiculo").getAsString();
+                    String placa = verVehiculo.get("placa").getAsString();
+                    String responsable = verVehiculo.get("responsable").getAsString();
+                    String Tarifa = verVehiculo.get("Tarifa").getAsString();
+                    String create_entrada = verVehiculo.get("create_entrada").getAsString();
+                    String tiempo = calcularTiempo(create_entrada);
+
+                    final int posicion = i;
+
+                    JButton btnSalida = new JButton("SALIDA");
+                    btnSalida.setBackground(new Color(207,191,255));
+                    btnSalida.setForeground(new Color(0,0,0));
+
+                    btnSalida.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            accionClickDarSalida( posicion );
+                        }
+                    });
+
+                    Object[] fila = new Object[]{id, tipo_vehiculo, placa, responsable, Tarifa, create_entrada, tiempo, btnSalida};
+                    modelo.addRow(fila);
+                }
+            }
+        }
     }//GEN-LAST:event_btnBuscarVehiculoParqueaderoActionPerformed
 
     private void inputBuscarUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBuscarUpdateActionPerformed
         
     }//GEN-LAST:event_inputBuscarUpdateActionPerformed
     
-    public void mostrarDatosParqueadero(String nit, String nombre, String direccion, String telefono, String user){                     
+    public void accionClickDarSalida(int fila){
+        // Obtener los datos de la fila seleccionada
+        String ticket = (String) modelo.getValueAt(fila, 0);
+        String vehiculo = (String) modelo.getValueAt(fila, 1);
+        String placa = (String) modelo.getValueAt(fila, 2);
+        String titular = (String) modelo.getValueAt(fila, 3);
+        String tarifa = (String) modelo.getValueAt(fila, 4);
+        String ingreso = (String) modelo.getValueAt(fila, 5);
+        String tiempo = (String) modelo.getValueAt(fila, 6);
+
+        System.out.println("Ticket: " + ticket);
+        System.out.println("Vehículo: " + vehiculo);
+        System.out.println("Placa: " + placa);
+        System.out.println("Titular: " + titular);
+        System.out.println("Tarifa: " + tarifa);
+        System.out.println("Ingreso: " + ingreso);
+        System.out.println("Tiempo: " + tiempo);
+        
+         double tarifaDouble = Double.parseDouble(tarifa);
+        
+        // Datos de entrada
+        double tarifaPorHora = tarifaDouble; // Tarifa 
+        String tiempoT = tiempo; 
+
+        // Extraer horas y minutos del tiempo
+        int horas = 0;
+        int minutos = 0;
+
+        if (tiempoT.contains("h")) {
+            String[] partesTiempo = tiempoT.split("h");
+            horas = Integer.parseInt(partesTiempo[0].trim());
+
+            if (partesTiempo[1].contains("m")) {
+                minutos = Integer.parseInt(partesTiempo[1].replace("m", "").trim());
+            }
+        } else if (tiempoT.contains("m")) {
+            minutos = Integer.parseInt(tiempoT.replace("m", "").trim());
+        }
+
+        // Calcular la tarifa
+        double tarifaTotal = (horas * tarifaPorHora) + ((minutos > 0) ? tarifaPorHora : 0);
+
+        System.out.println("Tarifa total: $" + tarifaTotal);
+        
+        Map<String, String> update = new HashMap<>();
+        update.put("placa", placa);
+        
+        
+        String verificarT = consumo.consumoGET("http://localhost/APIenPHP/API-tarifas/VerificarTicket.php", update);
+        
+        System.out.println("EL TICKET RETORNADO: "+verificarT);
+        
+        if(verificarT != null ){
+            
+            AlertCobrar alert = new AlertCobrar(placa, tarifaTotal,this, tiempo);
+            alert.setVisible(true);
+            
+        }
+        
+        
+    }
+    
+   
+    public void mostrarDatosParqueadero(){                     
         try {
-            System.out.println("nit: " + nit);
-            System.out.println("nombre: " + nombre);
-            System.out.println("direccion: " + direccion);
-            System.out.println("telefono: " + telefono);
-            System.out.println("user: " + user);            
+            System.out.println("nit a panel: " + nit);
+            System.out.println("nombre panel : " + nombre);
+            System.out.println("direccion panel : " + direccion);
+            System.out.println("telefono panel : " + telefono);
+            System.out.println("user panel : " + user);            
             etq_nit.setText(nit);
             etq_nombre.setText(nombre);
             etq_direccion.setText(direccion);
@@ -214,6 +368,66 @@ public final class Parqueadero extends javax.swing.JPanel {
         }
     }
     
+     //FUNCIÓN CALCULAR TIEMPO    
+    private String calcularTiempo(String ingreso) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
+        try {
+            Date fechaIngreso = format.parse(ingreso);
+            Date fechaActual = new Date();
+            long diferencia = fechaActual.getTime() - fechaIngreso.getTime();
+            long horas = diferencia / (60 * 60 * 1000);
+            long minutos = (diferencia % (60 * 60 * 1000)) / (60 * 1000);
+            return horas + "h " + minutos + "m";
+        } catch (Exception e) {
+            System.err.println("Error al calcular tiempo: " + e.getMessage());
+            return "";
+        }
+    }
+    
+    public void listaVehiculos(){
+        ConsumoApi consumo = new ConsumoApi();
+        String obtenerVehiculos = consumo.consumoGET("http://localhost/APIenPHP/API-voce/obtenerParqueadero.php");
+        
+        if (obtenerVehiculos != null){
+            JsonObject jsonTemp = gson.fromJson(obtenerVehiculos, JsonObject.class);
+            JsonArray parqueadero = jsonTemp.getAsJsonArray("registros");
+            modelo.setRowCount(0);
+            
+            for (int i=0 ; i < parqueadero.size(); i++){
+                JsonObject verParqueadero = parqueadero.get(i).getAsJsonObject();
+                String id = verParqueadero.get("id").getAsString();
+                String tipo_vehiculo = verParqueadero.get("tipo_vehiculo").getAsString();
+                String placa = verParqueadero.get("placa").getAsString();
+                String responsable = verParqueadero.get("responsable").getAsString();
+                String Tarifa = verParqueadero.get("Tarifa").getAsString();
+                String create_entrada = verParqueadero.get("create_entrada").getAsString();
+                
+                String tiempo = calcularTiempo(create_entrada);
+                
+                final int posicion = i;
+                
+                JButton btnSalida = new JButton("Salida");
+                btnSalida.setBackground(new Color(207, 191, 255));
+                btnSalida.setForeground(new Color(0,0,0));
+                
+                btnSalida.addActionListener(new ActionListener() {
+                      @Override
+                      public void actionPerformed(ActionEvent e) {
+                          accionClickDarSalida( posicion );
+                      }
+                  });
+                
+                Object[] fila = new Object[]{id, tipo_vehiculo, placa, responsable, Tarifa, create_entrada, tiempo, btnSalida};
+                modelo.addRow(fila);
+                
+            }
+        }
+    }
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarVehiculoParqueadero;
@@ -223,6 +437,7 @@ public final class Parqueadero extends javax.swing.JPanel {
     public javax.swing.JLabel etq_telefono;
     public javax.swing.JLabel etq_vendedor;
     private javax.swing.JTextField inputBuscarUpdate;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelTelefono;

@@ -28,7 +28,8 @@ public final class Historial extends javax.swing.JPanel {
     
     
     
-    public Historial(MainVendedor This) {
+    public Historial(MainVendedor main) {
+        this.main = main;
         consumo = new ConsumoApi();
         gson = new Gson();
         initComponents();
@@ -182,9 +183,73 @@ public final class Historial extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarHistorialActionPerformed
 
     private void inputBuscarHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputBuscarHistorialActionPerformed
+        String busqueda = inputBuscarHistorial.getText().trim(); 
         
-    }//GEN-LAST:event_inputBuscarHistorialActionPerformed
+        if (busqueda.isEmpty()) {
+            listaHistorial();
+            
+        } else {
 
+            ConsumoApi consumo = new ConsumoApi();
+            Map<String, String> parametros = new HashMap<>();
+            parametros.put("busqueda", busqueda);
+            String obtenerVehiculo = consumo.consumoGET("http://localhost/APIenPHP/buscarVehiculo.php", parametros);
+            
+            if (obtenerVehiculo != null) {
+                JsonObject jsonTemp = gson.fromJson(obtenerVehiculo, JsonObject.class);
+                JsonArray vehiculo = jsonTemp.getAsJsonArray("registros");
+                modelo.setRowCount(0);
+
+                for (int i = 0; i < vehiculo.size(); i++){
+                    JsonObject verVehiculo = vehiculo.get(i).getAsJsonObject();
+                    String id = verVehiculo.get(  "id").getAsString();
+                    String placa = verVehiculo.get("placa").getAsString();
+                    String createEntrada = verVehiculo.get("create_entrada").getAsString();
+                    String salida = verVehiculo.get("salida").getAsString();
+                    String tipoVehiculo = verVehiculo.get("tipo_vehiculo").getAsString();
+                    String tarifa = verVehiculo.get("Tarifa").getAsString();
+                    String responsable = verVehiculo.get("responsable").getAsString();
+                    String tiempo = calcularTiempo(createEntrada, salida);
+
+                    final int posicion = i;
+
+                    JButton btnImprimir = new JButton("IMPRIMIR");
+                    btnImprimir.setBackground(new Color(207,191,255));
+                    btnImprimir.setForeground(new Color(0,0,0));
+
+                    btnImprimir.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            accionClickBotonImprimir( posicion );
+                        }
+                    });
+
+                    Object[] fila = new Object[]{id, tipoVehiculo, placa, responsable, tarifa, createEntrada, salida, tiempo, btnImprimir};
+                    modelo.addRow(fila);
+                }
+            }
+        }
+
+    }//GEN-LAST:event_inputBuscarHistorialActionPerformed
+    
+    public void accionClickBotonImprimir(int fila){
+        
+        String id = (String) modelo.getValueAt(fila, 0);
+        String tipo_vh = (String) modelo.getValueAt(fila, 1);
+        String placa = (String) modelo.getValueAt(fila, 2);
+        String titular = (String) modelo.getValueAt(fila, 3);
+        String tarifa = (String) modelo.getValueAt(fila, 4);
+        String entrada = (String) modelo.getValueAt(fila, 5);
+        String salida = (String) modelo.getValueAt(fila, 6);
+        String tiempo = (String) modelo.getValueAt(fila, 7);
+        
+        Imprimir im = new Imprimir(id,tipo_vh,placa,titular,tarifa,entrada,salida,tiempo, this);
+        im.setVisible(true);
+        
+        main.setVisible(false);
+        
+    }
+    
     private String calcularTiempo(String ingreso, String salida) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
@@ -221,7 +286,7 @@ public final class Historial extends javax.swing.JPanel {
     }
    
    
-      private void listaHistorial(){
+    private void listaHistorial(){
         ConsumoApi consumo = new ConsumoApi();
         String obtenerHistorial = consumo.consumoGET("http://localhost/APIenPHP/API-voce/obtenerHistorial.php");
 
@@ -243,14 +308,14 @@ public final class Historial extends javax.swing.JPanel {
                 
                 final int posicion = i;
                 
-                JButton btnImprimir = new JButton("Imprimir");
+                JButton btnImprimir = new JButton("IMPRIMIR");
                 btnImprimir.setBackground(new Color(207,191,255));
                 btnImprimir.setForeground(new Color(0,0,0));
                 
                 btnImprimir.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //accionClickBotonImprimir( posicion );
+                        accionClickBotonImprimir( posicion );
                     }
                 });
 
